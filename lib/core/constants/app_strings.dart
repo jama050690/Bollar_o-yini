@@ -64,6 +64,22 @@ abstract final class AppStrings {
   static const objRocket = 'Raketa';
   static const objCat = 'Mushuk';
 
+  static const coloringTitle = "Rasm bo'yash";
+  static const choosePicture = 'Rasmni tanla';
+  static const coloringHint = "Rangni tanla va rasmni bos";
+  static const coloringDone = 'Tayyor! ✅';
+  static const clearAll = 'Tozalash';
+  static const picBalloons = 'Sharlar';
+  static const picApple = 'Olma';
+  static const picPear = 'Nok';
+  static const picStrawberry = 'Qulupnay';
+  static const picCat = 'Mushuk';
+  static const picFish = 'Baliq';
+  static const picButterfly = 'Kapalak';
+  static const picHouse = 'Uy';
+  static const picStar = 'Yulduz';
+  static const picFlower = 'Gul';
+
   // ---------- Modul B ----------
   static const mathTitle = 'Matematik sarguzasht';
   static String upTo(int max) => '$max gacha';
@@ -77,6 +93,18 @@ abstract final class AppStrings {
   static const sudokuTitle = 'Mini-Sudoku';
   static const sudokuRule = 'Har qator, ustun va diagonal = 15';
   static const sudokuPickCell = 'Bo\'sh katakni tanla';
+
+  static const crosswordTitle = 'Mini-krossvord';
+  static String wordsCount(int n) => "$n ta so'z";
+  static const crosswordHint = "Rasmni bos, so'ng harflarni tanla";
+
+  static const arithmeticTitle = 'Arifmetika';
+  static const levelAddSub = '+  −';
+  static const levelMulDiv = '×  ÷';
+  static const levelMixed = '+ − × ÷';
+
+  static const translateTitle = 'Tarjimon';
+  static const translateHint = 'Tarjimasini top:';
 
   static String round(int current, int total) => '$current / $total';
   static const tryAgain = "Yana urinib ko'r! 💪";
