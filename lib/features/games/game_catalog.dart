@@ -3,8 +3,12 @@ import 'package:flutter/widgets.dart';
 import '../../core/constants/age_group.dart';
 import '../../core/constants/app_strings.dart';
 import 'letter_number/letter_number_screen.dart';
+import 'math_adventure/math_adventure_screen.dart';
+import 'maze_quiz/maze_quiz_screen.dart';
 import 'memory_match/memory_match_screen.dart';
+import 'mini_sudoku/mini_sudoku_screen.dart';
 import 'shape_sorter/shape_sorter_screen.dart';
+import 'word_builder/word_builder_screen.dart';
 
 /// Bitta mini-o'yin haqida ma'lumot. Har bir o'yin mustaqil papkada (FR-3).
 class GameInfo {
@@ -44,6 +48,35 @@ final List<GameInfo> gameCatalog = [
     emoji: '🔺',
     group: AgeGroup.a,
     builder: () => const ShapeSorterScreen(),
+  ),
+  // ---------- Modul B (8–9 yosh) ----------
+  GameInfo(
+    id: 'math_adventure',
+    title: AppStrings.mathTitle,
+    emoji: '🚀',
+    group: AgeGroup.b,
+    builder: () => const MathAdventureScreen(),
+  ),
+  GameInfo(
+    id: 'word_builder',
+    title: AppStrings.wordBuilderTitle,
+    emoji: '🔠',
+    group: AgeGroup.b,
+    builder: () => const WordBuilderScreen(),
+  ),
+  GameInfo(
+    id: 'maze_quiz',
+    title: AppStrings.mazeQuizTitle,
+    emoji: '🧭',
+    group: AgeGroup.b,
+    builder: () => const MazeQuizScreen(),
+  ),
+  GameInfo(
+    id: 'mini_sudoku',
+    title: AppStrings.sudokuTitle,
+    emoji: '🔢',
+    group: AgeGroup.b,
+    builder: () => const MiniSudokuScreen(),
   ),
 ];
 

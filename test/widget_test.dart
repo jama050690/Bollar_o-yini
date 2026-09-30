@@ -67,6 +67,19 @@ void main() {
     expect(find.text(AppStrings.memoryTitle), findsNothing);
   });
 
+  testWidgets("FR-2: 8 yoshli bolaga Modul B o'yinlari ochiladi", (tester) async {
+    await tester.pumpWidget(const ProviderScope(child: AqlliDostlarApp()));
+    await tester.pumpAndSettle();
+    await createProfile(tester, name: 'Sardor', age: 8);
+
+    expect(find.text(AppStrings.mathTitle), findsOneWidget);
+    expect(find.text(AppStrings.wordBuilderTitle), findsOneWidget);
+    expect(find.text(AppStrings.mazeQuizTitle), findsOneWidget);
+    expect(find.text(AppStrings.sudokuTitle), findsOneWidget);
+    expect(find.text(AppStrings.lockedFor(5, 7)), findsOneWidget);
+    expect(find.text(AppStrings.memoryTitle), findsNothing);
+  });
+
   testWidgets("FR-5: profil qayta ochilganda tiklanadi", (tester) async {
     await tester.pumpWidget(const ProviderScope(child: AqlliDostlarApp()));
     await tester.pumpAndSettle();
