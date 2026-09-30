@@ -64,7 +64,9 @@ void main() {
       expect(find.text(title), findsOneWidget);
     }
     // Boshqa modullar ko'rinadi, lekin qulflangan.
+    await tester.scrollUntilVisible(find.text(AppStrings.lockedFor(8, 9)), 200);
     expect(find.text(AppStrings.lockedFor(8, 9)), findsOneWidget);
+    await tester.scrollUntilVisible(find.text(AppStrings.lockedFor(10, 12)), 200);
     expect(find.text(AppStrings.lockedFor(10, 12)), findsOneWidget);
   });
 
