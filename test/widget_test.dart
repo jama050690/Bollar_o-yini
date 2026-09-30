@@ -53,6 +53,16 @@ void main() {
     expect(find.text(AppStrings.memoryTitle), findsOneWidget);
     expect(find.text(AppStrings.letterNumberTitle), findsOneWidget);
     expect(find.text(AppStrings.shapeSorterTitle), findsOneWidget);
+    // Qo'shimcha o'yinlar ro'yxatda pastroqda — scroll qilib tekshiramiz.
+    for (final title in [
+      AppStrings.timesTableTitle,
+      AppStrings.alphabetsTitle,
+      AppStrings.countingTitle,
+      AppStrings.shapeBuilderTitle,
+    ]) {
+      await tester.scrollUntilVisible(find.text(title), 200);
+      expect(find.text(title), findsOneWidget);
+    }
     // Boshqa modullar ko'rinadi, lekin qulflangan.
     expect(find.text(AppStrings.lockedFor(8, 9)), findsOneWidget);
     expect(find.text(AppStrings.lockedFor(10, 12)), findsOneWidget);

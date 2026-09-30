@@ -2,12 +2,16 @@ import 'package:flutter/widgets.dart';
 
 import '../../core/constants/age_group.dart';
 import '../../core/constants/app_strings.dart';
+import 'alphabets/alphabets_screen.dart';
+import 'counting/counting_screen.dart';
 import 'letter_number/letter_number_screen.dart';
 import 'math_adventure/math_adventure_screen.dart';
 import 'maze_quiz/maze_quiz_screen.dart';
 import 'memory_match/memory_match_screen.dart';
 import 'mini_sudoku/mini_sudoku_screen.dart';
+import 'shape_builder/shape_builder_screen.dart';
 import 'shape_sorter/shape_sorter_screen.dart';
+import 'times_table/times_table_screen.dart';
 import 'word_builder/word_builder_screen.dart';
 
 /// Bitta mini-o'yin haqida ma'lumot. Har bir o'yin mustaqil papkada (FR-3).
@@ -48,6 +52,34 @@ final List<GameInfo> gameCatalog = [
     emoji: '🔺',
     group: AgeGroup.a,
     builder: () => const ShapeSorterScreen(),
+  ),
+  GameInfo(
+    id: 'times_table',
+    title: AppStrings.timesTableTitle,
+    emoji: '✖️',
+    group: AgeGroup.a,
+    builder: () => const TimesTableScreen(),
+  ),
+  GameInfo(
+    id: 'alphabets',
+    title: AppStrings.alphabetsTitle,
+    emoji: '🌍',
+    group: AgeGroup.a,
+    builder: () => const AlphabetsScreen(),
+  ),
+  GameInfo(
+    id: 'counting',
+    title: AppStrings.countingTitle,
+    emoji: '💯',
+    group: AgeGroup.a,
+    builder: () => const CountingScreen(),
+  ),
+  GameInfo(
+    id: 'shape_builder',
+    title: AppStrings.shapeBuilderTitle,
+    emoji: '🏠',
+    group: AgeGroup.a,
+    builder: () => const ShapeBuilderScreen(),
   ),
   // ---------- Modul B (8–9 yosh) ----------
   GameInfo(

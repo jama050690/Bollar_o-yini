@@ -40,6 +40,30 @@ abstract final class AppStrings {
   static const sortByColor = 'Ranglariga qarab sarala';
   static const sortByShape = 'Shakliga qarab sarala';
 
+  // ---------- Modul A (qo'shimcha) ----------
+  static const timesTableTitle = 'Karra jadvali';
+  static String timesLevel(int max) => '×1 – ×$max';
+
+  static const alphabetsTitle = 'Alifbolar';
+  static const chooseAlphabet = 'Alifboni tanla';
+  static const findLetter = 'Qaysi harf?';
+
+  static const countingTitle = 'Sanash';
+  static const chooseLanguage = 'Tilni tanla';
+  static const findNumber = 'Qaysi son?';
+
+  static const langUzbek = 'Oʻzbek';
+  static const langRussian = 'Rus';
+  static const langEnglish = 'Ingliz';
+
+  static const shapeBuilderTitle = 'Shakldan buyum';
+  static const dragShapes = 'Shakllarni joyiga sudra';
+  static const objHouse = 'Uy';
+  static const objCar = 'Mashina';
+  static const objTree = 'Daraxt';
+  static const objRocket = 'Raketa';
+  static const objCat = 'Mushuk';
+
   // ---------- Modul B ----------
   static const mathTitle = 'Matematik sarguzasht';
   static String upTo(int max) => '$max gacha';
