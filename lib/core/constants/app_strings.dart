@@ -40,6 +40,20 @@ abstract final class AppStrings {
   static const sortByColor = 'Ranglariga qarab sarala';
   static const sortByShape = 'Shakliga qarab sarala';
 
+  // ---------- Modul B ----------
+  static const mathTitle = 'Matematik sarguzasht';
+  static String upTo(int max) => '$max gacha';
+
+  static const wordBuilderTitle = "So'z quramchisi";
+  static const buildWord = "Harflardan so'z yig'";
+
+  static const mazeQuizTitle = 'Labirint-kviz';
+  static const mazeHint = '🚪 Eshikdagi savolga javob ber!';
+
+  static const sudokuTitle = 'Mini-Sudoku';
+  static const sudokuRule = 'Har qator, ustun va diagonal = 15';
+  static const sudokuPickCell = 'Bo\'sh katakni tanla';
+
   static String round(int current, int total) => '$current / $total';
   static const tryAgain = "Yana urinib ko'r! 💪";
   static const wellDone = 'Barakalla! 🎉';
