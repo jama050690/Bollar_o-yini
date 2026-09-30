@@ -3,7 +3,10 @@ import 'package:flutter/widgets.dart';
 import '../../core/constants/age_group.dart';
 import '../../core/constants/app_strings.dart';
 import 'alphabets/alphabets_screen.dart';
+import 'arithmetic/arithmetic_screen.dart';
+import 'coloring/coloring_screen.dart';
 import 'counting/counting_screen.dart';
+import 'crossword/crossword_screen.dart';
 import 'letter_number/letter_number_screen.dart';
 import 'math_adventure/math_adventure_screen.dart';
 import 'maze_quiz/maze_quiz_screen.dart';
@@ -12,6 +15,7 @@ import 'mini_sudoku/mini_sudoku_screen.dart';
 import 'shape_builder/shape_builder_screen.dart';
 import 'shape_sorter/shape_sorter_screen.dart';
 import 'times_table/times_table_screen.dart';
+import 'translate/translate_screen.dart';
 import 'word_builder/word_builder_screen.dart';
 
 /// Bitta mini-o'yin haqida ma'lumot. Har bir o'yin mustaqil papkada (FR-3).
@@ -81,6 +85,13 @@ final List<GameInfo> gameCatalog = [
     group: AgeGroup.a,
     builder: () => const ShapeBuilderScreen(),
   ),
+  GameInfo(
+    id: 'coloring',
+    title: AppStrings.coloringTitle,
+    emoji: '🎨',
+    group: AgeGroup.a,
+    builder: () => const ColoringScreen(),
+  ),
   // ---------- Modul B (8–9 yosh) ----------
   GameInfo(
     id: 'math_adventure',
@@ -109,6 +120,27 @@ final List<GameInfo> gameCatalog = [
     emoji: '🔢',
     group: AgeGroup.b,
     builder: () => const MiniSudokuScreen(),
+  ),
+  GameInfo(
+    id: 'crossword',
+    title: AppStrings.crosswordTitle,
+    emoji: '🧩',
+    group: AgeGroup.b,
+    builder: () => const CrosswordScreen(),
+  ),
+  GameInfo(
+    id: 'arithmetic',
+    title: AppStrings.arithmeticTitle,
+    emoji: '➗',
+    group: AgeGroup.b,
+    builder: () => const ArithmeticScreen(),
+  ),
+  GameInfo(
+    id: 'translate',
+    title: AppStrings.translateTitle,
+    emoji: '🌐',
+    group: AgeGroup.b,
+    builder: () => const TranslateScreen(),
   ),
 ];
 
