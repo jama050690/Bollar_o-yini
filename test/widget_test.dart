@@ -14,7 +14,8 @@ void main() {
   setUpAll(() async {
     tempDir = await Directory.systemTemp.createTemp('aqlli_dostlar_test');
     Hive.init(tempDir.path);
-    await HiveStorage.openBoxes();
+    // Xotiradagi baza: testWidgets soxta vaqtida disk IO osilib qolmasligi uchun.
+    await HiveStorage.openBoxes(inMemory: true);
   });
 
   setUp(() async {

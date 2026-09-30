@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 /// Lokal baza (FR-5, FR-9). Ma'lumotlar faqat qurilmada saqlanadi,
@@ -9,11 +10,13 @@ abstract final class HiveStorage {
   static const _progressBox = 'progress';
   static const _settingsBox = 'settings';
 
-  static Future<void> openBoxes() async {
+  /// [inMemory] faqat testlar uchun: bazani diskka yozmasdan xotirada ochadi.
+  static Future<void> openBoxes({@visibleForTesting bool inMemory = false}) async {
+    final bytes = inMemory ? Uint8List(0) : null;
     await Future.wait([
-      Hive.openBox<Map>(_profilesBox),
-      Hive.openBox<Map>(_progressBox),
-      Hive.openBox<dynamic>(_settingsBox),
+      Hive.openBox<Map>(_profilesBox, bytes: bytes),
+      Hive.openBox<Map>(_progressBox, bytes: bytes),
+      Hive.openBox<dynamic>(_settingsBox, bytes: bytes),
     ]);
   }
 
