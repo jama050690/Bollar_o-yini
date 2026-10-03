@@ -59,6 +59,7 @@ void main() {
       AppStrings.alphabetsTitle,
       AppStrings.countingTitle,
       AppStrings.shapeBuilderTitle,
+      AppStrings.coloringTitle,
     ]) {
       await tester.scrollUntilVisible(find.text(title), 200);
       expect(find.text(title), findsOneWidget);
@@ -88,6 +89,15 @@ void main() {
     expect(find.text(AppStrings.wordBuilderTitle), findsOneWidget);
     expect(find.text(AppStrings.mazeQuizTitle), findsOneWidget);
     expect(find.text(AppStrings.sudokuTitle), findsOneWidget);
+    for (final title in [
+      AppStrings.crosswordTitle,
+      AppStrings.arithmeticTitle,
+      AppStrings.translateTitle,
+    ]) {
+      await tester.scrollUntilVisible(find.text(title), 200);
+      expect(find.text(title), findsOneWidget);
+    }
+    await tester.scrollUntilVisible(find.text(AppStrings.lockedFor(5, 7)), -200);
     expect(find.text(AppStrings.lockedFor(5, 7)), findsOneWidget);
     expect(find.text(AppStrings.memoryTitle), findsNothing);
   });
