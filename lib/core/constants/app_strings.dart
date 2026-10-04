@@ -80,6 +80,15 @@ abstract final class AppStrings {
   static const picStar = 'Yulduz';
   static const picFlower = 'Gul';
 
+  static const matchPairsTitle = 'Juftini top';
+  static const findPair = 'Juftini top:';
+  static const pairsFood = 'Ovqati';
+  static const pairsTools = 'Asbobi';
+  static const pairsMixed = 'Aralash';
+
+  static const patternsTitle = 'Naqsh';
+  static const continuePattern = 'Nima keladi?';
+
   // ---------- Modul B ----------
   static const mathTitle = 'Matematik sarguzasht';
   static String upTo(int max) => '$max gacha';
