@@ -202,6 +202,22 @@ abstract final class AppStrings {
   static const catTransport = '🚗 Transport';
   static const catJob = '👷 Kasb';
 
+  static const translatePlusTitle = 'Tarjimon+';
+  static const levelWords = "So'zlar";
+  static const levelPhrases = 'Birikmalar';
+  static const levelSentences = 'Gaplar';
+
+  static const speedMathTitle = 'Tez hisob';
+  static const speedHint = "60 soniyada iloji boricha ko'p yech!";
+  static String secondsLeft(int s) => '⏱ $s';
+  static String correctCount(int n) => '✅ $n';
+
+  static const sudokuBigTitle = 'Sudoku';
+  static const sudokuBigRule = 'Qator, ustun va qutida raqam takrorlanmasin';
+  static const level4Easy = '4×4 oson';
+  static const level4Hard = '4×4 qiyin';
+  static const level6 = '6×6';
+
   static String round(int current, int total) => '$current / $total';
   static const tryAgain = "Yana urinib ko'r! 💪";
   static const wellDone = 'Barakalla! 🎉';
