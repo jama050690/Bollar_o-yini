@@ -7,6 +7,7 @@ import '../../../core/constants/age_group.dart';
 import '../../../core/constants/app_strings.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../shared/services/sound_service.dart';
+import '../../../shared/widgets/choice_card.dart';
 import '../../../shared/widgets/game_scaffold.dart';
 import '../game_result.dart';
 import 'word_builder_game.dart';
@@ -22,8 +23,8 @@ class WordBuilderScreen extends ConsumerStatefulWidget {
 }
 
 class _WordBuilderScreenState extends ConsumerState<WordBuilderScreen> {
-  final _game = WordBuilderGame();
-  final _stopwatch = Stopwatch()..start();
+  WordBuilderGame? _game;
+  final _stopwatch = Stopwatch();
   Timer? _timer;
   int? _wrongTile;
   bool _celebrating = false;
@@ -34,10 +35,18 @@ class _WordBuilderScreenState extends ConsumerState<WordBuilderScreen> {
     super.dispose();
   }
 
-  void _onTileTap(int index) {
-    if (_celebrating || _game.usedTiles.contains(index)) return;
+  void _start(WordLevel level) {
+    setState(() => _game = WordBuilderGame(level));
+    _stopwatch
+      ..reset()
+      ..start();
+  }
 
-    final outcome = _game.tapTile(index);
+  void _onTileTap(int index) {
+    final game = _game!;
+    if (_celebrating || game.usedTiles.contains(index)) return;
+
+    final outcome = game.tapTile(index);
     final sound = ref.read(soundServiceProvider);
     _timer?.cancel();
     setState(() => _wrongTile = outcome == LetterOutcome.wrong ? index : null);
@@ -57,7 +66,7 @@ class _WordBuilderScreenState extends ConsumerState<WordBuilderScreen> {
           if (!mounted) return;
           setState(() {
             _celebrating = false;
-            _game.nextWord();
+            game.nextWord();
           });
         });
       case LetterOutcome.gameFinished:
@@ -69,7 +78,7 @@ class _WordBuilderScreenState extends ConsumerState<WordBuilderScreen> {
           finishGame(
             context,
             ref,
-            GameResult(gameId: _gameId, stars: _game.stars, duration: _stopwatch.elapsed),
+            GameResult(gameId: _gameId, stars: game.stars, duration: _stopwatch.elapsed),
           );
         });
     }
@@ -77,72 +86,114 @@ class _WordBuilderScreenState extends ConsumerState<WordBuilderScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final letters = _game.currentLetters;
+    final game = _game;
     return GameScaffold(
       title: AppStrings.wordBuilderTitle,
       color: AgeGroup.b.color,
-      trailing: Text(
-        AppStrings.round(_game.wordIndex + 1, _game.words.length),
-        style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-      ),
-      child: ListView(
-        padding: const EdgeInsets.all(16),
-        children: [
-          // Rasm (so'z ma'nosi)
-          Container(
-            padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(AppSizes.radius),
+      trailing: game == null
+          ? null
+          : Text(
+              AppStrings.round(game.wordIndex + 1, game.words.length),
+              style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
             ),
-            child: Column(
+      child: game == null ? _LevelPicker(onSelected: _start) : _buildGame(game),
+    );
+  }
+
+  Widget _buildGame(WordBuilderGame game) {
+    final letters = game.currentLetters;
+    return ListView(
+      padding: const EdgeInsets.all(16),
+      children: [
+        // Rasm (so'z ma'nosi)
+        Container(
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(AppSizes.radius),
+          ),
+          child: Column(
+            children: [
+              Text(game.current.emoji, style: const TextStyle(fontSize: 96)),
+              Text(
+                _celebrating ? AppStrings.wellDone : AppStrings.buildWord,
+                style: const TextStyle(fontSize: 22, color: AppColors.text),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: 20),
+        // Yig'ilayotgan so'z: bo'sh kataklar
+        Wrap(
+          alignment: WrapAlignment.center,
+          spacing: 8,
+          runSpacing: 8,
+          children: [
+            for (var i = 0; i < letters.length; i++)
+              _Slot(letter: i < game.placed ? letters[i] : null),
+          ],
+        ),
+        SizedBox(
+          height: 40,
+          child: Center(
+            child: _wrongTile != null
+                ? const Text(
+                    AppStrings.tryAgain,
+                    style: TextStyle(fontSize: 22, color: Color(0xFFFB8C00)),
+                  )
+                : null,
+          ),
+        ),
+        // Aralash harf kartochkalari
+        Wrap(
+          alignment: WrapAlignment.center,
+          spacing: 12,
+          runSpacing: 12,
+          children: [
+            for (var i = 0; i < game.tiles.length; i++)
+              _LetterTile(
+                letter: game.tiles[i],
+                used: game.usedTiles.contains(i),
+                wrong: i == _wrongTile,
+                onTap: () => _onTileTap(i),
+              ),
+          ],
+        ),
+      ],
+    );
+  }
+}
+
+class _LevelPicker extends StatelessWidget {
+  const _LevelPicker({required this.onSelected});
+
+  final ValueChanged<WordLevel> onSelected;
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: SingleChildScrollView(
+        padding: const EdgeInsets.all(24),
+        child: Column(
+          children: [
+            Text(AppStrings.chooseLevel, style: Theme.of(context).textTheme.headlineLarge),
+            const SizedBox(height: 24),
+            Wrap(
+              alignment: WrapAlignment.center,
+              spacing: 16,
+              runSpacing: 16,
               children: [
-                Text(_game.current.emoji, style: const TextStyle(fontSize: 96)),
-                Text(
-                  _celebrating ? AppStrings.wellDone : AppStrings.buildWord,
-                  style: const TextStyle(fontSize: 22, color: AppColors.text),
-                ),
+                for (final level in WordLevel.values)
+                  ChoiceCard(
+                    emoji: level.emoji,
+                    label: level.label,
+                    color: Colors.white,
+                    onTap: () => onSelected(level),
+                  ),
               ],
             ),
-          ),
-          const SizedBox(height: 20),
-          // Yig'ilayotgan so'z: bo'sh kataklar
-          Wrap(
-            alignment: WrapAlignment.center,
-            spacing: 8,
-            runSpacing: 8,
-            children: [
-              for (var i = 0; i < letters.length; i++)
-                _Slot(letter: i < _game.placed ? letters[i] : null),
-            ],
-          ),
-          SizedBox(
-            height: 40,
-            child: Center(
-              child: _wrongTile != null
-                  ? const Text(
-                      AppStrings.tryAgain,
-                      style: TextStyle(fontSize: 22, color: Color(0xFFFB8C00)),
-                    )
-                  : null,
-            ),
-          ),
-          // Aralash harf kartochkalari
-          Wrap(
-            alignment: WrapAlignment.center,
-            spacing: 12,
-            runSpacing: 12,
-            children: [
-              for (var i = 0; i < _game.tiles.length; i++)
-                _LetterTile(
-                  letter: _game.tiles[i],
-                  used: _game.usedTiles.contains(i),
-                  wrong: i == _wrongTile,
-                  onTap: () => _onTileTap(i),
-                ),
-            ],
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -208,7 +259,11 @@ class _LetterTile extends StatelessWidget {
           ),
           child: Text(
             letter,
-            style: const TextStyle(fontSize: 38, fontWeight: FontWeight.bold, color: AppColors.text),
+            style: const TextStyle(
+              fontSize: 38,
+              fontWeight: FontWeight.bold,
+              color: AppColors.text,
+            ),
           ),
         ),
       ),

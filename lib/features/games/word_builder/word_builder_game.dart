@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import '../../../core/constants/app_strings.dart';
 import '../game_result.dart';
 
 /// So'z va unga mos rasm (emoji). Harflarga ajratish [splitUzbekLetters] orqali.
@@ -29,7 +30,7 @@ List<String> splitUzbekLetters(String word) {
   return result;
 }
 
-/// 3–6 harfli so'zlar ro'yxati.
+/// 3–8 harfli so'zlar ro'yxati (har darajaga kamida 8 tadan).
 const wordBank = [
   WordEntry('olma', '🍎'),
   WordEntry('mushuk', '🐱'),
@@ -64,19 +65,57 @@ const wordBank = [
   WordEntry('soat', '⌚'),
   WordEntry('kalit', '🔑'),
   WordEntry('qalam', '✏️'),
+  WordEntry('tish', '🦷'),
+  WordEntry('koʻz', '👁️'),
+  WordEntry('limon', '🍋'),
+  WordEntry('sabzi', '🥕'),
+  WordEntry('qayiq', '⛵'),
+  WordEntry('kapalak', '🦋'),
+  WordEntry('samolyot', '✈️'),
+  WordEntry('qurbaqa', '🐸'),
+  WordEntry('toshbaqa', '🐢'),
+  WordEntry('pomidor', '🍅'),
+  WordEntry('kartoshka', '🥔'),
+  WordEntry('kamalak', '🌈'),
 ];
+
+/// Daraja so'zdagi harflar soni bilan belgilanadi.
+enum WordLevel {
+  short(label: AppStrings.wordLevelShort, emoji: '🐣', minLetters: 3, maxLetters: 4),
+  medium(label: AppStrings.wordLevelMedium, emoji: '🐥', minLetters: 5, maxLetters: 5),
+  long(label: AppStrings.wordLevelLong, emoji: '🦅', minLetters: 6, maxLetters: 99);
+
+  const WordLevel({
+    required this.label,
+    required this.emoji,
+    required this.minLetters,
+    required this.maxLetters,
+  });
+
+  final String label;
+  final String emoji;
+  final int minLetters;
+  final int maxLetters;
+
+  bool fits(WordEntry entry) {
+    final n = entry.letters.length;
+    return n >= minLetters && n <= maxLetters;
+  }
+}
 
 enum LetterOutcome { correct, wrong, wordFinished, gameFinished }
 
 /// So'z quramchisi mantiqi: aralash harflardan so'zni tartib bilan yig'ish.
 class WordBuilderGame {
-  WordBuilderGame({Random? random, List<WordEntry> bank = wordBank}) : _random = random ?? Random() {
-    words = (List.of(bank)..shuffle(_random)).take(wordCount).toList();
+  WordBuilderGame(this.level, {Random? random, List<WordEntry> bank = wordBank})
+    : _random = random ?? Random() {
+    words = (bank.where(level.fits).toList()..shuffle(_random)).take(wordCount).toList();
     _prepareWord();
   }
 
   static const wordCount = 8;
 
+  final WordLevel level;
   final Random _random;
   late final List<WordEntry> words;
 

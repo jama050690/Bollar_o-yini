@@ -114,6 +114,37 @@ abstract final class AppStrings {
 
   static const translateTitle = 'Tarjimon';
   static const translateHint = 'Tarjimasini top:';
+  static const translateReverseHint = "O'zbekchasini top:";
+  static const levelReverse = 'Teskari';
+  static String optionsCount(int n) => '$n ta variant';
+
+  static const wordLevelShort = '3–4 harf';
+  static const wordLevelMedium = '5 harf';
+  static const wordLevelLong = '6+ harf';
+
+  static String mazeSize(int n) => '$n×$n';
+
+  static const clockTitle = 'Soat';
+  static const whatTime = 'Soat necha?';
+  static const clockHours = 'Butun soat';
+  static const clockHalves = 'Yarim soat';
+  static const clockFives = '5 daqiqa';
+
+  static const shopTitle = "Do'kon";
+  static const shopTotal = 'Hammasi necha pul?';
+  static const shopChange = 'Qaytim qancha?';
+  static const shopLevelTwo = '2 ta narsa';
+  static const shopLevelThree = '3 ta narsa';
+  static const shopLevelChange = 'Qaytim';
+  static String som(int thousands) => "$thousands 000 so'm";
+  static String shopPaid(int thousands) => "💵 Berildi: $thousands 000 so'm";
+
+  static const fractionsTitle = 'Kasrlar';
+  static const whichFraction = 'Qancha qismi rangli?';
+  static const whichBigger = 'Qaysi biri katta?';
+  static const fracBasic = '½  ⅓  ¼';
+  static const fracMore = '⅕ … ⅛';
+  static const fracCompare = 'Solishtir';
 
   static String round(int current, int total) => '$current / $total';
   static const tryAgain = "Yana urinib ko'r! 💪";
