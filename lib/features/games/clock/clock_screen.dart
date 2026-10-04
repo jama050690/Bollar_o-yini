@@ -161,8 +161,8 @@ class _ClockScreenState extends ConsumerState<ClockScreen> {
                     color: option == _wrong
                         ? const Color(0xFFFFE0B2)
                         : _solved != null && option == q.answer
-                            ? const Color(0xFFC8E6C9)
-                            : Colors.white,
+                        ? const Color(0xFFC8E6C9)
+                        : Colors.white,
                     elevation: 3,
                     borderRadius: BorderRadius.circular(AppSizes.radius),
                     child: InkWell(

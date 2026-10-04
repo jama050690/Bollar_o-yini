@@ -4,9 +4,11 @@ import '../../core/constants/age_group.dart';
 import '../../core/constants/app_strings.dart';
 import 'alphabets/alphabets_screen.dart';
 import 'arithmetic/arithmetic_screen.dart';
+import 'clock/clock_screen.dart';
 import 'coloring/coloring_screen.dart';
 import 'counting/counting_screen.dart';
 import 'crossword/crossword_screen.dart';
+import 'fractions/fractions_screen.dart';
 import 'letter_number/letter_number_screen.dart';
 import 'match_pairs/match_pairs_screen.dart';
 import 'math_adventure/math_adventure_screen.dart';
@@ -16,6 +18,7 @@ import 'mini_sudoku/mini_sudoku_screen.dart';
 import 'patterns/patterns_screen.dart';
 import 'shape_builder/shape_builder_screen.dart';
 import 'shape_sorter/shape_sorter_screen.dart';
+import 'shop/shop_screen.dart';
 import 'times_table/times_table_screen.dart';
 import 'translate/translate_screen.dart';
 import 'word_builder/word_builder_screen.dart';
@@ -157,6 +160,27 @@ final List<GameInfo> gameCatalog = [
     emoji: '🌐',
     group: AgeGroup.b,
     builder: () => const TranslateScreen(),
+  ),
+  GameInfo(
+    id: 'clock',
+    title: AppStrings.clockTitle,
+    emoji: '⏰',
+    group: AgeGroup.b,
+    builder: () => const ClockScreen(),
+  ),
+  GameInfo(
+    id: 'shop',
+    title: AppStrings.shopTitle,
+    emoji: '💰',
+    group: AgeGroup.b,
+    builder: () => const ShopScreen(),
+  ),
+  GameInfo(
+    id: 'fractions',
+    title: AppStrings.fractionsTitle,
+    emoji: '🍕',
+    group: AgeGroup.b,
+    builder: () => const FractionsScreen(),
   ),
 ];
 

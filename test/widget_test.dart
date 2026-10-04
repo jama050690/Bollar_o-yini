@@ -95,6 +95,9 @@ void main() {
       AppStrings.crosswordTitle,
       AppStrings.arithmeticTitle,
       AppStrings.translateTitle,
+      AppStrings.clockTitle,
+      AppStrings.shopTitle,
+      AppStrings.fractionsTitle,
     ]) {
       await tester.scrollUntilVisible(find.text(title), 200);
       expect(find.text(title), findsOneWidget);

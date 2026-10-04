@@ -17,9 +17,9 @@ enum ClockLevel {
 
   /// Darajadagi barcha mumkin bo'lgan vaqtlar.
   List<ClockTime> get times => [
-        for (var h = 1; h <= 12; h++)
-          for (var m = 0; m < 60; m += minuteStep) ClockTime(h, m),
-      ];
+    for (var h = 1; h <= 12; h++)
+      for (var m = 0; m < 60; m += minuteStep) ClockTime(h, m),
+  ];
 
   bool allows(ClockTime t) => t.minute % minuteStep == 0;
 }
@@ -32,8 +32,7 @@ class ClockTime {
   final int minute;
 
   /// Soat ko'rsatkichini 1–12 oralig'ida aylantiradi (13 → 1, 0 → 12).
-  factory ClockTime.wrap(int hour, int minute) =>
-      ClockTime((hour - 1) % 12 + 1, minute % 60);
+  factory ClockTime.wrap(int hour, int minute) => ClockTime((hour - 1) % 12 + 1, minute % 60);
 
   String get text => '$hour:${minute.toString().padLeft(2, '0')}';
 
@@ -94,8 +93,7 @@ class ClockGame {
       ClockTime.wrap(h, m - step),
       // Ko'rsatkichlar almashtirilgan: daqiqa ko'rsatkichi soat deb o'qilgan.
       ClockTime.wrap(m == 0 ? 12 : m ~/ 5, h * 5),
-    }.where((t) => t != time && level.allows(t)).toList()
-      ..shuffle(rnd);
+    }.where((t) => t != time && level.allows(t)).toList()..shuffle(rnd);
 
     final options = <ClockTime>{time, ...near.take(optionCount - 1)};
     final all = level.times..shuffle(rnd);

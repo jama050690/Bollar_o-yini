@@ -104,8 +104,7 @@ class ShopGame {
       answer + 10,
       answer - 10,
       if (paid != null) total,
-    }.where((v) => v > 0 && v != answer).toList()
-      ..shuffle(rnd);
+    }.where((v) => v > 0 && v != answer).toList()..shuffle(rnd);
     final options = [answer, ...candidates.take(optionCount - 1)]..shuffle(rnd);
     return ShopQuestion(items, paid, options);
   }

@@ -13,8 +13,7 @@ class Fraction {
   double get value => numerator / denominator;
 
   /// Qiymati teng kasrlar (1/2 va 2/4) — variantlarda birga chiqmasligi uchun.
-  bool sameValue(Fraction other) =>
-      numerator * other.denominator == other.numerator * denominator;
+  bool sameValue(Fraction other) => numerator * other.denominator == other.numerator * denominator;
 
   @override
   bool operator ==(Object other) =>
@@ -50,9 +49,9 @@ enum FractionLevel {
   final bool compare;
 
   List<Fraction> get fractions => [
-        for (var d = minDen; d <= maxDen; d++)
-          for (var n = 1; n < d; n++) Fraction(n, d),
-      ];
+    for (var d = minDen; d <= maxDen; d++)
+      for (var n = 1; n < d; n++) Fraction(n, d),
+  ];
 }
 
 class FractionQuestion {
@@ -118,8 +117,7 @@ class FractionsGame {
       Fraction(n, d + 1),
       Fraction(n, d - 1),
       Fraction(d - n, d),
-    }.where((f) => f.numerator > 0 && f.numerator < f.denominator).toList()
-      ..shuffle(rnd);
+    }.where((f) => f.numerator > 0 && f.numerator < f.denominator).toList()..shuffle(rnd);
 
     final options = <Fraction>[answer];
     void tryAdd(Fraction f) {
