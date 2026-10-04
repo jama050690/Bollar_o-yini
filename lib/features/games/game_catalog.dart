@@ -26,8 +26,11 @@ import 'sequence/sequence_screen.dart';
 import 'shape_builder/shape_builder_screen.dart';
 import 'shape_sorter/shape_sorter_screen.dart';
 import 'shop/shop_screen.dart';
+import 'speed_math/speed_math_screen.dart';
+import 'sudoku/sudoku_screen.dart';
 import 'times_table/times_table_screen.dart';
 import 'translate/translate_screen.dart';
+import 'translate_plus/translate_plus_screen.dart';
 import 'word_builder/word_builder_screen.dart';
 
 /// Bitta mini-o'yin haqida ma'lumot. Har bir o'yin mustaqil papkada (FR-3).
@@ -237,6 +240,27 @@ final List<GameInfo> gameCatalog = [
     emoji: '🔤',
     group: AgeGroup.c,
     builder: () => const AnagramScreen(),
+  ),
+  GameInfo(
+    id: 'translate_plus',
+    title: AppStrings.translatePlusTitle,
+    emoji: '🗣️',
+    group: AgeGroup.c,
+    builder: () => const TranslatePlusScreen(),
+  ),
+  GameInfo(
+    id: 'speed_math',
+    title: AppStrings.speedMathTitle,
+    emoji: '⚡',
+    group: AgeGroup.c,
+    builder: () => const SpeedMathScreen(),
+  ),
+  GameInfo(
+    id: 'sudoku',
+    title: AppStrings.sudokuBigTitle,
+    emoji: '🧩',
+    group: AgeGroup.c,
+    builder: () => const SudokuScreen(),
   ),
 ];
 

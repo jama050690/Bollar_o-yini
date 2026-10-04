@@ -119,10 +119,11 @@ class TranslatePlusGame {
   PhraseQuestion _question(PhraseItem item, Random rnd) {
     final others = level.items.where((i) => i != item).toList()..shuffle(rnd);
     final answer = item.translation(language);
-    return PhraseQuestion(item, answer, [
+    return PhraseQuestion(
+      item,
       answer,
-      for (final o in others.take(optionCount - 1)) o.translation(language),
-    ]..shuffle(rnd));
+      [answer, for (final o in others.take(optionCount - 1)) o.translation(language)]..shuffle(rnd),
+    );
   }
 
   PhraseOutcome answer(String option) {

@@ -86,6 +86,9 @@ void main() {
       AppStrings.geoTitle,
       AppStrings.natureTitle,
       AppStrings.anagramTitle,
+      AppStrings.translatePlusTitle,
+      AppStrings.speedMathTitle,
+      AppStrings.sudokuBigTitle,
     ]) {
       await tester.scrollUntilVisible(find.text(title), 200);
       expect(find.text(title), findsOneWidget);
