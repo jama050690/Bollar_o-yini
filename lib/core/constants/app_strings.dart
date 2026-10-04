@@ -177,6 +177,31 @@ abstract final class AppStrings {
   static const levelPercentMore = '5% … 75%';
   static const levelDiscount = 'Chegirma';
 
+  static const geoTitle = 'Geografiya';
+  static const levelUzbekistan = 'Oʻzbekiston';
+  static const levelAsia = 'Osiyo';
+  static const levelWorld = 'Dunyo';
+  static String capitalOf(String country) => '$country poytaxti qaysi?';
+
+  static const natureTitle = 'Tabiat';
+  static const levelAnimals = 'Hayvonlar';
+  static const levelPlants = 'Oʻsimliklar';
+  static const levelEarthSky = 'Yer va osmon';
+
+  static const anagramTitle = 'Anagramma';
+  static const anagramHint = "Harflardan so'z tuz";
+  static const anagramRemove = "Harfni qaytarish uchun ustiga bos";
+  static const anagram5 = '5 harf';
+  static const anagram67 = '6–7 harf';
+  static const anagram8 = '8+ harf';
+  static const catAnimal = '🐾 Hayvon';
+  static const catFood = '🍎 Taom va meva';
+  static const catNature = '🌍 Tabiat';
+  static const catSchool = '🎒 Maktab';
+  static const catHome = '🏠 Uy';
+  static const catTransport = '🚗 Transport';
+  static const catJob = '👷 Kasb';
+
   static String round(int current, int total) => '$current / $total';
   static const tryAgain = "Yana urinib ko'r! 💪";
   static const wellDone = 'Barakalla! 🎉';
