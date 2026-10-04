@@ -30,15 +30,15 @@ const shopItems = [
 const shopBills = [10, 20, 50];
 
 enum ShopLevel {
-  two(label: AppStrings.shopLevelTwo, emoji: '🛒', items: 2, change: false),
-  three(label: AppStrings.shopLevelThree, emoji: '🛍️', items: 3, change: false),
-  change(label: AppStrings.shopLevelChange, emoji: '💵', items: 2, change: true);
+  two(label: AppStrings.shopLevelTwo, emoji: '🛒', items: 2, withChange: false),
+  three(label: AppStrings.shopLevelThree, emoji: '🛍️', items: 3, withChange: false),
+  change(label: AppStrings.shopLevelChange, emoji: '💵', items: 2, withChange: true);
 
   const ShopLevel({
     required this.label,
     required this.emoji,
     required this.items,
-    required this.change,
+    required this.withChange,
   });
 
   final String label;
@@ -46,7 +46,7 @@ enum ShopLevel {
   final int items;
 
   /// true — xaridor pul beradi, qaytimni topish kerak.
-  final bool change;
+  final bool withChange;
 }
 
 class ShopQuestion {
@@ -89,7 +89,7 @@ class ShopGame {
     final items = (List.of(shopItems)..shuffle(rnd)).take(level.items).toList();
     final total = items.fold(0, (sum, item) => sum + item.price);
     int? paid;
-    if (level.change) {
+    if (level.withChange) {
       final bills = shopBills.where((b) => b > total).toList();
       paid = bills[rnd.nextInt(bills.length)];
     }
