@@ -146,6 +146,37 @@ abstract final class AppStrings {
   static const fracMore = '⅕ … ⅛';
   static const fracCompare = 'Solishtir';
 
+  // ---------- Modul C ----------
+  static const equationsTitle = 'Tenglamalar';
+  static const findX = 'x nechaga teng?';
+  static const levelEqAdd = 'x + a = b';
+  static const levelEqMul = 'a · x = b';
+  static const levelEqTwo = 'a · x + b = c';
+
+  static const sequenceTitle = 'Ketma-ketlik';
+  static const nextNumber = 'Keyingi son qaysi?';
+  static const levelSeqPlus = '+  −';
+  static const levelSeqTimes = '×2  ×3';
+  static const levelSeqTricky = 'Qiyin naqsh';
+
+  static const geometryTitle = 'Geometriya';
+  static const perimeterQuestion = 'Perimetri nechaga teng?';
+  static const areaQuestion = 'Yuzi nechaga teng?';
+  static String missingSideQuestion(int area) => 'Yuzi $area sm². "?" nechaga teng?';
+  static const levelPerimeter = 'Perimetr';
+  static const levelArea = 'Yuz';
+  static const levelGeoMix = 'Uchburchak';
+  static String cm(int n) => '$n sm';
+  static String cm2(int n) => '$n sm²';
+
+  static const percentTitle = 'Foizlar';
+  static String percentOf(int n, int p) => '$n ning $p% i';
+  static String discount(int p) => '🏷️ −$p% chegirma';
+  static const newPrice = 'Yangi narx qancha?';
+  static const levelPercentEasy = '50%  25%  10%';
+  static const levelPercentMore = '5% … 75%';
+  static const levelDiscount = 'Chegirma';
+
   static String round(int current, int total) => '$current / $total';
   static const tryAgain = "Yana urinib ko'r! 💪";
   static const wellDone = 'Barakalla! 🎉';
