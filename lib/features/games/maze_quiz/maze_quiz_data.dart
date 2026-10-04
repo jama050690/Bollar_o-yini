@@ -1,7 +1,54 @@
-/// Labirint-kviz uchun kontent: qo'lda chizilgan 7x7 labirintlar va savollar.
-///
-/// Labirint belgilari:
-///   `#` devor, `.` yo'l, `S` boshlanish, `E` chiqish, `D` savolli eshik.
+// Labirint-kviz uchun kontent: qo'lda chizilgan 5x5, 7x7, 9x9 labirintlar va savollar.
+//
+// Labirint belgilari:
+//   `#` devor, `.` yo'l, `S` boshlanish, `E` chiqish, `D` savolli eshik.
+
+// dart format off
+/// Oson daraja: 5x5, 2 tadan eshik.
+const mazeMaps5 = [
+  [
+    'S.#..',
+    '#.#E#',
+    '..#D#',
+    'D##.#',
+    '.....',
+  ],
+  [
+    'S...#',
+    '###D#',
+    'E.#..',
+    '#D#.#',
+    '#...#',
+  ],
+];
+
+/// Qiyin daraja: 9x9, 3–4 ta eshik.
+const mazeMaps9 = [
+  [
+    'S.......#',
+    '#######D#',
+    '#.......#',
+    '#D#######',
+    '#...#...#',
+    '###.#.#.#',
+    '#...#.#D#',
+    '#.###.#.#',
+    '#.....#.E',
+  ],
+  [
+    'S.....#..',
+    '#####.#..',
+    '...#..D.#',
+    '.#.####.#',
+    '.#...D..#',
+    '.###.####',
+    '...#.D...',
+    '##.#####.',
+    'E.D......',
+  ],
+];
+
+/// O'rta daraja: 7x7.
 const mazeMaps = [
   // 1-daraja: 2 ta eshik
   [
@@ -34,6 +81,7 @@ const mazeMaps = [
     '######E',
   ],
 ];
+// dart format on
 
 class QuizQuestion {
   const QuizQuestion(this.text, this.options, this.answerIndex);

@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import '../../../core/constants/app_strings.dart';
 import '../game_result.dart';
 import 'maze_quiz_data.dart';
 
@@ -35,20 +36,20 @@ class Pos {
 /// Bitta labirint: kataklar, boshlanish va chiqish.
 class Maze {
   Maze.parse(List<String> rows)
-      : size = rows.length,
-        cells = [
-          for (final row in rows)
-            [
-              for (final ch in row.split(''))
-                switch (ch) {
-                  '#' => Cell.wall,
-                  'D' => Cell.door,
-                  'E' => Cell.exit,
-                  _ => Cell.path,
-                },
-            ],
-        ],
-        start = _find(rows, 'S');
+    : size = rows.length,
+      cells = [
+        for (final row in rows)
+          [
+            for (final ch in row.split(''))
+              switch (ch) {
+                '#' => Cell.wall,
+                'D' => Cell.door,
+                'E' => Cell.exit,
+                _ => Cell.path,
+              },
+          ],
+      ],
+      start = _find(rows, 'S');
 
   final int size;
   final List<List<Cell>> cells;
@@ -74,11 +75,31 @@ enum MoveOutcome { moved, blocked, question, mazeFinished, gameFinished }
 
 enum QuizOutcome { correct, wrong }
 
-/// Labirint-kviz mantiqi: 3 ta labirint ketma-ket, eshiklarda savol.
+/// Daraja labirint o'lchami bilan belgilanadi; har darajada 2 ta labirint.
+enum MazeLevel {
+  small(size: 5, emoji: '🐣'),
+  medium(size: 7, emoji: '🐥'),
+  large(size: 9, emoji: '🦅');
+
+  const MazeLevel({required this.size, required this.emoji});
+
+  final int size;
+  final String emoji;
+
+  String get label => AppStrings.mazeSize(size);
+
+  List<List<String>> get maps => switch (this) {
+    MazeLevel.small => mazeMaps5,
+    MazeLevel.medium => mazeMaps.sublist(1),
+    MazeLevel.large => mazeMaps9,
+  };
+}
+
+/// Labirint-kviz mantiqi: darajadagi labirintlar ketma-ket, eshiklarda savol.
 class MazeQuizGame {
-  MazeQuizGame({Random? random, List<List<String>> maps = mazeMaps})
-      : _mazes = [for (final m in maps) Maze.parse(m)],
-        _questions = List.of(quizQuestions)..shuffle(random ?? Random()) {
+  MazeQuizGame({Random? random, MazeLevel level = MazeLevel.medium, List<List<String>>? maps})
+    : _mazes = [for (final m in maps ?? level.maps) Maze.parse(m)],
+      _questions = List.of(quizQuestions)..shuffle(random ?? Random()) {
     _resetMaze();
   }
 
