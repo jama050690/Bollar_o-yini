@@ -98,8 +98,7 @@ enum GeoLevel {
   final bool capitals;
 
   /// Noto'g'ri variantlar manbai.
-  List<String> get pool =>
-      capitals ? [for (final item in items) item.answer] : _uzbekistanPool;
+  List<String> get pool => capitals ? [for (final item in items) item.answer] : _uzbekistanPool;
 }
 
 class GeoQuestion {

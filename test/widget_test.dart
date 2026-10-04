@@ -85,6 +85,9 @@ void main() {
       AppStrings.sequenceTitle,
       AppStrings.geometryTitle,
       AppStrings.percentTitle,
+      AppStrings.geoTitle,
+      AppStrings.natureTitle,
+      AppStrings.anagramTitle,
     ]) {
       await tester.scrollUntilVisible(find.text(title), 200);
       expect(find.text(title), findsOneWidget);

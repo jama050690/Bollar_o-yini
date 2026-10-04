@@ -94,10 +94,12 @@ class NatureQuizGame {
     final items = List.of(level.items)..shuffle(rnd);
     questions = [
       for (final item in items.take(questionCount))
-        NatureQuestion(item.emoji, item.prompt, item.answer, [
+        NatureQuestion(
+          item.emoji,
+          item.prompt,
           item.answer,
-          ...item.wrong,
-        ]..shuffle(rnd)),
+          [item.answer, ...item.wrong]..shuffle(rnd),
+        ),
     ];
   }
 

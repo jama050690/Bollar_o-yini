@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import '../../core/constants/age_group.dart';
 import '../../core/constants/app_strings.dart';
 import 'alphabets/alphabets_screen.dart';
+import 'anagram/anagram_screen.dart';
 import 'arithmetic/arithmetic_screen.dart';
 import 'clock/clock_screen.dart';
 import 'coloring/coloring_screen.dart';
@@ -10,6 +11,7 @@ import 'counting/counting_screen.dart';
 import 'crossword/crossword_screen.dart';
 import 'equations/equations_screen.dart';
 import 'fractions/fractions_screen.dart';
+import 'geo_quiz/geo_quiz_screen.dart';
 import 'geometry/geometry_screen.dart';
 import 'letter_number/letter_number_screen.dart';
 import 'match_pairs/match_pairs_screen.dart';
@@ -17,6 +19,7 @@ import 'math_adventure/math_adventure_screen.dart';
 import 'maze_quiz/maze_quiz_screen.dart';
 import 'memory_match/memory_match_screen.dart';
 import 'mini_sudoku/mini_sudoku_screen.dart';
+import 'nature_quiz/nature_quiz_screen.dart';
 import 'patterns/patterns_screen.dart';
 import 'percent/percent_screen.dart';
 import 'sequence/sequence_screen.dart';
@@ -213,6 +216,27 @@ final List<GameInfo> gameCatalog = [
     emoji: '💯',
     group: AgeGroup.c,
     builder: () => const PercentScreen(),
+  ),
+  GameInfo(
+    id: 'geo_quiz',
+    title: AppStrings.geoTitle,
+    emoji: '🌍',
+    group: AgeGroup.c,
+    builder: () => const GeoQuizScreen(),
+  ),
+  GameInfo(
+    id: 'nature_quiz',
+    title: AppStrings.natureTitle,
+    emoji: '🌿',
+    group: AgeGroup.c,
+    builder: () => const NatureQuizScreen(),
+  ),
+  GameInfo(
+    id: 'anagram',
+    title: AppStrings.anagramTitle,
+    emoji: '🔤',
+    group: AgeGroup.c,
+    builder: () => const AnagramScreen(),
   ),
 ];
 
