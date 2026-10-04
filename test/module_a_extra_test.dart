@@ -133,9 +133,10 @@ void main() {
           final piece = game.tray.first;
           // Shu shakldagi bo'sh joylardan birining markaziga tashlaymiz.
           final parts = game.current.parts;
-          final slot = List.generate(parts.length, (i) => i).firstWhere(
-                (i) => !game.filled.contains(i) && parts[i].shape == parts[piece].shape,
-              );
+          final slot = List.generate(
+            parts.length,
+            (i) => i,
+          ).firstWhere((i) => !game.filled.contains(i) && parts[i].shape == parts[piece].shape);
           final p = parts[slot];
           last = game.place(piece, p.left + p.width / 2, p.top + p.height / 2);
           expect(last, isNot(PlaceResult.wrong), reason: game.current.name);

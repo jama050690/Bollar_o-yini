@@ -80,8 +80,10 @@ void main() {
       for (var w = 0; w < WordBuilderGame.wordCount; w++) {
         final letters = game.currentLetters;
         for (var i = 0; i < letters.length; i++) {
-          final tile = List.generate(game.tiles.length, (j) => j)
-              .firstWhere((j) => !game.usedTiles.contains(j) && game.tiles[j] == letters[i]);
+          final tile = List.generate(
+            game.tiles.length,
+            (j) => j,
+          ).firstWhere((j) => !game.usedTiles.contains(j) && game.tiles[j] == letters[i]);
           last = game.tapTile(tile);
         }
         if (last == LetterOutcome.wordFinished) game.nextWord();

@@ -73,13 +73,22 @@ void main() {
     expect(find.text(AppStrings.lockedFor(10, 12)), findsOneWidget);
   });
 
-  testWidgets("FR-2: 10 yoshli bola uchun Modul A qulflangan", (tester) async {
+  testWidgets("FR-2: 10 yoshli bolaga Modul C ochiladi, Modul A qulflangan", (tester) async {
     await tester.pumpWidget(const ProviderScope(child: AqlliDostlarApp()));
     await tester.pumpAndSettle();
     await createProfile(tester, name: 'Vali', age: 10);
 
     expect(find.text(AppStrings.lockedFor(5, 7)), findsOneWidget);
     expect(find.text(AppStrings.memoryTitle), findsNothing);
+    for (final title in [
+      AppStrings.equationsTitle,
+      AppStrings.sequenceTitle,
+      AppStrings.geometryTitle,
+      AppStrings.percentTitle,
+    ]) {
+      await tester.scrollUntilVisible(find.text(title), 200);
+      expect(find.text(title), findsOneWidget);
+    }
   });
 
   testWidgets("FR-2: 8 yoshli bolaga Modul B o'yinlari ochiladi", (tester) async {
