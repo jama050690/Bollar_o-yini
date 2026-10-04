@@ -8,10 +8,12 @@ import 'coloring/coloring_screen.dart';
 import 'counting/counting_screen.dart';
 import 'crossword/crossword_screen.dart';
 import 'letter_number/letter_number_screen.dart';
+import 'match_pairs/match_pairs_screen.dart';
 import 'math_adventure/math_adventure_screen.dart';
 import 'maze_quiz/maze_quiz_screen.dart';
 import 'memory_match/memory_match_screen.dart';
 import 'mini_sudoku/mini_sudoku_screen.dart';
+import 'patterns/patterns_screen.dart';
 import 'shape_builder/shape_builder_screen.dart';
 import 'shape_sorter/shape_sorter_screen.dart';
 import 'times_table/times_table_screen.dart';
@@ -91,6 +93,20 @@ final List<GameInfo> gameCatalog = [
     emoji: '🎨',
     group: AgeGroup.a,
     builder: () => const ColoringScreen(),
+  ),
+  GameInfo(
+    id: 'match_pairs',
+    title: AppStrings.matchPairsTitle,
+    emoji: '🐾',
+    group: AgeGroup.a,
+    builder: () => const MatchPairsScreen(),
+  ),
+  GameInfo(
+    id: 'patterns',
+    title: AppStrings.patternsTitle,
+    emoji: '🔁',
+    group: AgeGroup.a,
+    builder: () => const PatternsScreen(),
   ),
   // ---------- Modul B (8–9 yosh) ----------
   GameInfo(

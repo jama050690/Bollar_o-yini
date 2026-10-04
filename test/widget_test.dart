@@ -60,6 +60,8 @@ void main() {
       AppStrings.countingTitle,
       AppStrings.shapeBuilderTitle,
       AppStrings.coloringTitle,
+      AppStrings.matchPairsTitle,
+      AppStrings.patternsTitle,
     ]) {
       await tester.scrollUntilVisible(find.text(title), 200);
       expect(find.text(title), findsOneWidget);
