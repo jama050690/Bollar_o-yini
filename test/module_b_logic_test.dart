@@ -46,15 +46,34 @@ void main() {
       expect(splitUzbekLetters('gʻoz'), ['gʻ', 'o', 'z']);
     });
 
-    test("so'zlar bazasi: 30+ so'z, har biri 3-6 harf", () {
-      expect(wordBank.length, greaterThanOrEqualTo(30));
+    test("so'zlar bazasi: 40+ so'z, 3-9 harf, har darajada kamida 8 ta", () {
+      expect(wordBank.length, greaterThanOrEqualTo(40));
+      expect(wordBank.map((e) => e.word).toSet().length, wordBank.length);
       for (final entry in wordBank) {
-        expect(entry.letters.length, inInclusiveRange(3, 6), reason: entry.word);
+        expect(entry.letters.length, inInclusiveRange(3, 9), reason: entry.word);
+        expect(WordLevel.values.where((l) => l.fits(entry)).length, 1, reason: entry.word);
+      }
+      for (final level in WordLevel.values) {
+        expect(
+          wordBank.where(level.fits).length,
+          greaterThanOrEqualTo(WordBuilderGame.wordCount),
+          reason: level.name,
+        );
+      }
+    });
+
+    test("har darajada so'zlar harf soniga mos", () {
+      for (final level in WordLevel.values) {
+        final game = WordBuilderGame(level, random: Random(level.index));
+        expect(game.words.length, WordBuilderGame.wordCount);
+        for (final w in game.words) {
+          expect(w.letters.length, inInclusiveRange(level.minLetters, level.maxLetters));
+        }
       }
     });
 
     test("8 ta so'zni to'g'ri yig'ib o'yin tugaydi", () {
-      final game = WordBuilderGame(random: Random(3));
+      final game = WordBuilderGame(WordLevel.long, random: Random(3));
       expect(game.words.length, WordBuilderGame.wordCount);
 
       LetterOutcome? last;
@@ -72,7 +91,7 @@ void main() {
     });
 
     test("noto'g'ri harf xato hisoblanadi", () {
-      final game = WordBuilderGame(random: Random(5));
+      final game = WordBuilderGame(WordLevel.medium, random: Random(5));
       final expected = game.currentLetters.first;
       final wrongIndex = game.tiles.indexWhere((t) => t != expected);
       expect(game.tapTile(wrongIndex), LetterOutcome.wrong);
@@ -82,14 +101,18 @@ void main() {
   });
 
   group('Labirint-kviz', () {
-    test("har labirint 7x7, chiqishga faqat eshiklar orqali yetish mumkin", () {
-      for (final map in mazeMaps) {
-        final maze = Maze.parse(map);
-        expect(maze.size, 7);
-        expect(map.every((row) => row.length == 7), isTrue);
-        expect(maze.doorCount, greaterThan(0));
-        expect(_reachable(maze, throughDoors: true), isTrue);
-        expect(_reachable(maze, throughDoors: false), isFalse);
+    test("har darajada 2 ta labirint, o'lcham to'g'ri, chiqishga faqat eshiklar orqali", () {
+      for (final level in MazeLevel.values) {
+        expect(level.maps.length, 2);
+        for (final map in [...level.maps, if (level == MazeLevel.medium) ...mazeMaps]) {
+          final maze = Maze.parse(map);
+          expect(maze.size, level.size);
+          expect(map.every((row) => row.length == level.size), isTrue);
+          expect(maze.doorCount, greaterThan(0));
+          expect(_reachable(maze, throughDoors: true), isTrue);
+          expect(_reachable(maze, throughDoors: false), isFalse);
+        }
+        expect(MazeQuizGame(level: level).mazeCount, 2);
       }
     });
 
@@ -102,7 +125,7 @@ void main() {
     });
 
     test("devorga yurib bo'lmaydi, eshikda savol chiqadi", () {
-      final game = MazeQuizGame(random: Random(1));
+      final game = MazeQuizGame(random: Random(1), maps: mazeMaps);
       expect(game.move(Direction.up), MoveOutcome.blocked);
       expect(game.player, game.maze.start);
 

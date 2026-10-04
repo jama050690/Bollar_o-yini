@@ -61,31 +61,50 @@ const translateWords = [
   TranslateWord('qalam', '✏️', 'карандаш', 'pencil'),
 ];
 
+/// Daraja: variantlar soni yoki teskari yo'nalish (chet tilidagi so'z → o'zbekchasi).
+enum TranslateLevel {
+  three(emoji: '🐣', options: 3, isReverse: false),
+  four(emoji: '🐥', options: 4, isReverse: false),
+  reverse(emoji: '🦅', options: 4, isReverse: true);
+
+  const TranslateLevel({required this.emoji, required this.options, required this.isReverse});
+
+  final String emoji;
+  final int options;
+  final bool isReverse;
+
+  String get label => isReverse ? AppStrings.levelReverse : AppStrings.optionsCount(options);
+}
+
 class TranslateQuestion {
-  const TranslateQuestion(this.word, this.options);
+  const TranslateQuestion(this.word, this.prompt, this.answer, this.options);
 
   final TranslateWord word;
 
-  /// 4 ta tarjima varianti (bittasi to'g'ri).
+  /// Ekranda ko'rsatiladigan so'z (oddiy rejimda o'zbekcha, teskarida chet tilida).
+  final String prompt;
+
+  /// To'g'ri variant.
+  final String answer;
+
+  /// Variantlar (bittasi to'g'ri).
   final List<String> options;
 }
 
 enum TranslateOutcome { correct, wrong, finished }
 
-/// 10 ta takrorlanmaydigan so'z, har birida 4 ta variant.
+/// 10 ta takrorlanmaydigan so'z, darajaga qarab 3–4 ta variant.
 class TranslateGame {
-  TranslateGame(this.language, {Random? random}) {
+  TranslateGame(this.language, {this.level = TranslateLevel.four, Random? random}) {
     final rnd = random ?? Random();
     final words = [...translateWords]..shuffle(rnd);
-    questions = [
-      for (final word in words.take(questionCount))
-        TranslateQuestion(word, _options(word, rnd)),
-    ];
+    questions = [for (final word in words.take(questionCount)) _question(word, rnd)];
   }
 
   static const questionCount = 10;
 
   final TargetLanguage language;
+  final TranslateLevel level;
   late final List<TranslateQuestion> questions;
   int step = 0;
   int mistakes = 0;
@@ -94,16 +113,23 @@ class TranslateGame {
   bool get isFinished => step == questionCount;
   int get stars => starsForMistakes(mistakes);
 
-  List<String> _options(TranslateWord word, Random rnd) {
+  String _side(TranslateWord w, {required bool shown}) =>
+      shown != level.isReverse ? w.uzbek : w.translation(language);
+
+  TranslateQuestion _question(TranslateWord word, Random rnd) {
     final others = translateWords.where((w) => w != word).toList()..shuffle(rnd);
-    return [
-      word.translation(language),
-      for (final w in others.take(3)) w.translation(language),
-    ]..shuffle(rnd);
+    final answer = _side(word, shown: false);
+    return TranslateQuestion(
+      word,
+      _side(word, shown: true),
+      answer,
+      [answer, for (final w in others.take(level.options - 1)) _side(w, shown: false)]
+        ..shuffle(rnd),
+    );
   }
 
   TranslateOutcome answer(String option) {
-    if (option != current.word.translation(language)) {
+    if (option != current.answer) {
       mistakes++;
       return TranslateOutcome.wrong;
     }
