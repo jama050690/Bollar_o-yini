@@ -109,8 +109,7 @@ class EquationsGame {
       answer - 2,
       answer + 10,
       answer - 10,
-    }.where((v) => v > 0 && v != answer).toList()
-      ..shuffle(rnd);
+    }.where((v) => v > 0 && v != answer).toList()..shuffle(rnd);
     return EquationQuestion(
       text,
       answer,

@@ -71,8 +71,7 @@ class PercentGame {
       answer + 5,
       answer - 5,
       answer + 10,
-    }.where((v) => v > 0 && v != answer).toList()
-      ..shuffle(rnd);
+    }.where((v) => v > 0 && v != answer).toList()..shuffle(rnd);
     return PercentQuestion(
       number,
       percent,

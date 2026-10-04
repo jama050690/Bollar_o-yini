@@ -35,10 +35,10 @@ class GeometryQuestion {
   int get area => shape == GeoShape.rightTriangle ? width * height ~/ 2 : width * height;
 
   int get answer => switch (ask) {
-        GeoAsk.perimeter => 2 * (width + height),
-        GeoAsk.area => area,
-        GeoAsk.missingSide => height,
-      };
+    GeoAsk.perimeter => 2 * (width + height),
+    GeoAsk.area => area,
+    GeoAsk.missingSide => height,
+  };
 }
 
 enum GeometryOutcome { correct, wrong, finished }
@@ -100,8 +100,7 @@ class GeometryGame {
       answer - 1,
       answer + 2,
       answer - 2,
-    }.where((v) => v > 0 && v != answer).toList()
-      ..shuffle(rnd);
+    }.where((v) => v > 0 && v != answer).toList()..shuffle(rnd);
     return GeometryQuestion(
       shape,
       ask,
