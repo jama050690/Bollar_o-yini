@@ -8,7 +8,9 @@ import 'clock/clock_screen.dart';
 import 'coloring/coloring_screen.dart';
 import 'counting/counting_screen.dart';
 import 'crossword/crossword_screen.dart';
+import 'equations/equations_screen.dart';
 import 'fractions/fractions_screen.dart';
+import 'geometry/geometry_screen.dart';
 import 'letter_number/letter_number_screen.dart';
 import 'match_pairs/match_pairs_screen.dart';
 import 'math_adventure/math_adventure_screen.dart';
@@ -16,6 +18,8 @@ import 'maze_quiz/maze_quiz_screen.dart';
 import 'memory_match/memory_match_screen.dart';
 import 'mini_sudoku/mini_sudoku_screen.dart';
 import 'patterns/patterns_screen.dart';
+import 'percent/percent_screen.dart';
+import 'sequence/sequence_screen.dart';
 import 'shape_builder/shape_builder_screen.dart';
 import 'shape_sorter/shape_sorter_screen.dart';
 import 'shop/shop_screen.dart';
@@ -181,6 +185,34 @@ final List<GameInfo> gameCatalog = [
     emoji: '🍕',
     group: AgeGroup.b,
     builder: () => const FractionsScreen(),
+  ),
+  GameInfo(
+    id: 'equations',
+    title: AppStrings.equationsTitle,
+    emoji: '✖️',
+    group: AgeGroup.c,
+    builder: () => const EquationsScreen(),
+  ),
+  GameInfo(
+    id: 'sequence',
+    title: AppStrings.sequenceTitle,
+    emoji: '🔢',
+    group: AgeGroup.c,
+    builder: () => const SequenceScreen(),
+  ),
+  GameInfo(
+    id: 'geometry',
+    title: AppStrings.geometryTitle,
+    emoji: '📐',
+    group: AgeGroup.c,
+    builder: () => const GeometryScreen(),
+  ),
+  GameInfo(
+    id: 'percent',
+    title: AppStrings.percentTitle,
+    emoji: '💯',
+    group: AgeGroup.c,
+    builder: () => const PercentScreen(),
   ),
 ];
 

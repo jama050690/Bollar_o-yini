@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -10,26 +11,26 @@ import '../../../shared/services/sound_service.dart';
 import '../../../shared/widgets/choice_card.dart';
 import '../../../shared/widgets/game_scaffold.dart';
 import '../game_result.dart';
-import 'equations_game.dart';
+import 'geometry_game.dart';
 
-const _gameId = 'equations';
+const _gameId = 'geometry';
 
-/// Tenglamalar: noma'lum x ni topish (bir va ikki amalli).
-class EquationsScreen extends ConsumerStatefulWidget {
-  const EquationsScreen({super.key});
+/// Geometriya: chizilgan shaklning perimetri, yuzi va noma'lum tomoni.
+class GeometryScreen extends ConsumerStatefulWidget {
+  const GeometryScreen({super.key});
 
   @override
-  ConsumerState<EquationsScreen> createState() => _EquationsScreenState();
+  ConsumerState<GeometryScreen> createState() => _GeometryScreenState();
 }
 
-class _EquationsScreenState extends ConsumerState<EquationsScreen> {
-  EquationsGame? _game;
+class _GeometryScreenState extends ConsumerState<GeometryScreen> {
+  GeometryGame? _game;
   final _stopwatch = Stopwatch();
   Timer? _timer;
   int? _wrong;
 
   /// To'g'ri topilgan savol qisqa vaqt yashil holda ko'rsatiladi.
-  EquationQuestion? _solved;
+  GeometryQuestion? _solved;
 
   @override
   void dispose() {
@@ -37,8 +38,8 @@ class _EquationsScreenState extends ConsumerState<EquationsScreen> {
     super.dispose();
   }
 
-  void _start(EquationLevel level) {
-    setState(() => _game = EquationsGame(level));
+  void _start(GeometryLevel level) {
+    setState(() => _game = GeometryGame(level));
     _stopwatch
       ..reset()
       ..start();
@@ -54,13 +55,13 @@ class _EquationsScreenState extends ConsumerState<EquationsScreen> {
     _timer?.cancel();
 
     switch (outcome) {
-      case EquationOutcome.wrong:
+      case GeometryOutcome.wrong:
         sound.play(SoundService.tryAgain);
         setState(() => _wrong = option);
         _timer = Timer(const Duration(milliseconds: 900), () {
           if (mounted) setState(() => _wrong = null);
         });
-      case EquationOutcome.correct:
+      case GeometryOutcome.correct:
         sound.play(SoundService.correct);
         setState(() {
           _wrong = null;
@@ -69,7 +70,7 @@ class _EquationsScreenState extends ConsumerState<EquationsScreen> {
         _timer = Timer(const Duration(milliseconds: 900), () {
           if (mounted) setState(() => _solved = null);
         });
-      case EquationOutcome.finished:
+      case GeometryOutcome.finished:
         _stopwatch.stop();
         sound.play(SoundService.win);
         setState(() {
@@ -91,14 +92,14 @@ class _EquationsScreenState extends ConsumerState<EquationsScreen> {
   Widget build(BuildContext context) {
     final game = _game;
     return GameScaffold(
-      title: AppStrings.equationsTitle,
+      title: AppStrings.geometryTitle,
       color: AgeGroup.c.color,
       trailing: game == null
           ? null
           : Text(
               AppStrings.round(
-                (game.step + (_solved == null ? 1 : 0)).clamp(1, EquationsGame.questionCount),
-                EquationsGame.questionCount,
+                (game.step + (_solved == null ? 1 : 0)).clamp(1, GeometryGame.questionCount),
+                GeometryGame.questionCount,
               ),
               style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
             ),
@@ -106,7 +107,7 @@ class _EquationsScreenState extends ConsumerState<EquationsScreen> {
     );
   }
 
-  Widget _buildGame(EquationsGame game) {
+  Widget _buildGame(GeometryGame game) {
     final q = _solved ?? game.current;
     return ListView(
       padding: const EdgeInsets.all(16),
@@ -119,20 +120,14 @@ class _EquationsScreenState extends ConsumerState<EquationsScreen> {
           ),
           child: Column(
             children: [
-              FittedBox(
-                fit: BoxFit.scaleDown,
-                child: Text(
-                  q.text,
-                  style: const TextStyle(
-                    fontSize: 40,
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.text,
-                  ),
-                ),
+              SizedBox(
+                height: 200,
+                width: double.infinity,
+                child: CustomPaint(painter: ShapePainter(q)),
               ),
               const SizedBox(height: 12),
               Text(
-                _solved != null ? 'x = ${q.answer}  ✅' : AppStrings.findX,
+                _solved != null ? '${_format(q, q.answer)}  ✅' : _questionText(q),
                 textAlign: TextAlign.center,
                 style: const TextStyle(fontSize: 24, color: AppColors.text),
               ),
@@ -176,7 +171,7 @@ class _EquationsScreenState extends ConsumerState<EquationsScreen> {
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 8),
                         child: Text(
-                          '$option',
+                          _format(q, option),
                           style: const TextStyle(
                             fontSize: 36,
                             fontWeight: FontWeight.bold,
@@ -195,10 +190,87 @@ class _EquationsScreenState extends ConsumerState<EquationsScreen> {
   }
 }
 
+/// Javob birligi: perimetr va tomon — sm, yuz — sm².
+String _format(GeometryQuestion q, int value) =>
+    q.ask == GeoAsk.area ? AppStrings.cm2(value) : AppStrings.cm(value);
+
+String _questionText(GeometryQuestion q) => switch (q.ask) {
+  GeoAsk.perimeter => AppStrings.perimeterQuestion,
+  GeoAsk.area => AppStrings.areaQuestion,
+  GeoAsk.missingSide => AppStrings.missingSideQuestion(q.area),
+};
+
+/// Shaklni tomonlariga mutanosib chizadi; pastki tomon — eni, chap tomon — bo'yi.
+/// Noma'lum tomon o'rnida "?" yoziladi.
+class ShapePainter extends CustomPainter {
+  ShapePainter(this.question);
+
+  final GeometryQuestion question;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final q = question;
+    const labelSpace = 56.0;
+    final maxW = size.width - labelSpace * 2;
+    final maxH = size.height - labelSpace;
+    final unit = min(maxW / q.width, maxH / q.height);
+    final w = q.width * unit;
+    final h = q.height * unit;
+    final rect = Rect.fromLTWH((size.width - w) / 2, (size.height - labelSpace / 2 - h) / 2, w, h);
+
+    final path = Path();
+    if (q.shape == GeoShape.rightTriangle) {
+      path
+        ..moveTo(rect.left, rect.top)
+        ..lineTo(rect.left, rect.bottom)
+        ..lineTo(rect.right, rect.bottom)
+        ..close();
+    } else {
+      path.addRect(rect);
+    }
+    final stroke = Paint()
+      ..color = const Color(0xFF2E7D32)
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 4
+      ..strokeJoin = StrokeJoin.round;
+    canvas
+      ..drawPath(path, Paint()..color = const Color(0xFFC8E6C9))
+      ..drawPath(path, stroke);
+
+    // To'g'ri burchak belgisi (pastki chap burchak).
+    const mark = 14.0;
+    canvas.drawPath(
+      Path()
+        ..moveTo(rect.left, rect.bottom - mark)
+        ..lineTo(rect.left + mark, rect.bottom - mark)
+        ..lineTo(rect.left + mark, rect.bottom),
+      stroke..strokeWidth = 2,
+    );
+
+    _label(canvas, AppStrings.cm(q.width), Offset(rect.center.dx, rect.bottom + 18));
+    final heightText = q.ask == GeoAsk.missingSide ? '?' : AppStrings.cm(q.height);
+    _label(canvas, heightText, Offset(rect.left - 30, rect.center.dy));
+  }
+
+  void _label(Canvas canvas, String text, Offset center) {
+    final painter = TextPainter(
+      text: TextSpan(
+        text: text,
+        style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: AppColors.text),
+      ),
+      textDirection: TextDirection.ltr,
+    )..layout();
+    painter.paint(canvas, center - Offset(painter.width / 2, painter.height / 2));
+  }
+
+  @override
+  bool shouldRepaint(ShapePainter oldDelegate) => oldDelegate.question != question;
+}
+
 class _LevelPicker extends StatelessWidget {
   const _LevelPicker({required this.onSelected});
 
-  final ValueChanged<EquationLevel> onSelected;
+  final ValueChanged<GeometryLevel> onSelected;
 
   @override
   Widget build(BuildContext context) {
@@ -214,7 +286,7 @@ class _LevelPicker extends StatelessWidget {
               spacing: 16,
               runSpacing: 16,
               children: [
-                for (final level in EquationLevel.values)
+                for (final level in GeometryLevel.values)
                   ChoiceCard(
                     emoji: level.emoji,
                     label: level.label,
