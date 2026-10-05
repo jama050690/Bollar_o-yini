@@ -56,3 +56,15 @@ class ParentSettingsNotifier extends Notifier<ParentSettings> {
 
 final parentSettingsProvider =
     NotifierProvider<ParentSettingsNotifier, ParentSettings>(ParentSettingsNotifier.new);
+
+/// Panel PIN bilan ochilganmi. Faqat xotirada: ilova qayta ochilsa yana PIN so'raladi.
+class ParentUnlockNotifier extends Notifier<bool> {
+  @override
+  bool build() => false;
+
+  void unlock() => state = true;
+  void lock() => state = false;
+}
+
+final parentUnlockedProvider =
+    NotifierProvider<ParentUnlockNotifier, bool>(ParentUnlockNotifier.new);

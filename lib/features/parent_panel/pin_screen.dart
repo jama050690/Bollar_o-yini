@@ -99,7 +99,8 @@ class _PinScreenState extends ConsumerState<PinScreen> {
   }
 
   void _openPanel() {
-    context.pushReplacement(AppRoutes.parentPanel, extra: AppRoutes.parentUnlocked);
+    ref.read(parentUnlockedProvider.notifier).unlock();
+    context.pushReplacement(AppRoutes.parentPanel);
   }
 
   Future<void> _onForgot() async {

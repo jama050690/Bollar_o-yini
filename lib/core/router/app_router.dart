@@ -6,6 +6,7 @@ import '../../features/games/game_result.dart';
 import '../../features/games/result/result_screen.dart';
 import '../../features/home/home_screen.dart';
 import '../../features/parent_panel/parent_panel_screen.dart';
+import '../../features/parent_panel/parent_settings.dart';
 import '../../features/parent_panel/pin_screen.dart';
 import '../../features/parent_panel/screen_time_providers.dart';
 import '../../features/parent_panel/time_up_screen.dart';
@@ -44,7 +45,7 @@ final appRouterProvider = Provider<GoRouter>((ref) {
         return AppRoutes.home;
       }
       // FR-6: panelga PIN kiritmasdan kirib bo'lmaydi.
-      if (location == AppRoutes.parentPanel && state.extra != AppRoutes.parentUnlocked) {
+      if (location == AppRoutes.parentPanel && !ref.read(parentUnlockedProvider)) {
         return AppRoutes.parentPin;
       }
       if (location == AppRoutes.result && state.extra is! GameResult) {

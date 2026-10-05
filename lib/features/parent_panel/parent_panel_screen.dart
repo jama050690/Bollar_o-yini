@@ -59,9 +59,12 @@ class ParentPanelScreen extends ConsumerWidget {
     final settings = ref.watch(parentSettingsProvider);
     final profiles = ref.watch(profilesProvider);
 
-    // Paneldan har doim bosh menyu orqali chiqiladi: vaqt tugagan bo'lsa,
-    // router bolani "vaqt tugadi" ekraniga yo'naltiradi.
-    void close() => context.go(AppRoutes.home);
+    // Paneldan har doim bosh menyu orqali chiqiladi: panel qulflanadi, vaqt
+    // tugagan bo'lsa router bolani "vaqt tugadi" ekraniga yo'naltiradi.
+    void close() {
+      ref.read(parentUnlockedProvider.notifier).lock();
+      context.go(AppRoutes.home);
+    }
 
     return PopScope(
       canPop: false,
