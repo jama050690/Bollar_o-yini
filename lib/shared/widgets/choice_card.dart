@@ -40,14 +40,11 @@ class ChoiceCard extends StatelessWidget {
               children: [
                 Text(emoji, style: TextStyle(fontSize: size * 0.35)),
                 const SizedBox(height: 8),
-                Text(
-                  label,
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(
-                    fontSize: 22,
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.text,
-                  ),
+                LayoutBuilder(
+                  builder: (context, constraints) {
+                    final style = _labelStyle(context, constraints.maxWidth);
+                    return Text(label, textAlign: TextAlign.center, style: style);
+                  },
                 ),
                 if (footer != null) ...[const SizedBox(height: 4), footer!],
               ],
