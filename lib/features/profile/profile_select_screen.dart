@@ -20,6 +20,18 @@ class ProfileSelectScreen extends ConsumerWidget {
         child: ListView(
           padding: const EdgeInsets.all(24),
           children: [
+            Center(
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(32),
+                child: Image.asset(
+                  'assets/images/app_icon.png',
+                  width: 140,
+                  height: 140,
+                  semanticLabel: AppStrings.appName,
+                ),
+              ),
+            ),
+            const SizedBox(height: 24),
             Text(
               AppStrings.whoPlays,
               textAlign: TextAlign.center,
