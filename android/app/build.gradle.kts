@@ -37,6 +37,13 @@ android {
             signingConfig = signingConfigs.getByName("debug")
         }
     }
+
+    // APK hajmini kichraytirish: native kutubxonalar (.so) siqilgan holda saqlanadi
+    packaging {
+        jniLibs {
+            useLegacyPackaging = true
+        }
+    }
 }
 
 flutter {
