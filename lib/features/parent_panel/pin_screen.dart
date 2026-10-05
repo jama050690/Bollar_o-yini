@@ -100,7 +100,9 @@ class _PinScreenState extends ConsumerState<PinScreen> {
 
   void _openPanel() {
     ref.read(parentUnlockedProvider.notifier).unlock();
-    context.pushReplacement(AppRoutes.parentPanel);
+    // go (push emas): vaqt holati o'zgarib router qayta tekshirganda
+    // panel asosiy manzil bo'lib qolishi kerak, aks holda yopilib qoladi.
+    context.go(AppRoutes.parentPanel);
   }
 
   Future<void> _onForgot() async {

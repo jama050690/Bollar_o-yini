@@ -172,6 +172,11 @@ void main() {
       await tester.tap(find.byType(CloseButton));
       await tester.pumpAndSettle();
       expect(find.byType(HomeScreen), findsOneWidget);
+
+      // Yopilgan panel qayta qulflanadi.
+      containerOf(tester).read(appRouterProvider).go('/parent');
+      await tester.pumpAndSettle();
+      expect(find.text(AppStrings.pinEnter), findsOneWidget);
     });
 
     testWidgets('tasdiqlash mos kelmasa, boshidan kiritiladi', (tester) async {
@@ -218,6 +223,7 @@ void main() {
       await tester.tap(find.text('🔒'));
       await tester.pumpAndSettle();
 
+      await tester.ensureVisible(find.text(AppStrings.pinForgot));
       await tester.tap(find.text(AppStrings.pinForgot));
       await tester.pumpAndSettle();
       final question = tester
