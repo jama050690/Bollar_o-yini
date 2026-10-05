@@ -11,5 +11,8 @@ abstract final class AppRoutes {
   static const parentPinChange = '/parent/pin?change=1';
   static const timeUp = '/time-up';
 
+  /// PIN to'g'ri kiritilgandan keyin panelga `extra` sifatida beriladi.
+  static const parentUnlocked = 'parentUnlocked';
+
   static String game(String gameId) => '/game/$gameId';
 }

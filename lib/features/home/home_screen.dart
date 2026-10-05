@@ -71,6 +71,13 @@ class _Header extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
           ),
         ),
+        // FR-6: ota-ona paneli (PIN bilan himoyalangan).
+        IconButton(
+          tooltip: AppStrings.parentPanelTitle,
+          constraints: BoxConstraints.tight(const Size.square(AppSizes.minTapTarget)),
+          onPressed: () => context.push(AppRoutes.parentPin),
+          icon: const Text('🔒', style: TextStyle(fontSize: 32)),
+        ),
       ],
     );
   }

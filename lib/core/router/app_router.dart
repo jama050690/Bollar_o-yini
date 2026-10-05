@@ -20,7 +20,7 @@ bool _isParentArea(String location) =>
     location == AppRoutes.parentPanel || location == AppRoutes.parentPin;
 
 final appRouterProvider = Provider<GoRouter>((ref) {
-  return GoRouter(
+  final router = GoRouter(
     initialLocation: AppRoutes.home,
     // Foydalanuvchi oqimi (TZ 3-bo'lim):
     // profil yo'q → yaratish (FR-1); faol profil yo'q → tanlash; aks holda → bosh menyu.
@@ -90,4 +90,9 @@ final appRouterProvider = Provider<GoRouter>((ref) {
       ),
     ],
   );
+
+  // FR-7: vaqt o'yin o'rtasida tugasa ham (yoki ota-ona chegarani o'zgartirsa)
+  // yo'naltirish qayta tekshiriladi.
+  ref.listen(timeUpProvider, (_, _) => router.refresh());
+  return router;
 });
