@@ -235,4 +235,39 @@ abstract final class AppStrings {
     if (minutes == 0) return '⏱ $seconds soniya';
     return '⏱ $minutes daqiqa $seconds soniya';
   }
+
+  // ---------- Ota-ona paneli (FR-6, FR-7) ----------
+  static const parentPanelTitle = 'Ota-ona paneli';
+  static const parentEntry = 'Ota-ona uchun 🔒';
+
+  static const pinEnter = 'PIN kodni kiriting';
+  static const pinCreate = "Yangi PIN kod o'ylab toping";
+  static const pinConfirm = 'PIN kodni yana bir marta kiriting';
+  static const pinWrong = "PIN noto'g'ri. Qayta urinib ko'ring";
+  static const pinMismatch = 'PIN kodlar mos kelmadi. Boshidan kiriting';
+  static const pinForgot = 'PIN ni unutdim';
+  static const pinChange = "PIN ni o'zgartirish";
+  static const pinChanged = "PIN o'zgartirildi ✅";
+  static const pinDelete = "O'chirish";
+  static String adultQuestion(int a, int b) => 'Kattalar uchun savol: $a × $b = ?';
+  static const adultAnswerHint = 'Javob';
+  static const adultWrong = "Javob noto'g'ri";
+  static const cancel = 'Bekor qilish';
+  static const confirm = 'Tasdiqlash';
+
+  static const dailyLimitTitle = "Kunlik o'yin vaqti";
+  static const dailyLimitHint = "Vaqt tugaganda ilova bolaga muloyim eslatma ko'rsatadi";
+  static const limitOff = "O'chiq";
+  static String minutesShort(int m) => '$m daq';
+
+  static const reportTitle = 'Hisobot';
+  static const reportEmpty = "Hali profil yo'q";
+  static String todayTime(int minutes) => 'Bugun: $minutes daqiqa';
+  static String totalPlays(int n) => "O'yinlar: $n marta";
+  static String totalStars(int n) => 'Yulduzlar: $n ⭐';
+  static String totalTime(int minutes) => "Jami o'yin vaqti: $minutes daqiqa";
+  static const favoriteGames = "Eng ko'p o'ynagani:";
+
+  static const timeUpTitle = "Bugun yaxshi o'ynading!";
+  static const timeUpBody = "Endi dam olamiz. Ertaga ko'rishamiz! 🌙";
 }
