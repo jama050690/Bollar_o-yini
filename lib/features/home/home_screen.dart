@@ -64,11 +64,16 @@ class _Header extends StatelessWidget {
           ),
         ),
         const SizedBox(width: 16),
+        // Ism uzun bo'lsa kesilmaydi — matn sig'adigan qilib kichrayadi.
         Expanded(
-          child: Text(
-            AppStrings.hello(profile.name),
-            style: Theme.of(context).textTheme.headlineLarge,
-            overflow: TextOverflow.ellipsis,
+          child: FittedBox(
+            fit: BoxFit.scaleDown,
+            alignment: Alignment.centerLeft,
+            child: Text(
+              AppStrings.hello(profile.name),
+              style: Theme.of(context).textTheme.headlineLarge,
+              maxLines: 1,
+            ),
           ),
         ),
         // FR-6: ota-ona paneli (PIN bilan himoyalangan).
