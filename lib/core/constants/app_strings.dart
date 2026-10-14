@@ -270,4 +270,23 @@ abstract final class AppStrings {
 
   static const timeUpTitle = "Bugun yaxshi o'ynading!";
   static const timeUpBody = "Endi dam olamiz. Ertaga ko'rishamiz! 🌙";
+
+  // ---------- Sovg'alar do'koni (tangalar) ----------
+  static const rewardsTitle = "Sovg'alar do'koni";
+  static String coins(int n) => '🪙 $n';
+  static String coinsEarned(int n) => '+$n 🪙';
+  static String price(int n) => '🪙 $n';
+  static const rewardsAvatars = "Yangi do'stlar";
+  static const rewardsBackgrounds = 'Bosh ekran foni';
+  static const rewardsSelect = 'Tanlash';
+  static const rewardsSelected = 'Tanlangan ✅';
+  static const rewardsBought = "Yangi sovg'a! 🎉";
+  static const rewardsNotEnough = "Yana o'ynab tanga yig'! 💪";
+
+  static const bgDefault = 'Oddiy';
+  static const bgSky = 'Osmon';
+  static const bgMeadow = "O'tloq";
+  static const bgCandy = 'Shirinlik';
+  static const bgSunset = 'Shafaq';
+  static const bgSpace = 'Koinot';
 }

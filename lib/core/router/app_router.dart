@@ -13,6 +13,7 @@ import '../../features/parent_panel/time_up_screen.dart';
 import '../../features/profile/profile_create_screen.dart';
 import '../../features/profile/profile_providers.dart';
 import '../../features/profile/profile_select_screen.dart';
+import '../../features/rewards/rewards_screen.dart';
 import 'app_routes.dart';
 
 export 'app_routes.dart';
@@ -75,6 +76,10 @@ final appRouterProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: AppRoutes.result,
         builder: (context, state) => ResultScreen(result: state.extra! as GameResult),
+      ),
+      GoRoute(
+        path: AppRoutes.rewards,
+        builder: (context, state) => const RewardsScreen(),
       ),
       GoRoute(
         path: AppRoutes.parentPanel,

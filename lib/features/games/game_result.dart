@@ -5,6 +5,8 @@ import 'package:go_router/go_router.dart';
 import '../../core/router/app_routes.dart';
 import '../profile/profile_providers.dart';
 import '../progress/progress_providers.dart';
+import '../rewards/rewards_catalog.dart';
+import '../rewards/rewards_providers.dart';
 
 /// O'yin tugagandagi natija (FR-4): yulduzcha soni va sarflangan vaqt.
 class GameResult {
@@ -24,11 +26,12 @@ int starsForMistakes(int mistakes) {
   return 1;
 }
 
-/// Natijani saqlaydi (FR-5) va natija ekraniga o'tadi.
+/// Natijani saqlaydi (FR-5), tanga beradi va natija ekraniga o'tadi.
 void finishGame(BuildContext context, WidgetRef ref, GameResult result) {
   final profile = ref.read(activeProfileProvider);
   if (profile != null) {
     ref.read(progressProvider.notifier).record(profile.id, result);
+    ref.read(walletProvider.notifier).earn(coinsForStars(result.stars));
   }
   context.pushReplacement(AppRoutes.result, extra: result);
 }

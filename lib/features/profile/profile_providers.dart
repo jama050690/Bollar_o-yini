@@ -24,6 +24,19 @@ class ProfilesNotifier extends Notifier<List<Profile>> {
     state = [...state, profile];
     return profile;
   }
+
+  /// Sovg'alar do'konidan olingan avatarni "kiyish".
+  void updateAvatar(String id, String avatar) {
+    state = [
+      for (final p in state)
+        if (p.id == id)
+          Profile(id: p.id, name: p.name, age: p.age, avatar: avatar, createdAt: p.createdAt)
+        else
+          p,
+    ];
+    final updated = state.firstWhere((p) => p.id == id);
+    HiveStorage.profiles.put(id, updated.toMap());
+  }
 }
 
 final profilesProvider =
