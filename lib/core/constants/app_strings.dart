@@ -289,4 +289,27 @@ abstract final class AppStrings {
   static const bgCandy = 'Shirinlik';
   static const bgSunset = 'Shafaq';
   static const bgSpace = 'Koinot';
+
+  // ---------- Yutuqlar javoni (medallar) ----------
+  static const achievementsTitle = 'Yutuqlar javoni';
+  static String medalsCount(int unlocked, int total) => '🏆 $unlocked/$total';
+  static const newMedal = 'Yangi medal! 🏅';
+  static const medalUnlocked = 'Ochildi ✅';
+
+  static const medalFirstWin = "Birinchi g'alaba";
+  static const medalFirstWinHint = "1 ta o'yinni tugat";
+  static const medalPlayer = "O'yinchi";
+  static const medalPlayerHint = "10 ta o'yin tugat";
+  static const medalChampion = 'Chempion';
+  static const medalChampionHint = "50 ta o'yin tugat";
+  static const medalMaster = 'Ustoz';
+  static const medalMasterHint = "Biror o'yinda 3 yulduz ol";
+  static const medalStar5 = 'Yulduzcha';
+  static const medalStar5Hint = "5 xil o'yinda 3 yulduz ol";
+  static const medalExplorer = 'Kashfiyotchi';
+  static const medalExplorerHint = "5 xil o'yin o'yna";
+  static const medalTraveler = 'Sayohatchi';
+  static const medalTravelerHint = "O'z guruhingdagi hamma o'yinni o'yna";
+  static const medalCollector = 'Yulduzlar kolleksiyasi';
+  static const medalCollectorHint = "Jami 25 yulduz yig'";
 }

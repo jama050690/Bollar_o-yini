@@ -5,6 +5,7 @@ abstract final class AppRoutes {
   static const profileCreate = '/profiles/create';
   static const result = '/result';
   static const rewards = '/rewards';
+  static const achievements = '/achievements';
 
   // Ota-ona paneli (FR-6, FR-7)
   static const parentPanel = '/parent';

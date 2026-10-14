@@ -5,6 +5,7 @@ import '../../../core/constants/app_strings.dart';
 import '../../../core/router/app_routes.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../shared/widgets/stars_row.dart';
+import '../../achievements/achievements_catalog.dart';
 import '../../rewards/rewards_catalog.dart';
 import '../game_catalog.dart';
 import '../game_result.dart';
@@ -68,6 +69,10 @@ class ResultScreen extends StatelessWidget {
                     ),
                   ),
                 ),
+                if (result.newMedals.isNotEmpty) ...[
+                  const SizedBox(height: 20),
+                  _NewMedals(medals: result.newMedals),
+                ],
                 const SizedBox(height: 16),
                 Text(
                   AppStrings.duration(result.duration),
@@ -99,6 +104,43 @@ class ResultScreen extends StatelessWidget {
               ],
             ),
           ),
+        ),
+      ),
+    );
+  }
+}
+
+/// Yangi ochilgan medallar va ular uchun bonus tangalar.
+class _NewMedals extends StatelessWidget {
+  const _NewMedals({required this.medals});
+
+  final List<Medal> medals;
+
+  @override
+  Widget build(BuildContext context) {
+    return TweenAnimationBuilder<double>(
+      tween: Tween(begin: 0.5, end: 1),
+      duration: const Duration(milliseconds: 700),
+      curve: Curves.elasticOut,
+      builder: (context, scale, child) => Transform.scale(scale: scale, child: child),
+      child: Container(
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: const Color(0xFFFFF8E1),
+          borderRadius: BorderRadius.circular(AppSizes.radius),
+          border: Border.all(color: const Color(0xFFFFB300), width: 3),
+        ),
+        child: Column(
+          children: [
+            Text(AppStrings.newMedal, style: Theme.of(context).textTheme.titleLarge),
+            const SizedBox(height: 8),
+            for (final medal in medals)
+              Text(
+                '${medal.emoji} ${medal.title}  ${AppStrings.coinsEarned(kMedalBonusCoins)}',
+                textAlign: TextAlign.center,
+                style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+              ),
+          ],
         ),
       ),
     );

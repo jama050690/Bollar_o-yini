@@ -8,6 +8,8 @@ import '../../core/router/app_routes.dart';
 import '../../core/theme/app_theme.dart';
 import '../../shared/widgets/choice_card.dart';
 import '../../shared/widgets/stars_row.dart';
+import '../achievements/achievements_catalog.dart';
+import '../achievements/achievements_providers.dart';
 import '../games/game_catalog.dart';
 import '../profile/profile.dart';
 import '../profile/profile_providers.dart';
@@ -50,7 +52,13 @@ class HomeScreen extends ConsumerWidget {
             children: [
               _Header(profile: profile),
               const SizedBox(height: 12),
-              _CoinsButton(coins: wallet.coins),
+              Row(
+                children: [
+                  Expanded(child: _CoinsButton(coins: wallet.coins)),
+                  const SizedBox(width: 12),
+                  _MedalsButton(unlocked: ref.watch(unlockedMedalsProvider).length),
+                ],
+              ),
               const SizedBox(height: 16),
               for (final group in groups)
                 _ModuleSection(group: group, unlocked: group == profile.ageGroup),
@@ -133,6 +141,27 @@ class _Header extends StatelessWidget {
           icon: const Text('🔒', style: TextStyle(fontSize: 32)),
         ),
       ],
+    );
+  }
+}
+
+/// Ochilgan medallar soni va yutuqlar javoniga kirish.
+class _MedalsButton extends StatelessWidget {
+  const _MedalsButton({required this.unlocked});
+
+  final int unlocked;
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      onPressed: () => context.push(AppRoutes.achievements),
+      style: ElevatedButton.styleFrom(
+        backgroundColor: const Color(0xFFFFF8E1),
+        foregroundColor: AppColors.text,
+        minimumSize: const Size(AppSizes.minTapTarget, AppSizes.minTapTarget),
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+      ),
+      child: Text(AppStrings.medalsCount(unlocked, kMedals.length)),
     );
   }
 }
