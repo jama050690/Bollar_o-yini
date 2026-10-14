@@ -70,7 +70,8 @@ class MedalCard extends StatelessWidget {
 
     return Container(
       width: 160,
-      height: 190,
+      // Uzun nom/shart ikki qatorga tushsa, karta pastga cho'ziladi.
+      constraints: const BoxConstraints(minHeight: 200),
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
         color: unlocked ? const Color(0xFFFFF8E1) : Colors.white,
