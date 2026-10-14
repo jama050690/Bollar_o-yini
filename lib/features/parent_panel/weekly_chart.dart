@@ -124,7 +124,7 @@ class SubjectSummary extends StatelessWidget {
         Text(AppStrings.subjectsTitle, style: style.copyWith(fontWeight: FontWeight.bold)),
         const SizedBox(height: 4),
         if (scores.isEmpty)
-          const Text(AppStrings.subjectsEmpty, style: style)
+          Text(AppStrings.subjectsEmpty, style: style)
         else
           for (final score in scores)
             Text(

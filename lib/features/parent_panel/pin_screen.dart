@@ -90,7 +90,7 @@ class _PinScreenState extends ConsumerState<PinScreen> {
         settings.setPin(pin);
         if (widget.changePin) {
           ScaffoldMessenger.of(context)
-              .showSnackBar(const SnackBar(content: Text(AppStrings.pinChanged)));
+              .showSnackBar(SnackBar(content: Text(AppStrings.pinChanged)));
           context.pop();
         } else {
           _openPanel();
@@ -132,7 +132,7 @@ class _PinScreenState extends ConsumerState<PinScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(AppStrings.parentPanelTitle),
+        title: Text(AppStrings.parentPanelTitle),
         leading: CloseButton(onPressed: _close),
       ),
       body: SafeArea(
@@ -168,7 +168,7 @@ class _PinScreenState extends ConsumerState<PinScreen> {
                       textStyle: const TextStyle(fontSize: 18),
                     ),
                     onPressed: _onForgot,
-                    child: const Text(AppStrings.pinForgot),
+                    child: Text(AppStrings.pinForgot),
                   ),
               ],
             ),
@@ -320,9 +320,9 @@ class _AdultQuestionDialogState extends State<_AdultQuestionDialog> {
       actions: [
         TextButton(
           onPressed: () => Navigator.of(context).pop(false),
-          child: const Text(AppStrings.cancel),
+          child: Text(AppStrings.cancel),
         ),
-        ElevatedButton(onPressed: _check, child: const Text(AppStrings.confirm)),
+        ElevatedButton(onPressed: _check, child: Text(AppStrings.confirm)),
       ],
     );
   }

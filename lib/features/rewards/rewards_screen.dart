@@ -54,7 +54,7 @@ class RewardsScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text(AppStrings.rewardsTitle),
+        title: Text(AppStrings.rewardsTitle),
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 16),

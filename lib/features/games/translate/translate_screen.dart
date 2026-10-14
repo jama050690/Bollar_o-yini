@@ -169,7 +169,7 @@ class _TranslateScreenState extends ConsumerState<TranslateScreen> {
           height: 44,
           child: Center(
             child: _wrong != null
-                ? const Text(
+                ? Text(
                     AppStrings.tryAgain,
                     style: TextStyle(fontSize: 22, color: Color(0xFFFB8C00)),
                   )

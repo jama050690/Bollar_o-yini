@@ -122,7 +122,7 @@ class _ProfileCreateScreenState extends ConsumerState<ProfileCreateScreen> {
                 foregroundColor: Colors.white,
                 minimumSize: const Size.fromHeight(72),
               ),
-              child: const Text(AppStrings.saveProfile),
+              child: Text(AppStrings.saveProfile),
             ),
           ],
         ),

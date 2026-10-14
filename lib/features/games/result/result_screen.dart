@@ -110,7 +110,7 @@ class ResultScreen extends StatelessWidget {
                     ElevatedButton.icon(
                       onPressed: () => context.pushReplacement(AppRoutes.game(result.gameId)),
                       icon: const Icon(Icons.replay_rounded, size: 32),
-                      label: const Text(AppStrings.playAgain),
+                      label: Text(AppStrings.playAgain),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppColors.primary,
                         foregroundColor: Colors.white,
@@ -121,7 +121,7 @@ class ResultScreen extends StatelessWidget {
                     OutlinedButton.icon(
                       onPressed: () => context.go(AppRoutes.home),
                       icon: const Icon(Icons.home_rounded, size: 32),
-                      label: const Text(AppStrings.toHome, style: TextStyle(fontSize: 24)),
+                      label: Text(AppStrings.toHome, style: TextStyle(fontSize: 24)),
                       style: OutlinedButton.styleFrom(
                         minimumSize: const Size(260, 72),
                         shape: RoundedRectangleBorder(

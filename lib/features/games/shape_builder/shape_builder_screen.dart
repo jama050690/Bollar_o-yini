@@ -109,7 +109,7 @@ class _ShapeBuilderScreenState extends ConsumerState<ShapeBuilderScreen> {
                 SizedBox(
                   height: 32,
                   child: _showTryAgain
-                      ? const Text(
+                      ? Text(
                           AppStrings.tryAgain,
                           style: TextStyle(fontSize: 20, color: Color(0xFFFB8C00)),
                         )

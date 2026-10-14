@@ -214,12 +214,12 @@ class _TargetPanel extends StatelessWidget {
       child: Column(
         children: [
           if (celebrating)
-            const Text(AppStrings.wellDone, style: TextStyle(fontSize: 40))
+            Text(AppStrings.wellDone, style: TextStyle(fontSize: 40))
           else
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text(AppStrings.findThis, style: TextStyle(fontSize: 26)),
+                Text(AppStrings.findThis, style: TextStyle(fontSize: 26)),
                 const SizedBox(width: 12),
                 Text(
                   game.target.label,
@@ -256,7 +256,7 @@ class _TargetPanel extends StatelessWidget {
           SizedBox(
             height: 32,
             child: showTryAgain
-                ? const Text(
+                ? Text(
                     AppStrings.tryAgain,
                     style: TextStyle(fontSize: 22, color: Color(0xFFFB8C00)),
                   )

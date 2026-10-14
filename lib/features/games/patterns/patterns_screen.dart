@@ -119,7 +119,7 @@ class _PatternsScreenState extends ConsumerState<PatternsScreen> {
           ),
           child: Column(
             children: [
-              const Text(
+              Text(
                 AppStrings.continuePattern,
                 style: TextStyle(fontSize: 26, color: AppColors.text),
               ),
@@ -158,12 +158,12 @@ class _PatternsScreenState extends ConsumerState<PatternsScreen> {
           height: 44,
           child: Center(
             child: _wrong != null
-                ? const Text(
+                ? Text(
                     AppStrings.tryAgain,
                     style: TextStyle(fontSize: 22, color: Color(0xFFFB8C00)),
                   )
                 : _solved != null
-                    ? const Text(AppStrings.wellDone, style: TextStyle(fontSize: 22))
+                    ? Text(AppStrings.wellDone, style: TextStyle(fontSize: 22))
                     : null,
           ),
         ),

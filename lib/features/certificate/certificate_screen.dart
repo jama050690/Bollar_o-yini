@@ -43,7 +43,7 @@ class _CertificateScreenState extends ConsumerState<CertificateScreen> {
     // Ochilmagan sertifikatga to'g'ridan-to'g'ri kirib bo'lmaydi.
     if (profile == null || !status.unlocked || day == null) {
       return Scaffold(
-        appBar: AppBar(title: const Text(AppStrings.certificateButton)),
+        appBar: AppBar(title: Text(AppStrings.certificateButton)),
         body: Center(
           child: Padding(
             padding: const EdgeInsets.all(24),
@@ -73,7 +73,7 @@ class _CertificateScreenState extends ConsumerState<CertificateScreen> {
           onPressed: () =>
               context.canPop() ? context.pop() : context.go(AppRoutes.achievements),
         ),
-        title: const Text(AppStrings.certificateButton),
+        title: Text(AppStrings.certificateButton),
       ),
       body: Stack(
         children: [
@@ -103,7 +103,7 @@ class _CertificateScreenState extends ConsumerState<CertificateScreen> {
                             children: [
                               const Text('🏅🎓🏅', style: TextStyle(fontSize: 44)),
                               const SizedBox(height: 8),
-                              const FittedBox(
+                              FittedBox(
                                 fit: BoxFit.scaleDown,
                                 child: Text(
                                   AppStrings.certificateTitle,
@@ -116,7 +116,7 @@ class _CertificateScreenState extends ConsumerState<CertificateScreen> {
                                 ),
                               ),
                               const SizedBox(height: 16),
-                              const Text(
+                              Text(
                                 AppStrings.certificateGiven,
                                 style: TextStyle(fontSize: 18, color: AppColors.text),
                               ),
@@ -165,9 +165,9 @@ class _CertificateScreenState extends ConsumerState<CertificateScreen> {
                         ),
                       ),
                       const SizedBox(height: 16),
-                      const Mascot(messages: AppStrings.certificatePraise),
+                      Mascot(messages: AppStrings.certificatePraise),
                       const SizedBox(height: 12),
-                      const Text(
+                      Text(
                         AppStrings.certificateSaveHint,
                         textAlign: TextAlign.center,
                         style: TextStyle(fontSize: 16, color: Colors.black54),
@@ -209,7 +209,7 @@ class CertificateButton extends ConsumerWidget {
               style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black54),
             ),
             const SizedBox(height: 4),
-            const Text(
+            Text(
               AppStrings.certificateLockedHint,
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: 15, color: Colors.black45),
@@ -227,7 +227,7 @@ class CertificateButton extends ConsumerWidget {
         minimumSize: const Size(double.infinity, 72),
         textStyle: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
       ),
-      child: const Text(AppStrings.certificateButton),
+      child: Text(AppStrings.certificateButton),
     );
   }
 }

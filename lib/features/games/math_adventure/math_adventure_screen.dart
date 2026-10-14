@@ -114,7 +114,7 @@ class _MathAdventureScreenState extends ConsumerState<MathAdventureScreen> {
           height: 40,
           child: Center(
             child: _wrongOption != null
-                ? const Text(
+                ? Text(
                     AppStrings.tryAgain,
                     style: TextStyle(fontSize: 22, color: Color(0xFFFB8C00)),
                   )

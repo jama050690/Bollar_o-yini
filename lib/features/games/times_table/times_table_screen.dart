@@ -92,7 +92,7 @@ class _TimesTableScreenState extends ConsumerState<TimesTableScreen> {
 
   Widget _buildGame(TimesTableGame game) {
     if (_celebrating || game.isFinished) {
-      return const Center(child: Text(AppStrings.wellDone, style: TextStyle(fontSize: 44)));
+      return Center(child: Text(AppStrings.wellDone, style: TextStyle(fontSize: 44)));
     }
     final q = game.current;
     return ListView(
@@ -123,7 +123,7 @@ class _TimesTableScreenState extends ConsumerState<TimesTableScreen> {
           height: 44,
           child: Center(
             child: _wrongOption != null
-                ? const Text(
+                ? Text(
                     AppStrings.tryAgain,
                     style: TextStyle(fontSize: 22, color: Color(0xFFFB8C00)),
                   )

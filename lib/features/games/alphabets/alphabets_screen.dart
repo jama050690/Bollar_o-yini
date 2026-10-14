@@ -104,7 +104,7 @@ class _AlphabetsScreenState extends ConsumerState<AlphabetsScreen> {
 
   Widget _buildGame(AlphabetsGame game) {
     if (_celebrating || game.isFinished) {
-      return const Center(child: Text(AppStrings.wellDone, style: TextStyle(fontSize: 44)));
+      return Center(child: Text(AppStrings.wellDone, style: TextStyle(fontSize: 44)));
     }
     final q = game.current;
     return ListView(
@@ -149,7 +149,7 @@ class _AlphabetsScreenState extends ConsumerState<AlphabetsScreen> {
           height: 44,
           child: Center(
             child: _wrong != null
-                ? const Text(
+                ? Text(
                     AppStrings.tryAgain,
                     style: TextStyle(fontSize: 22, color: Color(0xFFFB8C00)),
                   )

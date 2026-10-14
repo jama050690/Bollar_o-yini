@@ -148,7 +148,7 @@ class _ColoringScreenState extends ConsumerState<ColoringScreen> {
             child: ElevatedButton.icon(
               onPressed: _celebrating ? null : () => setState(game.clear),
               icon: const Icon(Icons.cleaning_services_rounded, size: 32),
-              label: const Text(AppStrings.clearAll, style: TextStyle(fontSize: 22)),
+              label: Text(AppStrings.clearAll, style: TextStyle(fontSize: 22)),
             ),
           ),
         ],

@@ -137,7 +137,7 @@ class _WordBuilderScreenState extends ConsumerState<WordBuilderScreen> {
           height: 40,
           child: Center(
             child: _wrongTile != null
-                ? const Text(
+                ? Text(
                     AppStrings.tryAgain,
                     style: TextStyle(fontSize: 22, color: Color(0xFFFB8C00)),
                   )

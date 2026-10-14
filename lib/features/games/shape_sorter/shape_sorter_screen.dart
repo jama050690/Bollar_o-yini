@@ -102,7 +102,7 @@ class _ShapeSorterScreenState extends ConsumerState<ShapeSorterScreen> {
             SizedBox(
               height: 36,
               child: _showTryAgain
-                  ? const Text(
+                  ? Text(
                       AppStrings.tryAgain,
                       style: TextStyle(fontSize: 22, color: Color(0xFFFB8C00)),
                     )

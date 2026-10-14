@@ -116,7 +116,7 @@ class _ArithmeticScreenState extends ConsumerState<ArithmeticScreen> {
           height: 48,
           child: Center(
             child: _wrongOption != null
-                ? const Text(
+                ? Text(
                     AppStrings.tryAgain,
                     style: TextStyle(fontSize: 22, color: Color(0xFFFB8C00)),
                   )

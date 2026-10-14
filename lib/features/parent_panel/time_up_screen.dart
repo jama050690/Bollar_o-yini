@@ -32,7 +32,7 @@ class TimeUpScreen extends StatelessWidget {
                         style: Theme.of(context).textTheme.headlineLarge,
                       ),
                       const SizedBox(height: 16),
-                      const Text(
+                      Text(
                         AppStrings.timeUpBody,
                         textAlign: TextAlign.center,
                         style: TextStyle(fontSize: 24, color: AppColors.text),
@@ -40,7 +40,7 @@ class TimeUpScreen extends StatelessWidget {
                       const SizedBox(height: 24),
                       ConstrainedBox(
                         constraints: const BoxConstraints(maxWidth: 420),
-                        child: const Mascot(messages: AppStrings.mascotTimeUp),
+                        child: Mascot(messages: AppStrings.mascotTimeUp),
                       ),
                     ],
                   ),
@@ -55,7 +55,7 @@ class TimeUpScreen extends StatelessWidget {
                   textStyle: const TextStyle(fontSize: 18),
                 ),
                 onPressed: () => context.push(AppRoutes.parentPin),
-                child: const Text(AppStrings.parentEntry),
+                child: Text(AppStrings.parentEntry),
               ),
             ),
           ],

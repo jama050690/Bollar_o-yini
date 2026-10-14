@@ -128,9 +128,9 @@ class _MazeQuizScreenState extends ConsumerState<MazeQuizScreen> {
             ),
             const SizedBox(height: 12),
             if (_celebrating)
-              const Center(child: Text(AppStrings.wellDone, style: TextStyle(fontSize: 36)))
+              Center(child: Text(AppStrings.wellDone, style: TextStyle(fontSize: 36)))
             else if (question == null) ...[
-              const Center(child: Text(AppStrings.mazeHint, style: TextStyle(fontSize: 20))),
+              Center(child: Text(AppStrings.mazeHint, style: TextStyle(fontSize: 20))),
               const SizedBox(height: 12),
               _ArrowPad(onMove: _onMove),
             ] else
@@ -319,7 +319,7 @@ class _QuestionPanel extends StatelessWidget {
             height: 36,
             child: Center(
               child: wrongOption != null
-                  ? const Text(
+                  ? Text(
                       AppStrings.tryAgain,
                       style: TextStyle(fontSize: 20, color: Color(0xFFFB8C00)),
                     )

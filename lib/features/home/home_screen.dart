@@ -99,7 +99,7 @@ class _CoinsButton extends StatelessWidget {
         children: [
           Text(AppStrings.coins(coins)),
           const Spacer(),
-          const Flexible(
+          Flexible(
             child: FittedBox(
               fit: BoxFit.scaleDown,
               child: Text('${AppStrings.rewardsTitle} 🎁'),
@@ -244,7 +244,7 @@ class _ModuleSection extends StatelessWidget {
             if (unlocked) ...[
               const SizedBox(height: 16),
               if (games.isEmpty)
-                const Text(AppStrings.comingSoon, style: TextStyle(fontSize: 20))
+                Text(AppStrings.comingSoon, style: TextStyle(fontSize: 20))
               else
                 Wrap(
                   spacing: 12,

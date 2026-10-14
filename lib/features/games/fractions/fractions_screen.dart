@@ -121,12 +121,12 @@ class _FractionsScreenState extends ConsumerState<FractionsScreen> {
     height: 44,
     child: Center(
       child: _wrong != null
-          ? const Text(
+          ? Text(
               AppStrings.tryAgain,
               style: TextStyle(fontSize: 22, color: Color(0xFFFB8C00)),
             )
           : _solved != null
-          ? const Text(AppStrings.wellDone, style: TextStyle(fontSize: 22))
+          ? Text(AppStrings.wellDone, style: TextStyle(fontSize: 22))
           : null,
     ),
   );
@@ -155,7 +155,7 @@ class _FractionsScreenState extends ConsumerState<FractionsScreen> {
                     ),
                   ),
                   const SizedBox(height: 8),
-                  const Text(
+                  Text(
                     AppStrings.whichFraction,
                     style: TextStyle(fontSize: 26, color: AppColors.text),
                   ),
@@ -196,7 +196,7 @@ class _FractionsScreenState extends ConsumerState<FractionsScreen> {
     return ListView(
       padding: const EdgeInsets.all(16),
       children: [
-        const Center(
+        Center(
           child: Text(
             AppStrings.whichBigger,
             style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: AppColors.text),

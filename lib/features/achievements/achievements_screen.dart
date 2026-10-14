@@ -17,7 +17,7 @@ class AchievementsScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text(AppStrings.achievementsTitle),
+        title: Text(AppStrings.achievementsTitle),
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 16),

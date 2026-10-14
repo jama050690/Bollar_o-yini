@@ -151,7 +151,7 @@ class _SpeedMathScreenState extends ConsumerState<SpeedMathScreen> {
                 ),
               ),
               const SizedBox(height: 4),
-              const Text(
+              Text(
                 AppStrings.speedHint,
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 18, color: AppColors.text),
@@ -163,7 +163,7 @@ class _SpeedMathScreenState extends ConsumerState<SpeedMathScreen> {
           height: 44,
           child: Center(
             child: _wrong != null
-                ? const Text(
+                ? Text(
                     AppStrings.tryAgain,
                     style: TextStyle(fontSize: 22, color: Color(0xFFFB8C00)),
                   )

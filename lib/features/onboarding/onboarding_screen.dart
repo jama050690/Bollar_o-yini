@@ -90,7 +90,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                     textStyle: const TextStyle(fontSize: 18),
                   ),
                   onPressed: _finish,
-                  child: const Text(AppStrings.onboardingSkip),
+                  child: Text(AppStrings.onboardingSkip),
                 ),
               ),
             ),

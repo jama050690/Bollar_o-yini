@@ -75,7 +75,7 @@ class ParentPanelScreen extends ConsumerWidget {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: const Text(AppStrings.parentPanelTitle),
+          title: Text(AppStrings.parentPanelTitle),
           leading: CloseButton(onPressed: close),
         ),
         body: SafeArea(
@@ -85,7 +85,7 @@ class ParentPanelScreen extends ConsumerWidget {
               _Section(
                 title: AppStrings.dailyLimitTitle,
                 children: [
-                  const Text(AppStrings.dailyLimitHint, style: TextStyle(fontSize: 16)),
+                  Text(AppStrings.dailyLimitHint, style: TextStyle(fontSize: 16)),
                   const SizedBox(height: 12),
                   Wrap(
                     spacing: 8,
@@ -127,10 +127,31 @@ class ParentPanelScreen extends ConsumerWidget {
                 ],
               ),
               _Section(
+                title: AppStrings.languageTitle,
+                children: [
+                  Text(AppStrings.languageHint, style: const TextStyle(fontSize: 16)),
+                  const SizedBox(height: 12),
+                  Wrap(
+                    spacing: 8,
+                    runSpacing: 8,
+                    children: [
+                      for (final language in AppLanguage.values)
+                        ChoiceChip(
+                          label: Text('${language.flag} ${language.nativeName}'),
+                          labelStyle: const TextStyle(fontSize: 20, color: AppColors.text),
+                          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
+                          selected: ref.watch(appLanguageProvider) == language,
+                          onSelected: (_) => ref.read(appLanguageProvider.notifier).set(language),
+                        ),
+                    ],
+                  ),
+                ],
+              ),
+              _Section(
                 title: AppStrings.reportTitle,
                 children: [
                   if (profiles.isEmpty)
-                    const Text(AppStrings.reportEmpty, style: TextStyle(fontSize: 18))
+                    Text(AppStrings.reportEmpty, style: TextStyle(fontSize: 18))
                   else
                     for (final profile in profiles) _ProfileReportCard(profile: profile),
                 ],
@@ -144,7 +165,7 @@ class ParentPanelScreen extends ConsumerWidget {
                   ),
                   onPressed: () => context.push(AppRoutes.parentPinChange),
                   icon: const Icon(Icons.lock_reset),
-                  label: const Text(AppStrings.pinChange),
+                  label: Text(AppStrings.pinChange),
                 ),
               ),
             ],

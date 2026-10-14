@@ -129,12 +129,12 @@ class _MiniSudokuScreenState extends ConsumerState<MiniSudokuScreen> {
           height: 40,
           child: Center(
             child: _wrongNumber != null
-                ? const Text(
+                ? Text(
                     AppStrings.tryAgain,
                     style: TextStyle(fontSize: 22, color: Color(0xFFFB8C00)),
                   )
                 : _selectedCell == null && !_celebrating
-                    ? const Text(AppStrings.sudokuPickCell, style: TextStyle(fontSize: 20))
+                    ? Text(AppStrings.sudokuPickCell, style: TextStyle(fontSize: 20))
                     : null,
           ),
         ),
@@ -168,7 +168,7 @@ class _LevelPicker extends StatelessWidget {
           children: [
             Text(AppStrings.chooseLevel, style: Theme.of(context).textTheme.headlineLarge),
             const SizedBox(height: 8),
-            const Text(AppStrings.sudokuRule, style: TextStyle(fontSize: 20)),
+            Text(AppStrings.sudokuRule, style: TextStyle(fontSize: 20)),
             const SizedBox(height: 24),
             Wrap(
               alignment: WrapAlignment.center,
