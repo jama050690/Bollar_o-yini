@@ -305,6 +305,17 @@ abstract final class AppStrings {
       _t("Yana urinib ko'r! 💪", 'Попробуй ещё раз! 💪', 'Try again! 💪');
   static String get wellDone => _t('Barakalla! 🎉', 'Молодец! 🎉', 'Well done! 🎉');
 
+  // ---------- Kutilmagan xato (bolani qo'rqitmaydigan ekran) ----------
+  static String get errorTitle =>
+      _t('Voy, nimadir chalkashdi! 🙈', 'Ой, что-то запуталось! 🙈', 'Oops, something got mixed up! 🙈');
+  static String get errorHint => _t(
+        'Xavotir olma, qaytadan boshlaymiz!',
+        'Не волнуйся, начнём сначала!',
+        "Don't worry, let's start again!",
+      );
+  static String get errorHomeButton => _t('🏠 Bosh menyuga', '🏠 В главное меню', '🏠 Main menu');
+  static String get errorRetryButton => _t('🔄 Qayta urinish', '🔄 Попробовать снова', '🔄 Try again');
+
   // ---------- Natija ----------
   static String get result3 => _t('Ajoyib! 🎉', 'Великолепно! 🎉', 'Amazing! 🎉');
   static String get result2 => _t("Zo'r! 👏", 'Здорово! 👏', 'Great! 👏');
