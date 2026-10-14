@@ -12,6 +12,8 @@ import '../games/game_catalog.dart';
 import '../profile/profile.dart';
 import '../profile/profile_providers.dart';
 import '../progress/progress_providers.dart';
+import '../rewards/rewards_catalog.dart';
+import '../rewards/rewards_providers.dart';
 
 /// Bosh menyu: bolaning yoshiga mos modul ochiq, qolganlari
 /// "qulflangan, lekin ko'rinadi" holatda (TZ 3-bo'lim, FR-2).
@@ -29,17 +31,64 @@ class HomeScreen extends ConsumerWidget {
       ...AgeGroup.values.where((g) => g != profile.ageGroup),
     ];
 
+    final wallet = ref.watch(walletProvider);
+    final background = backgroundById(wallet.backgroundId);
+
     return Scaffold(
-      body: SafeArea(
-        child: ListView(
-          padding: const EdgeInsets.all(16),
-          children: [
-            _Header(profile: profile),
-            const SizedBox(height: 16),
-            for (final group in groups)
-              _ModuleSection(group: group, unlocked: group == profile.ageGroup),
-          ],
+      body: DecoratedBox(
+        // Sovg'alar do'konida tanlangan fon.
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: background.colors,
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+          ),
         ),
+        child: SafeArea(
+          child: ListView(
+            padding: const EdgeInsets.all(16),
+            children: [
+              _Header(profile: profile),
+              const SizedBox(height: 12),
+              _CoinsButton(coins: wallet.coins),
+              const SizedBox(height: 16),
+              for (final group in groups)
+                _ModuleSection(group: group, unlocked: group == profile.ageGroup),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// Tangalar balansi va sovg'alar do'koniga kirish.
+class _CoinsButton extends StatelessWidget {
+  const _CoinsButton({required this.coins});
+
+  final int coins;
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      onPressed: () => context.push(AppRoutes.rewards),
+      style: ElevatedButton.styleFrom(
+        backgroundColor: const Color(0xFFFFE082),
+        foregroundColor: AppColors.text,
+        minimumSize: const Size.fromHeight(AppSizes.minTapTarget),
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+      ),
+      child: Row(
+        children: [
+          Text(AppStrings.coins(coins)),
+          const Spacer(),
+          const Flexible(
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Text('${AppStrings.rewardsTitle} 🎁'),
+            ),
+          ),
+        ],
       ),
     );
   }

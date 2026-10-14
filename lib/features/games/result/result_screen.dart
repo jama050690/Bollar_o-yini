@@ -5,6 +5,7 @@ import '../../../core/constants/app_strings.dart';
 import '../../../core/router/app_routes.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../shared/widgets/stars_row.dart';
+import '../../rewards/rewards_catalog.dart';
 import '../game_catalog.dart';
 import '../game_result.dart';
 
@@ -47,6 +48,25 @@ class ResultScreen extends StatelessWidget {
                   builder: (context, scale, child) =>
                       Transform.scale(scale: scale, child: child),
                   child: StarsRow(stars: result.stars, size: 72),
+                ),
+                const SizedBox(height: 12),
+                // Topilgan tangalar (sovg'alar do'koni uchun).
+                TweenAnimationBuilder<double>(
+                  tween: Tween(begin: 0, end: 1),
+                  duration: const Duration(milliseconds: 900),
+                  curve: Curves.easeOutBack,
+                  builder: (context, t, child) => Opacity(
+                    opacity: t.clamp(0, 1),
+                    child: Transform.translate(offset: Offset(0, 24 * (1 - t)), child: child),
+                  ),
+                  child: Text(
+                    AppStrings.coinsEarned(coinsForStars(result.stars)),
+                    style: const TextStyle(
+                      fontSize: 36,
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xFFF57F17),
+                    ),
+                  ),
                 ),
                 const SizedBox(height: 16),
                 Text(
