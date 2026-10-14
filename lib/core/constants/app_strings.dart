@@ -346,6 +346,15 @@ abstract final class AppStrings {
   ];
   static const mascotTimeUp = ["Ko'zlaring dam olsin, ertaga ko'rishamiz! 🌙"];
 
+  // ---------- Birinchi ochilish ko'rsatmasi ----------
+  static const onboarding1 = "Salom! Men Donish. Birga o'ynab o'rganamiz! 🎮";
+  static const onboarding2 = "O'yin o'ynab ⭐ yulduz va 🪙 tanga yig'. Tangalarga sovg'a ol! 🎁";
+  static const onboarding3 =
+      "Ota-onalar uchun: 🔒 tugmasi — vaqt chegarasi va hisobot. Ilova internetsiz ishlaydi, reklama yo'q.";
+  static const onboardingNext = 'Keyingi ➡️';
+  static const onboardingStart = 'Boshlash 🚀';
+  static const onboardingSkip = "O'tkazib yuborish";
+
   // ---------- Kunlik seriya ----------
   static String streakDays(int n) => '🔥 $n';
   static String streakBonus(int days, int coins) => days > 1

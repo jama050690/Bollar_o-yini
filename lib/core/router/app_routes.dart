@@ -1,6 +1,7 @@
 /// Marshrut yo'llari.
 abstract final class AppRoutes {
   static const home = '/';
+  static const welcome = '/welcome';
   static const profiles = '/profiles';
   static const profileCreate = '/profiles/create';
   static const result = '/result';

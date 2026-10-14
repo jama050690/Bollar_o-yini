@@ -6,6 +6,7 @@ import '../../features/games/game_catalog.dart';
 import '../../features/games/game_result.dart';
 import '../../features/games/result/result_screen.dart';
 import '../../features/home/home_screen.dart';
+import '../../features/onboarding/onboarding_screen.dart';
 import '../../features/parent_panel/parent_panel_screen.dart';
 import '../../features/parent_panel/parent_settings.dart';
 import '../../features/parent_panel/pin_screen.dart';
@@ -32,6 +33,14 @@ final appRouterProvider = Provider<GoRouter>((ref) {
       final hasProfiles = ref.read(profilesProvider).isNotEmpty;
       final hasActive = ref.read(activeProfileProvider) != null;
 
+      // Birinchi ochilish: avval qisqa ko'rsatma. Profil allaqachon bo'lsa — ko'rsatilmaydi.
+      final needsWelcome = !hasProfiles && !ref.read(onboardingDoneProvider);
+      if (needsWelcome) {
+        return location == AppRoutes.welcome ? null : AppRoutes.welcome;
+      }
+      if (location == AppRoutes.welcome) {
+        return hasProfiles ? AppRoutes.home : AppRoutes.profileCreate;
+      }
       if (!hasProfiles && location != AppRoutes.profileCreate) {
         return AppRoutes.profileCreate;
       }
@@ -59,6 +68,10 @@ final appRouterProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: AppRoutes.home,
         builder: (context, state) => const HomeScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.welcome,
+        builder: (context, state) => const OnboardingScreen(),
       ),
       GoRoute(
         path: AppRoutes.profiles,

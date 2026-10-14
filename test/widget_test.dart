@@ -22,6 +22,8 @@ void main() {
     await HiveStorage.profiles.clear();
     await HiveStorage.progress.clear();
     await HiveStorage.settings.clear();
+    // Birinchi ochilish ko'rsatmasi alohida testlanadi (onboarding_test.dart).
+    await HiveStorage.settings.put('onboardingDone', true);
   });
 
   tearDownAll(() async {
