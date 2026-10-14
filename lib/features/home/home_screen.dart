@@ -98,11 +98,25 @@ class _CoinsButton extends StatelessWidget {
       child: Row(
         children: [
           Text(AppStrings.coins(coins)),
-          const Spacer(),
-          Flexible(
-            child: FittedBox(
-              fit: BoxFit.scaleDown,
-              child: Text('${AppStrings.rewardsTitle} 🎁'),
+          const SizedBox(width: 12),
+          Expanded(
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                // Matn sig'masa kichraytirmaymiz — faqat 🎁 qoladi.
+                final label = '${AppStrings.rewardsTitle} 🎁';
+                final painter = TextPainter(
+                  text: TextSpan(text: label, style: DefaultTextStyle.of(context).style),
+                  textDirection: Directionality.of(context),
+                  textScaler: MediaQuery.textScalerOf(context),
+                  maxLines: 1,
+                )..layout();
+                final fits = painter.width <= constraints.maxWidth;
+                painter.dispose();
+                return Align(
+                  alignment: Alignment.centerRight,
+                  child: Text(fits ? label : '🎁', maxLines: 1),
+                );
+              },
             ),
           ),
         ],

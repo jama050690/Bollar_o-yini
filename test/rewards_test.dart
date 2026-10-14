@@ -144,7 +144,11 @@ void main() {
     Future<void> openShop(WidgetTester tester) async {
       await tester.pumpWidget(const ProviderScope(child: AqlliDostlarApp()));
       await tester.pumpAndSettle();
-      await tester.tap(find.textContaining(AppStrings.rewardsTitle));
+      // Tor ekranda tugmada faqat 🎁 qoladi, shuning uchun tanga balansi orqali topamiz.
+      await tester.tap(find.ancestor(
+        of: find.textContaining('🪙'),
+        matching: find.byType(ElevatedButton),
+      ));
       await tester.pumpAndSettle();
       expect(find.byType(RewardsScreen), findsOneWidget);
     }
