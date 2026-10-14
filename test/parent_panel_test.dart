@@ -9,6 +9,7 @@ import 'package:aqlli_dostlar/features/parent_panel/parent_panel_screen.dart';
 import 'package:aqlli_dostlar/features/parent_panel/parent_settings.dart';
 import 'package:aqlli_dostlar/features/parent_panel/screen_time_providers.dart';
 import 'package:aqlli_dostlar/features/progress/progress_providers.dart';
+import 'package:aqlli_dostlar/shared/services/tts_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -81,6 +82,39 @@ void main() {
       final settings = container.read(parentSettingsProvider);
       expect(settings.hasPin, isFalse);
       expect(settings.dailyLimitMinutes, 30);
+    });
+
+    test("ovozlar avvaldan yoqiq, o'chirilsa eslab qolinadi", () {
+      final container = ProviderContainer();
+      addTearDown(container.dispose);
+      final settings = container.read(parentSettingsProvider);
+      expect(settings.soundEnabled, isTrue);
+      expect(settings.ttsEnabled, isTrue);
+
+      container.read(parentSettingsProvider.notifier)
+        ..setSoundEnabled(false)
+        ..setTtsEnabled(false)
+        ..setPin('1234')
+        ..setDailyLimit(15)
+        ..resetPin();
+
+      final reopened = ProviderContainer();
+      addTearDown(reopened.dispose);
+      final saved = reopened.read(parentSettingsProvider);
+      expect(saved.soundEnabled, isFalse);
+      expect(saved.ttsEnabled, isFalse);
+      expect(saved.dailyLimitMinutes, 15);
+    });
+
+    test("o'chirilgan TTS hech narsa aytmaydi", () async {
+      final container = ProviderContainer();
+      addTearDown(container.dispose);
+      container.read(parentSettingsProvider.notifier).setTtsEnabled(false);
+
+      final spoken = await container
+          .read(ttsServiceProvider)
+          .speak('olma', language: TtsService.uzbek);
+      expect(spoken, isFalse);
     });
   });
 
@@ -177,6 +211,24 @@ void main() {
       containerOf(tester).read(appRouterProvider).go('/parent');
       await tester.pumpAndSettle();
       expect(find.text(AppStrings.pinEnter), findsOneWidget);
+    });
+
+    testWidgets("paneldan o'yin ovozlari o'chiriladi", (tester) async {
+      await _seedProfile(pin: '1234');
+      await openApp(tester);
+      await tester.tap(find.text('🔒'));
+      await tester.pumpAndSettle();
+      await typePin(tester, '1234');
+
+      final soundSwitch = find.text(AppStrings.soundEffects);
+      await tester.scrollUntilVisible(soundSwitch, 200);
+      await tester.tap(soundSwitch);
+      await tester.pumpAndSettle();
+
+      final settings = containerOf(tester).read(parentSettingsProvider);
+      expect(settings.soundEnabled, isFalse);
+      expect(settings.ttsEnabled, isTrue);
+      expect(HiveStorage.settings.get('soundEnabled'), isFalse);
     });
 
     testWidgets('tasdiqlash mos kelmasa, boshidan kiritiladi', (tester) async {

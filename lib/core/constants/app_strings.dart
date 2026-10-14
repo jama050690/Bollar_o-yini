@@ -260,6 +260,12 @@ abstract final class AppStrings {
   static const limitOff = "O'chiq";
   static String minutesShort(int m) => '$m daq';
 
+  static const soundSettingsTitle = 'Ovoz';
+  static const soundEffects = "🔔 O'yin ovozlari";
+  static const soundEffectsHint = "To'g'ri javob va g'alaba ovozlari";
+  static const ttsReading = "🗣️ Ovozli o'qish";
+  static const ttsReadingHint = "So'z va savollarni ovoz chiqarib o'qiydi";
+
   static const reportTitle = 'Hisobot';
   static const reportEmpty = "Hali profil yo'q";
   static String todayTime(int minutes) => 'Bugun: $minutes daqiqa';

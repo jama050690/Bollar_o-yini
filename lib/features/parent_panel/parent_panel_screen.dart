@@ -108,6 +108,23 @@ class ParentPanelScreen extends ConsumerWidget {
                 ],
               ),
               _Section(
+                title: AppStrings.soundSettingsTitle,
+                children: [
+                  _SoundSwitch(
+                    title: AppStrings.soundEffects,
+                    subtitle: AppStrings.soundEffectsHint,
+                    value: settings.soundEnabled,
+                    onChanged: ref.read(parentSettingsProvider.notifier).setSoundEnabled,
+                  ),
+                  _SoundSwitch(
+                    title: AppStrings.ttsReading,
+                    subtitle: AppStrings.ttsReadingHint,
+                    value: settings.ttsEnabled,
+                    onChanged: ref.read(parentSettingsProvider.notifier).setTtsEnabled,
+                  ),
+                ],
+              ),
+              _Section(
                 title: AppStrings.reportTitle,
                 children: [
                   if (profiles.isEmpty)
@@ -158,6 +175,35 @@ class _Section extends StatelessWidget {
           const SizedBox(height: 12),
           ...children,
         ],
+      ),
+    );
+  }
+}
+
+/// Katta almashtirgich (kamida 64dp balandlikda).
+class _SoundSwitch extends StatelessWidget {
+  const _SoundSwitch({
+    required this.title,
+    required this.subtitle,
+    required this.value,
+    required this.onChanged,
+  });
+
+  final String title;
+  final String subtitle;
+  final bool value;
+  final ValueChanged<bool> onChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    return ConstrainedBox(
+      constraints: const BoxConstraints(minHeight: AppSizes.minTapTarget),
+      child: SwitchListTile(
+        contentPadding: EdgeInsets.zero,
+        title: Text(title, style: const TextStyle(fontSize: 20, color: AppColors.text)),
+        subtitle: Text(subtitle, style: const TextStyle(fontSize: 15)),
+        value: value,
+        onChanged: onChanged,
       ),
     );
   }
