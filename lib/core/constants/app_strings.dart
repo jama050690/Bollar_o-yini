@@ -1,392 +1,663 @@
-/// Ilovadagi barcha UI matnlari bitta joyda (MVP: faqat o'zbek tili, FR-8).
-/// Rus/ingliz tillari qo'shilganda shu fayl ARB lokalizatsiyaga ko'chiriladi.
+import 'app_language.dart';
+
+/// Ilovadagi barcha UI matnlari bitta joyda: o'zbek, rus va ingliz tillarida (FR-8).
+/// Til [AppStrings.current] orqali tanlanadi (uni appLanguageProvider o'rnatadi).
+/// Tilga bog'liq bo'lmagan belgilar (+ − × ÷, 4×4 ...) `const` bo'lib qoladi.
+///
+/// Eslatma: o'yinlar ichidagi o'quv kontenti (so'zlar, savollar) hozircha o'zbek tilida.
 abstract final class AppStrings {
+  static AppLanguage current = AppLanguage.uz;
+
+  static String _t(String uz, String ru, String en) => switch (current) {
+        AppLanguage.uz => uz,
+        AppLanguage.ru => ru,
+        AppLanguage.en => en,
+      };
+
+  static List<String> _l(List<String> uz, List<String> ru, List<String> en) => switch (current) {
+        AppLanguage.uz => uz,
+        AppLanguage.ru => ru,
+        AppLanguage.en => en,
+      };
+
   static const appName = "Aqlli Do'stlar";
 
+  // ---------- Til ----------
+  static String get languageTitle => _t('🌐 Til', '🌐 Язык', '🌐 Language');
+  static String get languageHint => _t(
+        "Ilova tili. O'yinlardagi o'quv mashqlari o'zbek tilida qoladi",
+        'Язык приложения. Учебные задания в играх остаются на узбекском',
+        'App language. Learning tasks inside games stay in Uzbek',
+      );
+
   // ---------- Profil ----------
-  static const createProfileTitle = 'Yangi profil';
-  static const nameLabel = 'Isming nima?';
-  static const nameHint = 'Ismingni yoz';
-  static const ageLabel = 'Yoshing nechida?';
-  static const avatarLabel = "Do'stingni tanla";
-  static const saveProfile = 'Tayyor!';
-  static const whoPlays = "Kim o'ynaydi?";
-  static const addProfile = 'Yangi';
+  static String get createProfileTitle => _t('Yangi profil', 'Новый профиль', 'New profile');
+  static String get nameLabel => _t('Isming nima?', 'Как тебя зовут?', "What's your name?");
+  static String get nameHint => _t('Ismingni yoz', 'Напиши своё имя', 'Type your name');
+  static String get ageLabel => _t('Yoshing nechida?', 'Сколько тебе лет?', 'How old are you?');
+  static String get avatarLabel => _t("Do'stingni tanla", 'Выбери друга', 'Pick your buddy');
+  static String get saveProfile => _t('Tayyor!', 'Готово!', 'Done!');
+  static String get whoPlays => _t("Kim o'ynaydi?", 'Кто играет?', "Who's playing?");
+  static String get addProfile => _t('Yangi', 'Новый', 'New');
 
   // ---------- Bosh menyu ----------
-  static String hello(String name) => 'Salom, $name!';
-  static const moduleATitle = 'Kichkintoylar';
-  static const moduleBTitle = "O'rta guruh";
-  static const moduleCTitle = 'Kattalar';
-  static String ageRange(int min, int max) => '$min-$max yosh';
-  static String lockedFor(int min, int max) => '🔒 $min-$max yoshlilar uchun';
-  static const comingSoon = "Tez orada yangi o'yinlar! 🚀";
+  static String hello(String name) => _t('Salom, $name!', 'Привет, $name!', 'Hi, $name!');
+  static String get moduleATitle => _t('Kichkintoylar', 'Малыши', 'Little ones');
+  static String get moduleBTitle => _t("O'rta guruh", 'Средняя группа', 'Middle group');
+  static String get moduleCTitle => _t('Kattalar', 'Старшие', 'Big kids');
+  static String ageRange(int min, int max) =>
+      _t('$min-$max yosh', '$min-$max лет', '$min-$max years');
+  static String lockedFor(int min, int max) =>
+      _t('🔒 $min-$max yoshlilar uchun', '🔒 Для $min-$max лет', '🔒 For ages $min-$max');
+  static String get comingSoon =>
+      _t("Tez orada yangi o'yinlar! 🚀", 'Скоро новые игры! 🚀', 'New games coming soon! 🚀');
 
   // ---------- O'yinlar ----------
-  static const memoryTitle = 'Xotira';
-  static const letterNumberTitle = 'Harf-Raqam';
-  static const shapeSorterTitle = 'Rang-Shakl';
+  static String get memoryTitle => _t('Xotira', 'Память', 'Memory');
+  static String get letterNumberTitle => _t('Harf-Raqam', 'Буквы-Цифры', 'Letters & Numbers');
+  static String get shapeSorterTitle => _t('Rang-Shakl', 'Цвет и форма', 'Colors & Shapes');
 
-  static const chooseLevel = 'Darajani tanla';
-  static const levelEasy = 'Oson';
-  static const levelMedium = "O'rta";
-  static const levelHard = 'Qiyin';
+  static String get chooseLevel => _t('Darajani tanla', 'Выбери уровень', 'Choose a level');
+  static String get levelEasy => _t('Oson', 'Легко', 'Easy');
+  static String get levelMedium => _t("O'rta", 'Средне', 'Medium');
+  static String get levelHard => _t('Qiyin', 'Сложно', 'Hard');
 
-  static const chooseMode = 'Nimani o\'ynaymiz?';
-  static const modeNumbers = 'Raqamlar';
-  static const modeLetters = 'Harflar';
-  static const findThis = 'Buni top:';
+  static String get chooseMode => _t("Nimani o'ynaymiz?", 'Во что играем?', 'What shall we play?');
+  static String get modeNumbers => _t('Raqamlar', 'Цифры', 'Numbers');
+  static String get modeLetters => _t('Harflar', 'Буквы', 'Letters');
+  static String get findThis => _t('Buni top:', 'Найди это:', 'Find this:');
 
-  static const sortByColor = 'Ranglariga qarab sarala';
-  static const sortByShape = 'Shakliga qarab sarala';
+  static String get sortByColor =>
+      _t('Ranglariga qarab sarala', 'Разложи по цвету', 'Sort by color');
+  static String get sortByShape =>
+      _t('Shakliga qarab sarala', 'Разложи по форме', 'Sort by shape');
 
   // ---------- Modul A (qo'shimcha) ----------
-  static const timesTableTitle = 'Karra jadvali';
+  static String get timesTableTitle => _t('Karra jadvali', 'Таблица умножения', 'Times tables');
   static String timesLevel(int max) => '×1 – ×$max';
 
-  static const alphabetsTitle = 'Alifbolar';
-  static const chooseAlphabet = 'Alifboni tanla';
-  static const findLetter = 'Qaysi harf?';
+  static String get alphabetsTitle => _t('Alifbolar', 'Алфавиты', 'Alphabets');
+  static String get chooseAlphabet => _t('Alifboni tanla', 'Выбери алфавит', 'Choose an alphabet');
+  static String get findLetter => _t('Qaysi harf?', 'Какая буква?', 'Which letter?');
 
-  static const countingTitle = 'Sanash';
-  static const chooseLanguage = 'Tilni tanla';
-  static const findNumber = 'Qaysi son?';
+  static String get countingTitle => _t('Sanash', 'Счёт', 'Counting');
+  static String get chooseLanguage => _t('Tilni tanla', 'Выбери язык', 'Choose a language');
+  static String get findNumber => _t('Qaysi son?', 'Какое число?', 'Which number?');
 
-  static const langUzbek = 'Oʻzbek';
-  static const langRussian = 'Rus';
-  static const langEnglish = 'Ingliz';
+  static String get langUzbek => _t('Oʻzbek', 'Узбекский', 'Uzbek');
+  static String get langRussian => _t('Rus', 'Русский', 'Russian');
+  static String get langEnglish => _t('Ingliz', 'Английский', 'English');
 
-  static const shapeBuilderTitle = 'Shakldan buyum';
-  static const dragShapes = 'Shakllarni joyiga sudra';
-  static const objHouse = 'Uy';
-  static const objCar = 'Mashina';
-  static const objTree = 'Daraxt';
-  static const objRocket = 'Raketa';
-  static const objCat = 'Mushuk';
+  static String get shapeBuilderTitle =>
+      _t('Shakldan buyum', 'Собери из фигур', 'Build with shapes');
+  static String get dragShapes =>
+      _t('Shakllarni joyiga sudra', 'Перетащи фигуры на место', 'Drag the shapes into place');
+  static String get objHouse => _t('Uy', 'Дом', 'House');
+  static String get objCar => _t('Mashina', 'Машина', 'Car');
+  static String get objTree => _t('Daraxt', 'Дерево', 'Tree');
+  static String get objRocket => _t('Raketa', 'Ракета', 'Rocket');
+  static String get objCat => _t('Mushuk', 'Кошка', 'Cat');
 
-  static const coloringTitle = "Rasm bo'yash";
-  static const choosePicture = 'Rasmni tanla';
-  static const coloringHint = "Rangni tanla va rasmni bos";
-  static const coloringDone = 'Tayyor! ✅';
-  static const clearAll = 'Tozalash';
-  static const picBalloons = 'Sharlar';
-  static const picApple = 'Olma';
-  static const picPear = 'Nok';
-  static const picStrawberry = 'Qulupnay';
-  static const picCat = 'Mushuk';
-  static const picFish = 'Baliq';
-  static const picButterfly = 'Kapalak';
-  static const picHouse = 'Uy';
-  static const picStar = 'Yulduz';
-  static const picFlower = 'Gul';
+  static String get coloringTitle => _t("Rasm bo'yash", 'Раскраска', 'Coloring');
+  static String get choosePicture => _t('Rasmni tanla', 'Выбери картинку', 'Choose a picture');
+  static String get coloringHint => _t(
+        'Rangni tanla va rasmni bos',
+        'Выбери цвет и нажми на картинку',
+        'Pick a color and tap the picture',
+      );
+  static String get coloringDone => _t('Tayyor! ✅', 'Готово! ✅', 'Done! ✅');
+  static String get clearAll => _t('Tozalash', 'Очистить', 'Clear');
+  static String get picBalloons => _t('Sharlar', 'Шарики', 'Balloons');
+  static String get picApple => _t('Olma', 'Яблоко', 'Apple');
+  static String get picPear => _t('Nok', 'Груша', 'Pear');
+  static String get picStrawberry => _t('Qulupnay', 'Клубника', 'Strawberry');
+  static String get picCat => _t('Mushuk', 'Кошка', 'Cat');
+  static String get picFish => _t('Baliq', 'Рыбка', 'Fish');
+  static String get picButterfly => _t('Kapalak', 'Бабочка', 'Butterfly');
+  static String get picHouse => _t('Uy', 'Дом', 'House');
+  static String get picStar => _t('Yulduz', 'Звезда', 'Star');
+  static String get picFlower => _t('Gul', 'Цветок', 'Flower');
 
-  static const matchPairsTitle = 'Juftini top';
-  static const findPair = 'Juftini top:';
-  static const pairsFood = 'Ovqati';
-  static const pairsTools = 'Asbobi';
-  static const pairsMixed = 'Aralash';
+  static String get matchPairsTitle => _t('Juftini top', 'Найди пару', 'Find the pair');
+  static String get findPair => _t('Juftini top:', 'Найди пару:', 'Find the pair:');
+  static String get pairsFood => _t('Ovqati', 'Еда', 'Food');
+  static String get pairsTools => _t('Asbobi', 'Инструменты', 'Tools');
+  static String get pairsMixed => _t('Aralash', 'Вперемешку', 'Mixed');
 
-  static const patternsTitle = 'Naqsh';
-  static const continuePattern = 'Nima keladi?';
+  static String get patternsTitle => _t('Naqsh', 'Узоры', 'Patterns');
+  static String get continuePattern => _t('Nima keladi?', 'Что дальше?', 'What comes next?');
 
   // ---------- Modul B ----------
-  static const mathTitle = 'Matematik sarguzasht';
-  static String upTo(int max) => '$max gacha';
+  static String get mathTitle =>
+      _t('Matematik sarguzasht', 'Математическое приключение', 'Math adventure');
+  static String upTo(int max) => _t('$max gacha', 'до $max', 'up to $max');
 
-  static const wordBuilderTitle = "So'z quramchisi";
-  static const buildWord = "Harflardan so'z yig'";
+  static String get wordBuilderTitle => _t("So'z quramchisi", 'Собери слово', 'Word builder');
+  static String get buildWord =>
+      _t("Harflardan so'z yig'", 'Собери слово из букв', 'Make a word from the letters');
 
-  static const mazeQuizTitle = 'Labirint-kviz';
-  static const mazeHint = '🚪 Eshikdagi savolga javob ber!';
+  static String get mazeQuizTitle => _t('Labirint-kviz', 'Лабиринт-викторина', 'Maze quiz');
+  static String get mazeHint => _t(
+        '🚪 Eshikdagi savolga javob ber!',
+        '🚪 Ответь на вопрос у двери!',
+        '🚪 Answer the question at the door!',
+      );
 
-  static const sudokuTitle = 'Mini-Sudoku';
-  static const sudokuRule = 'Har qator, ustun va diagonal = 15';
-  static const sudokuPickCell = 'Bo\'sh katakni tanla';
+  static String get sudokuTitle => _t('Mini-Sudoku', 'Мини-судоку', 'Mini Sudoku');
+  static String get sudokuRule => _t(
+        'Har qator, ustun va diagonal = 15',
+        'Каждая строка, столбец и диагональ = 15',
+        'Every row, column and diagonal = 15',
+      );
+  static String get sudokuPickCell =>
+      _t("Bo'sh katakni tanla", 'Выбери пустую клетку', 'Pick an empty cell');
 
-  static const crosswordTitle = 'Mini-krossvord';
-  static String wordsCount(int n) => "$n ta so'z";
-  static const crosswordHint = "Rasmni bos, so'ng harflarni tanla";
+  static String get crosswordTitle => _t('Mini-krossvord', 'Мини-кроссворд', 'Mini crossword');
+  static String wordsCount(int n) => _t("$n ta so'z", '$n слов', '$n words');
+  static String get crosswordHint => _t(
+        "Rasmni bos, so'ng harflarni tanla",
+        'Нажми на картинку, потом выбери буквы',
+        'Tap a picture, then pick the letters',
+      );
 
-  static const arithmeticTitle = 'Arifmetika';
+  static String get arithmeticTitle => _t('Arifmetika', 'Арифметика', 'Arithmetic');
   static const levelAddSub = '+  −';
   static const levelMulDiv = '×  ÷';
   static const levelMixed = '+ − × ÷';
 
-  static const translateTitle = 'Tarjimon';
-  static const translateHint = 'Tarjimasini top:';
-  static const translateReverseHint = "O'zbekchasini top:";
-  static const levelReverse = 'Teskari';
-  static String optionsCount(int n) => '$n ta variant';
+  static String get translateTitle => _t('Tarjimon', 'Переводчик', 'Translator');
+  static String get translateHint => _t('Tarjimasini top:', 'Найди перевод:', 'Find the translation:');
+  static String get translateReverseHint =>
+      _t("O'zbekchasini top:", 'Найди по-узбекски:', 'Find it in Uzbek:');
+  static String get levelReverse => _t('Teskari', 'Наоборот', 'Reverse');
+  static String optionsCount(int n) => _t('$n ta variant', '$n варианта', '$n options');
 
-  static const wordLevelShort = '3–4 harf';
-  static const wordLevelMedium = '5 harf';
-  static const wordLevelLong = '6+ harf';
+  static String get wordLevelShort => _t('3–4 harf', '3–4 буквы', '3–4 letters');
+  static String get wordLevelMedium => _t('5 harf', '5 букв', '5 letters');
+  static String get wordLevelLong => _t('6+ harf', '6+ букв', '6+ letters');
 
   static String mazeSize(int n) => '$n×$n';
 
-  static const clockTitle = 'Soat';
-  static const whatTime = 'Soat necha?';
-  static const clockHours = 'Butun soat';
-  static const clockHalves = 'Yarim soat';
-  static const clockFives = '5 daqiqa';
+  static String get clockTitle => _t('Soat', 'Часы', 'Clock');
+  static String get whatTime => _t('Soat necha?', 'Который час?', 'What time is it?');
+  static String get clockHours => _t('Butun soat', 'Ровные часы', "O'clock");
+  static String get clockHalves => _t('Yarim soat', 'Полчаса', 'Half past');
+  static String get clockFives => _t('5 daqiqa', '5 минут', '5 minutes');
 
-  static const shopTitle = "Do'kon";
-  static const shopTotal = 'Hammasi necha pul?';
-  static const shopChange = 'Qaytim qancha?';
-  static const shopLevelTwo = '2 ta narsa';
-  static const shopLevelThree = '3 ta narsa';
-  static const shopLevelChange = 'Qaytim';
-  static String som(int thousands) => "$thousands 000 so'm";
-  static String shopPaid(int thousands) => "💵 Berildi: $thousands 000 so'm";
+  static String get shopTitle => _t("Do'kon", 'Магазин', 'Shop');
+  static String get shopTotal =>
+      _t('Hammasi necha pul?', 'Сколько стоит всё вместе?', 'How much is it all?');
+  static String get shopChange => _t('Qaytim qancha?', 'Какая сдача?', 'How much change?');
+  static String get shopLevelTwo => _t('2 ta narsa', '2 товара', '2 items');
+  static String get shopLevelThree => _t('3 ta narsa', '3 товара', '3 items');
+  static String get shopLevelChange => _t('Qaytim', 'Сдача', 'Change');
+  static String som(int thousands) =>
+      _t("$thousands 000 so'm", '$thousands 000 сум', '$thousands 000 soum');
+  static String shopPaid(int thousands) => _t(
+        "💵 Berildi: $thousands 000 so'm",
+        '💵 Дали: $thousands 000 сум',
+        '💵 Paid: $thousands 000 soum',
+      );
 
-  static const fractionsTitle = 'Kasrlar';
-  static const whichFraction = 'Qancha qismi rangli?';
-  static const whichBigger = 'Qaysi biri katta?';
+  static String get fractionsTitle => _t('Kasrlar', 'Дроби', 'Fractions');
+  static String get whichFraction =>
+      _t('Qancha qismi rangli?', 'Какая часть закрашена?', 'How much is colored?');
+  static String get whichBigger => _t('Qaysi biri katta?', 'Что больше?', 'Which is bigger?');
   static const fracBasic = '½  ⅓  ¼';
   static const fracMore = '⅕ … ⅛';
-  static const fracCompare = 'Solishtir';
+  static String get fracCompare => _t('Solishtir', 'Сравни', 'Compare');
 
   // ---------- Modul C ----------
-  static const equationsTitle = 'Tenglamalar';
-  static const findX = 'x nechaga teng?';
+  static String get equationsTitle => _t('Tenglamalar', 'Уравнения', 'Equations');
+  static String get findX => _t('x nechaga teng?', 'Чему равен x?', 'What is x?');
   static const levelEqAdd = 'x + a = b';
   static const levelEqMul = 'a · x = b';
   static const levelEqTwo = 'a · x + b = c';
 
-  static const sequenceTitle = 'Ketma-ketlik';
-  static const nextNumber = 'Keyingi son qaysi?';
+  static String get sequenceTitle => _t('Ketma-ketlik', 'Последовательность', 'Sequences');
+  static String get nextNumber =>
+      _t('Keyingi son qaysi?', 'Какое число следующее?', 'What number comes next?');
   static const levelSeqPlus = '+  −';
   static const levelSeqTimes = '×2  ×3';
-  static const levelSeqTricky = 'Qiyin naqsh';
+  static String get levelSeqTricky => _t('Qiyin naqsh', 'Хитрый узор', 'Tricky pattern');
 
-  static const geometryTitle = 'Geometriya';
-  static const perimeterQuestion = 'Perimetri nechaga teng?';
-  static const areaQuestion = 'Yuzi nechaga teng?';
-  static String missingSideQuestion(int area) => 'Yuzi $area sm². "?" nechaga teng?';
-  static const levelPerimeter = 'Perimetr';
-  static const levelArea = 'Yuz';
-  static const levelGeoMix = 'Uchburchak';
-  static String cm(int n) => '$n sm';
-  static String cm2(int n) => '$n sm²';
+  static String get geometryTitle => _t('Geometriya', 'Геометрия', 'Geometry');
+  static String get perimeterQuestion =>
+      _t('Perimetri nechaga teng?', 'Чему равен периметр?', 'What is the perimeter?');
+  static String get areaQuestion =>
+      _t('Yuzi nechaga teng?', 'Чему равна площадь?', 'What is the area?');
+  static String missingSideQuestion(int area) => _t(
+        'Yuzi $area sm². "?" nechaga teng?',
+        'Площадь $area см². Чему равен «?»?',
+        'The area is $area cm². What is "?"?',
+      );
+  static String get levelPerimeter => _t('Perimetr', 'Периметр', 'Perimeter');
+  static String get levelArea => _t('Yuz', 'Площадь', 'Area');
+  static String get levelGeoMix => _t('Uchburchak', 'Треугольник', 'Triangle');
+  static String cm(int n) => _t('$n sm', '$n см', '$n cm');
+  static String cm2(int n) => _t('$n sm²', '$n см²', '$n cm²');
 
-  static const percentTitle = 'Foizlar';
-  static String percentOf(int n, int p) => '$n ning $p% i';
-  static String discount(int p) => '🏷️ −$p% chegirma';
-  static const newPrice = 'Yangi narx qancha?';
+  static String get percentTitle => _t('Foizlar', 'Проценты', 'Percentages');
+  static String percentOf(int n, int p) => _t('$n ning $p% i', '$p% от $n', '$p% of $n');
+  static String discount(int p) => _t('🏷️ −$p% chegirma', '🏷️ Скидка −$p%', '🏷️ −$p% off');
+  static String get newPrice => _t('Yangi narx qancha?', 'Какая новая цена?', "What's the new price?");
   static const levelPercentEasy = '50%  25%  10%';
   static const levelPercentMore = '5% … 75%';
-  static const levelDiscount = 'Chegirma';
+  static String get levelDiscount => _t('Chegirma', 'Скидка', 'Discount');
 
-  static const geoTitle = 'Geografiya';
-  static const levelUzbekistan = 'Oʻzbekiston';
-  static const levelAsia = 'Osiyo';
-  static const levelWorld = 'Dunyo';
-  static String capitalOf(String country) => '$country poytaxti qaysi?';
+  static String get geoTitle => _t('Geografiya', 'География', 'Geography');
+  static String get levelUzbekistan => _t('Oʻzbekiston', 'Узбекистан', 'Uzbekistan');
+  static String get levelAsia => _t('Osiyo', 'Азия', 'Asia');
+  static String get levelWorld => _t('Dunyo', 'Мир', 'World');
+  static String capitalOf(String country) =>
+      _t('$country poytaxti qaysi?', 'Столица: $country?', 'Capital of $country?');
 
-  static const natureTitle = 'Tabiat';
-  static const levelAnimals = 'Hayvonlar';
-  static const levelPlants = 'Oʻsimliklar';
-  static const levelEarthSky = 'Yer va osmon';
+  static String get natureTitle => _t('Tabiat', 'Природа', 'Nature');
+  static String get levelAnimals => _t('Hayvonlar', 'Животные', 'Animals');
+  static String get levelPlants => _t('Oʻsimliklar', 'Растения', 'Plants');
+  static String get levelEarthSky => _t('Yer va osmon', 'Земля и небо', 'Earth and sky');
 
-  static const anagramTitle = 'Anagramma';
-  static const anagramHint = "Harflardan so'z tuz";
-  static const anagramRemove = "Harfni qaytarish uchun ustiga bos";
-  static const anagram5 = '5 harf';
-  static const anagram67 = '6–7 harf';
-  static const anagram8 = '8+ harf';
-  static const catAnimal = '🐾 Hayvon';
-  static const catFood = '🍎 Taom va meva';
-  static const catNature = '🌍 Tabiat';
-  static const catSchool = '🎒 Maktab';
-  static const catHome = '🏠 Uy';
-  static const catTransport = '🚗 Transport';
-  static const catJob = '👷 Kasb';
+  static String get anagramTitle => _t('Anagramma', 'Анаграмма', 'Anagram');
+  static String get anagramHint =>
+      _t("Harflardan so'z tuz", 'Составь слово из букв', 'Make a word from the letters');
+  static String get anagramRemove => _t(
+        'Harfni qaytarish uchun ustiga bos',
+        'Нажми на букву, чтобы вернуть её',
+        'Tap a letter to take it back',
+      );
+  static String get anagram5 => _t('5 harf', '5 букв', '5 letters');
+  static String get anagram67 => _t('6–7 harf', '6–7 букв', '6–7 letters');
+  static String get anagram8 => _t('8+ harf', '8+ букв', '8+ letters');
+  static String get catAnimal => _t('🐾 Hayvon', '🐾 Животное', '🐾 Animal');
+  static String get catFood => _t('🍎 Taom va meva', '🍎 Еда и фрукты', '🍎 Food and fruit');
+  static String get catNature => _t('🌍 Tabiat', '🌍 Природа', '🌍 Nature');
+  static String get catSchool => _t('🎒 Maktab', '🎒 Школа', '🎒 School');
+  static String get catHome => _t('🏠 Uy', '🏠 Дом', '🏠 Home');
+  static String get catTransport => _t('🚗 Transport', '🚗 Транспорт', '🚗 Transport');
+  static String get catJob => _t('👷 Kasb', '👷 Профессия', '👷 Job');
 
-  static const translatePlusTitle = 'Tarjimon+';
-  static const levelWords = "So'zlar";
-  static const levelPhrases = 'Birikmalar';
-  static const levelSentences = 'Gaplar';
+  static String get translatePlusTitle => _t('Tarjimon+', 'Переводчик+', 'Translator+');
+  static String get levelWords => _t("So'zlar", 'Слова', 'Words');
+  static String get levelPhrases => _t('Birikmalar', 'Словосочетания', 'Phrases');
+  static String get levelSentences => _t('Gaplar', 'Предложения', 'Sentences');
 
-  static const speedMathTitle = 'Tez hisob';
-  static const speedHint = "60 soniyada iloji boricha ko'p yech!";
+  static String get speedMathTitle => _t('Tez hisob', 'Быстрый счёт', 'Speed math');
+  static String get speedHint => _t(
+        "60 soniyada iloji boricha ko'p yech!",
+        'Реши как можно больше за 60 секунд!',
+        'Solve as many as you can in 60 seconds!',
+      );
   static String secondsLeft(int s) => '⏱ $s';
   static String correctCount(int n) => '✅ $n';
 
-  static const sudokuBigTitle = 'Sudoku';
-  static const sudokuBigRule = 'Qator, ustun va qutida raqam takrorlanmasin';
-  static const level4Easy = '4×4 oson';
-  static const level4Hard = '4×4 qiyin';
+  static String get sudokuBigTitle => _t('Sudoku', 'Судоку', 'Sudoku');
+  static String get sudokuBigRule => _t(
+        'Qator, ustun va qutida raqam takrorlanmasin',
+        'Цифры не повторяются в строке, столбце и квадрате',
+        'No repeats in any row, column or box',
+      );
+  static String get level4Easy => _t('4×4 oson', '4×4 легко', '4×4 easy');
+  static String get level4Hard => _t('4×4 qiyin', '4×4 сложно', '4×4 hard');
   static const level6 = '6×6';
 
   static String round(int current, int total) => '$current / $total';
-  static const tryAgain = "Yana urinib ko'r! 💪";
-  static const wellDone = 'Barakalla! 🎉';
+  static String get tryAgain =>
+      _t("Yana urinib ko'r! 💪", 'Попробуй ещё раз! 💪', 'Try again! 💪');
+  static String get wellDone => _t('Barakalla! 🎉', 'Молодец! 🎉', 'Well done! 🎉');
 
   // ---------- Natija ----------
-  static const result3 = 'Ajoyib! 🎉';
-  static const result2 = "Zo'r! 👏";
-  static const result1 = "Yaxshi! Yana o'ynaymizmi? 💪";
-  static const playAgain = "Yana o'ynash";
-  static const toHome = 'Bosh menyu';
+  static String get result3 => _t('Ajoyib! 🎉', 'Великолепно! 🎉', 'Amazing! 🎉');
+  static String get result2 => _t("Zo'r! 👏", 'Здорово! 👏', 'Great! 👏');
+  static String get result1 => _t(
+        "Yaxshi! Yana o'ynaymizmi? 💪",
+        'Хорошо! Сыграем ещё? 💪',
+        'Good! Play again? 💪',
+      );
+  static String get playAgain => _t("Yana o'ynash", 'Играть ещё', 'Play again');
+  static String get toHome => _t('Bosh menyu', 'Главное меню', 'Main menu');
 
   static String duration(Duration d) {
     final minutes = d.inMinutes;
     final seconds = d.inSeconds % 60;
-    if (minutes == 0) return '⏱ $seconds soniya';
-    return '⏱ $minutes daqiqa $seconds soniya';
+    if (minutes == 0) return _t('⏱ $seconds soniya', '⏱ $seconds сек', '⏱ $seconds sec');
+    return _t(
+      '⏱ $minutes daqiqa $seconds soniya',
+      '⏱ $minutes мин $seconds сек',
+      '⏱ $minutes min $seconds sec',
+    );
   }
 
   // ---------- Ota-ona paneli (FR-6, FR-7) ----------
-  static const parentPanelTitle = 'Ota-ona paneli';
-  static const parentEntry = 'Ota-ona uchun 🔒';
+  static String get parentPanelTitle =>
+      _t('Ota-ona paneli', 'Панель для родителей', 'Parent panel');
+  static String get parentEntry => _t('Ota-ona uchun 🔒', 'Для родителей 🔒', 'For parents 🔒');
 
-  static const pinEnter = 'PIN kodni kiriting';
-  static const pinCreate = "Yangi PIN kod o'ylab toping";
-  static const pinConfirm = 'PIN kodni yana bir marta kiriting';
-  static const pinWrong = "PIN noto'g'ri. Qayta urinib ko'ring";
-  static const pinMismatch = 'PIN kodlar mos kelmadi. Boshidan kiriting';
-  static const pinForgot = 'PIN ni unutdim';
-  static const pinChange = "PIN ni o'zgartirish";
-  static const pinChanged = "PIN o'zgartirildi ✅";
-  static const pinDelete = "O'chirish";
-  static String adultQuestion(int a, int b) => 'Kattalar uchun savol: $a × $b = ?';
-  static const adultAnswerHint = 'Javob';
-  static const adultWrong = "Javob noto'g'ri";
-  static const cancel = 'Bekor qilish';
-  static const confirm = 'Tasdiqlash';
+  static String get pinEnter => _t('PIN kodni kiriting', 'Введите PIN-код', 'Enter PIN');
+  static String get pinCreate =>
+      _t("Yangi PIN kod o'ylab toping", 'Придумайте новый PIN-код', 'Create a new PIN');
+  static String get pinConfirm =>
+      _t('PIN kodni yana bir marta kiriting', 'Введите PIN-код ещё раз', 'Enter the PIN again');
+  static String get pinWrong => _t(
+        "PIN noto'g'ri. Qayta urinib ko'ring",
+        'Неверный PIN. Попробуйте ещё раз',
+        'Wrong PIN. Please try again',
+      );
+  static String get pinMismatch => _t(
+        'PIN kodlar mos kelmadi. Boshidan kiriting',
+        'PIN-коды не совпали. Введите заново',
+        "PINs don't match. Start over",
+      );
+  static String get pinForgot => _t('PIN ni unutdim', 'Забыл PIN', 'Forgot PIN');
+  static String get pinChange => _t("PIN ni o'zgartirish", 'Сменить PIN', 'Change PIN');
+  static String get pinChanged => _t("PIN o'zgartirildi ✅", 'PIN изменён ✅', 'PIN changed ✅');
+  static String get pinDelete => _t("O'chirish", 'Стереть', 'Delete');
+  static String adultQuestion(int a, int b) => _t(
+        'Kattalar uchun savol: $a × $b = ?',
+        'Вопрос для взрослых: $a × $b = ?',
+        'Question for adults: $a × $b = ?',
+      );
+  static String get adultAnswerHint => _t('Javob', 'Ответ', 'Answer');
+  static String get adultWrong => _t("Javob noto'g'ri", 'Неверный ответ', 'Wrong answer');
+  static String get cancel => _t('Bekor qilish', 'Отмена', 'Cancel');
+  static String get confirm => _t('Tasdiqlash', 'Подтвердить', 'Confirm');
 
-  static const dailyLimitTitle = "Kunlik o'yin vaqti";
-  static const dailyLimitHint = "Vaqt tugaganda ilova bolaga muloyim eslatma ko'rsatadi";
-  static const limitOff = "O'chiq";
-  static String minutesShort(int m) => '$m daq';
+  static String get dailyLimitTitle =>
+      _t("Kunlik o'yin vaqti", 'Время игры в день', 'Daily play time');
+  static String get dailyLimitHint => _t(
+        "Vaqt tugaganda ilova bolaga muloyim eslatma ko'rsatadi",
+        'Когда время закончится, ребёнок увидит мягкое напоминание',
+        'When time is up, your child sees a gentle reminder',
+      );
+  static String get limitOff => _t("O'chiq", 'Выкл.', 'Off');
+  static String minutesShort(int m) => _t('$m daq', '$m мин', '$m min');
 
-  static const soundSettingsTitle = 'Ovoz';
-  static const soundEffects = "🔔 O'yin ovozlari";
-  static const soundEffectsHint = "To'g'ri javob va g'alaba ovozlari";
-  static const ttsReading = "🗣️ Ovozli o'qish";
-  static const ttsReadingHint = "So'z va savollarni ovoz chiqarib o'qiydi";
+  static String get soundSettingsTitle => _t('Ovoz', 'Звук', 'Sound');
+  static String get soundEffects => _t("🔔 O'yin ovozlari", '🔔 Звуки игры', '🔔 Game sounds');
+  static String get soundEffectsHint => _t(
+        "To'g'ri javob va g'alaba ovozlari",
+        'Звуки правильного ответа и победы',
+        'Right-answer and victory sounds',
+      );
+  static String get ttsReading => _t("🗣️ Ovozli o'qish", '🗣️ Озвучка', '🗣️ Read aloud');
+  static String get ttsReadingHint => _t(
+        "So'z va savollarni ovoz chiqarib o'qiydi",
+        'Читает слова и вопросы вслух',
+        'Reads words and questions out loud',
+      );
 
-  static const reportTitle = 'Hisobot';
-  static const reportEmpty = "Hali profil yo'q";
-  static String todayTime(int minutes) => 'Bugun: $minutes daqiqa';
-  static String totalPlays(int n) => "O'yinlar: $n marta";
-  static String totalStars(int n) => 'Yulduzlar: $n ⭐';
-  static String totalTime(int minutes) => "Jami o'yin vaqti: $minutes daqiqa";
-  static const favoriteGames = "Eng ko'p o'ynagani:";
+  static String get reportTitle => _t('Hisobot', 'Отчёт', 'Report');
+  static String get reportEmpty => _t("Hali profil yo'q", 'Профилей пока нет', 'No profiles yet');
+  static String todayTime(int minutes) =>
+      _t('Bugun: $minutes daqiqa', 'Сегодня: $minutes мин', 'Today: $minutes min');
+  static String totalPlays(int n) => _t("O'yinlar: $n marta", 'Игр: $n', 'Games played: $n');
+  static String totalStars(int n) => _t('Yulduzlar: $n ⭐', 'Звёзды: $n ⭐', 'Stars: $n ⭐');
+  static String totalTime(int minutes) => _t(
+        "Jami o'yin vaqti: $minutes daqiqa",
+        'Всего времени в игре: $minutes мин',
+        'Total play time: $minutes min',
+      );
+  static String get favoriteGames =>
+      _t("Eng ko'p o'ynagani:", 'Любимые игры:', 'Favorite games:');
 
   // Haftalik grafik va fanlar
-  static const weekdaysShort = ['Du', 'Se', 'Ch', 'Pa', 'Ju', 'Sh', 'Ya'];
-  static String weekTotal(int minutes) => 'Oxirgi 7 kun: $minutes daqiqa';
-  static String dayMinutes(String day, int minutes) => '$day: $minutes daqiqa';
-  static const subjectsTitle = 'Fanlar bo\'yicha (o\'rtacha ⭐):';
-  static const subjectsEmpty = "Hali o'ynalmagan";
+  static List<String> get weekdaysShort => _l(
+        const ['Du', 'Se', 'Ch', 'Pa', 'Ju', 'Sh', 'Ya'],
+        const ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'],
+        const ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'],
+      );
+  static String weekTotal(int minutes) => _t(
+        'Oxirgi 7 kun: $minutes daqiqa',
+        'Последние 7 дней: $minutes мин',
+        'Last 7 days: $minutes min',
+      );
+  static String dayMinutes(String day, int minutes) =>
+      _t('$day: $minutes daqiqa', '$day: $minutes мин', '$day: $minutes min');
+  static String get subjectsTitle => _t(
+        "Fanlar bo'yicha (o'rtacha ⭐):",
+        'По предметам (в среднем ⭐):',
+        'By subject (average ⭐):',
+      );
+  static String get subjectsEmpty =>
+      _t("Hali o'ynalmagan", 'Ещё не играл(а)', 'Not played yet');
   static String subjectStars(String subject, String stars) => '$subject — $stars ⭐';
-  static String strongSubject(String subject) => '💪 Kuchli tomoni: $subject';
-  static String practiceSubject(String subject) => "🌱 Ko'proq mashq kerak: $subject";
-  static const subjectMath = 'Matematika';
-  static const subjectLanguage = "Til va o'qish";
-  static const subjectLogic = 'Mantiq va xotira';
-  static const subjectCreative = 'Shakllar va ijod';
-  static const subjectWorld = 'Atrof-olam';
+  static String strongSubject(String subject) => _t(
+        '💪 Kuchli tomoni: $subject',
+        '💪 Сильная сторона: $subject',
+        '💪 Strongest: $subject',
+      );
+  static String practiceSubject(String subject) => _t(
+        "🌱 Ko'proq mashq kerak: $subject",
+        '🌱 Нужно больше практики: $subject',
+        '🌱 Needs more practice: $subject',
+      );
+  static String get subjectMath => _t('Matematika', 'Математика', 'Math');
+  static String get subjectLanguage => _t("Til va o'qish", 'Язык и чтение', 'Language & reading');
+  static String get subjectLogic => _t('Mantiq va xotira', 'Логика и память', 'Logic & memory');
+  static String get subjectCreative =>
+      _t('Shakllar va ijod', 'Фигуры и творчество', 'Shapes & creativity');
+  static String get subjectWorld => _t('Atrof-olam', 'Окружающий мир', 'The world around us');
 
-  static const timeUpTitle = "Bugun yaxshi o'ynading!";
-  static const timeUpBody = "Endi dam olamiz. Ertaga ko'rishamiz! 🌙";
+  static String get timeUpTitle =>
+      _t("Bugun yaxshi o'ynading!", 'Ты сегодня отлично поиграл!', 'You played great today!');
+  static String get timeUpBody => _t(
+        "Endi dam olamiz. Ertaga ko'rishamiz! 🌙",
+        'Теперь отдыхаем. До завтра! 🌙',
+        "Now it's time to rest. See you tomorrow! 🌙",
+      );
 
   // ---------- Sovg'alar do'koni (tangalar) ----------
-  static const rewardsTitle = "Sovg'alar do'koni";
+  static String get rewardsTitle => _t("Sovg'alar do'koni", 'Магазин подарков', 'Gift shop');
   static String coins(int n) => '🪙 $n';
   static String coinsEarned(int n) => '+$n 🪙';
   static String price(int n) => '🪙 $n';
-  static const rewardsAvatars = "Yangi do'stlar";
-  static const rewardsBackgrounds = 'Bosh ekran foni';
-  static const rewardsSelect = 'Tanlash';
-  static const rewardsSelected = 'Tanlangan ✅';
-  static const rewardsBought = "Yangi sovg'a! 🎉";
-  static const rewardsNotEnough = "Yana o'ynab tanga yig'! 💪";
+  static String get rewardsAvatars => _t("Yangi do'stlar", 'Новые друзья', 'New buddies');
+  static String get rewardsBackgrounds =>
+      _t('Bosh ekran foni', 'Фон главного экрана', 'Home background');
+  static String get rewardsSelect => _t('Tanlash', 'Выбрать', 'Select');
+  static String get rewardsSelected => _t('Tanlangan ✅', 'Выбрано ✅', 'Selected ✅');
+  static String get rewardsBought => _t("Yangi sovg'a! 🎉", 'Новый подарок! 🎉', 'New gift! 🎉');
+  static String get rewardsNotEnough => _t(
+        "Yana o'ynab tanga yig'! 💪",
+        'Играй ещё и собирай монетки! 💪',
+        'Keep playing to collect coins! 💪',
+      );
 
-  static const bgDefault = 'Oddiy';
-  static const bgSky = 'Osmon';
-  static const bgMeadow = "O'tloq";
-  static const bgCandy = 'Shirinlik';
-  static const bgSunset = 'Shafaq';
-  static const bgSpace = 'Koinot';
+  static String get bgDefault => _t('Oddiy', 'Обычный', 'Classic');
+  static String get bgSky => _t('Osmon', 'Небо', 'Sky');
+  static String get bgMeadow => _t("O'tloq", 'Луг', 'Meadow');
+  static String get bgCandy => _t('Shirinlik', 'Конфетки', 'Candy');
+  static String get bgSunset => _t('Shafaq', 'Закат', 'Sunset');
+  static String get bgSpace => _t('Koinot', 'Космос', 'Space');
 
   // ---------- Yutuqlar javoni (medallar) ----------
-  static const achievementsTitle = 'Yutuqlar javoni';
+  static String get achievementsTitle =>
+      _t('Yutuqlar javoni', 'Полка наград', 'Trophy shelf');
   static String medalsCount(int unlocked, int total) => '🏆 $unlocked/$total';
-  static const newMedal = 'Yangi medal! 🏅';
-  static const medalUnlocked = 'Ochildi ✅';
+  static String get newMedal => _t('Yangi medal! 🏅', 'Новая медаль! 🏅', 'New medal! 🏅');
+  static String get medalUnlocked => _t('Ochildi ✅', 'Получено ✅', 'Unlocked ✅');
 
-  static const medalFirstWin = "Birinchi g'alaba";
-  static const medalFirstWinHint = "1 ta o'yinni tugat";
-  static const medalPlayer = "O'yinchi";
-  static const medalPlayerHint = "10 ta o'yin tugat";
-  static const medalChampion = 'Chempion';
-  static const medalChampionHint = "50 ta o'yin tugat";
-  static const medalMaster = 'Ustoz';
-  static const medalMasterHint = "Biror o'yinda 3 yulduz ol";
-  static const medalStar5 = 'Yulduzcha';
-  static const medalStar5Hint = "5 xil o'yinda 3 yulduz ol";
-  static const medalExplorer = 'Kashfiyotchi';
-  static const medalExplorerHint = "5 xil o'yin o'yna";
-  static const medalTraveler = 'Sayohatchi';
-  static const medalTravelerHint = "O'z guruhingdagi hamma o'yinni o'yna";
-  static const medalCollector = 'Yulduzlar kolleksiyasi';
-  static const medalCollectorHint = "Jami 25 yulduz yig'";
-  static const medalStreak3 = 'Olovli 3 kun';
-  static const medalStreak3Hint = "3 kun ketma-ket o'yna";
-  static const medalStreak7 = 'Olovli hafta';
-  static const medalStreak7Hint = "7 kun ketma-ket o'yna";
+  static String get medalFirstWin => _t("Birinchi g'alaba", 'Первая победа', 'First win');
+  static String get medalFirstWinHint =>
+      _t("1 ta o'yinni tugat", 'Закончи 1 игру', 'Finish 1 game');
+  static String get medalPlayer => _t("O'yinchi", 'Игрок', 'Player');
+  static String get medalPlayerHint =>
+      _t("10 ta o'yin tugat", 'Закончи 10 игр', 'Finish 10 games');
+  static String get medalChampion => _t('Chempion', 'Чемпион', 'Champion');
+  static String get medalChampionHint =>
+      _t("50 ta o'yin tugat", 'Закончи 50 игр', 'Finish 50 games');
+  static String get medalMaster => _t('Ustoz', 'Мастер', 'Master');
+  static String get medalMasterHint => _t(
+        "Biror o'yinda 3 yulduz ol",
+        'Получи 3 звезды в любой игре',
+        'Get 3 stars in any game',
+      );
+  static String get medalStar5 => _t('Yulduzcha', 'Звёздочка', 'Little star');
+  static String get medalStar5Hint => _t(
+        "5 xil o'yinda 3 yulduz ol",
+        'Получи 3 звезды в 5 разных играх',
+        'Get 3 stars in 5 different games',
+      );
+  static String get medalExplorer => _t('Kashfiyotchi', 'Исследователь', 'Explorer');
+  static String get medalExplorerHint =>
+      _t("5 xil o'yin o'yna", 'Сыграй в 5 разных игр', 'Play 5 different games');
+  static String get medalTraveler => _t('Sayohatchi', 'Путешественник', 'Traveler');
+  static String get medalTravelerHint => _t(
+        "O'z guruhingdagi hamma o'yinni o'yna",
+        'Сыграй во все игры своей группы',
+        'Play every game in your group',
+      );
+  static String get medalCollector =>
+      _t('Yulduzlar kolleksiyasi', 'Коллекция звёзд', 'Star collector');
+  static String get medalCollectorHint =>
+      _t("Jami 25 yulduz yig'", 'Собери 25 звёзд', 'Collect 25 stars');
+  static String get medalStreak3 => _t('Olovli 3 kun', 'Огненные 3 дня', 'Fiery 3 days');
+  static String get medalStreak3Hint =>
+      _t("3 kun ketma-ket o'yna", 'Играй 3 дня подряд', 'Play 3 days in a row');
+  static String get medalStreak7 => _t('Olovli hafta', 'Огненная неделя', 'Fiery week');
+  static String get medalStreak7Hint =>
+      _t("7 kun ketma-ket o'yna", 'Играй 7 дней подряд', 'Play 7 days in a row');
 
   // ---------- Yordamchi qahramon (Donish 🦉) ----------
-  static const mascotName = "Donish — yordamchi boyo'g'li";
-  static List<String> mascotGreetings(String name) => [
-        "Bugun nima o'ynaymiz, $name? 🎈",
-        "$name, seni ko'rganimdan xursandman! 😊",
-        'Qani, $name, yangi sarguzasht boshlaymizmi? 🚀',
-        'Bugun ham bilimdon bo\'lamiz, $name! 📚',
-      ];
-  static const mascotPraise3 = [
-    "Zo'r! Sen haqiqiy bilimdonsan! 🌟",
-    'Voy-boy! Hammasini topding! 🏆',
-    'Men sen bilan faxrlanaman! 🦉💛',
-  ];
-  static const mascotPraise2 = [
-    "Juda yaxshi! Yana bir oz — va 3 yulduz! ⭐",
-    "Barakalla! Sen tez o'rganyapsan! 👍",
-  ];
-  static const mascotPraise1 = [
-    "Yaxshi boshlanish! Birga yana urinib ko'ramiz! 💪",
-    "Har safar yaxshiroq bo'lyapsan! 🌱",
-  ];
-  static const mascotTimeUp = ["Ko'zlaring dam olsin, ertaga ko'rishamiz! 🌙"];
+  static String get mascotName =>
+      _t("Donish — yordamchi boyo'g'li", 'Дониш — сова-помощник', 'Donish — your owl helper');
+  static List<String> mascotGreetings(String name) => _l(
+        [
+          "Bugun nima o'ynaymiz, $name? 🎈",
+          "$name, seni ko'rganimdan xursandman! 😊",
+          'Qani, $name, yangi sarguzasht boshlaymizmi? 🚀',
+          "Bugun ham bilimdon bo'lamiz, $name! 📚",
+        ],
+        [
+          'Во что сегодня поиграем, $name? 🎈',
+          '$name, я рад тебя видеть! 😊',
+          'Ну что, $name, начнём новое приключение? 🚀',
+          'Сегодня тоже станем умнее, $name! 📚',
+        ],
+        [
+          'What shall we play today, $name? 🎈',
+          "$name, I'm so happy to see you! 😊",
+          'Ready for a new adventure, $name? 🚀',
+          "Let's get smarter today, $name! 📚",
+        ],
+      );
+  static List<String> get mascotPraise3 => _l(
+        const [
+          "Zo'r! Sen haqiqiy bilimdonsan! 🌟",
+          'Voy-boy! Hammasini topding! 🏆',
+          'Men sen bilan faxrlanaman! 🦉💛',
+        ],
+        const [
+          'Супер! Ты настоящий знаток! 🌟',
+          'Ого! Ты всё отгадал! 🏆',
+          'Я горжусь тобой! 🦉💛',
+        ],
+        const [
+          "Awesome! You're a real whiz! 🌟",
+          'Wow! You got them all! 🏆',
+          "I'm so proud of you! 🦉💛",
+        ],
+      );
+  static List<String> get mascotPraise2 => _l(
+        const [
+          'Juda yaxshi! Yana bir oz — va 3 yulduz! ⭐',
+          "Barakalla! Sen tez o'rganyapsan! 👍",
+        ],
+        const [
+          'Очень хорошо! Ещё чуть-чуть — и 3 звезды! ⭐',
+          'Молодец! Ты быстро учишься! 👍',
+        ],
+        const [
+          'Very good! Just a bit more for 3 stars! ⭐',
+          "Well done! You're learning fast! 👍",
+        ],
+      );
+  static List<String> get mascotPraise1 => _l(
+        const [
+          "Yaxshi boshlanish! Birga yana urinib ko'ramiz! 💪",
+          "Har safar yaxshiroq bo'lyapsan! 🌱",
+        ],
+        const [
+          'Хорошее начало! Попробуем ещё раз вместе! 💪',
+          'С каждым разом у тебя получается лучше! 🌱',
+        ],
+        const [
+          "Good start! Let's try again together! 💪",
+          "You're getting better every time! 🌱",
+        ],
+      );
+  static List<String> get mascotTimeUp => _l(
+        const ["Ko'zlaring dam olsin, ertaga ko'rishamiz! 🌙"],
+        const ['Пусть глазки отдохнут, увидимся завтра! 🌙'],
+        const ['Let your eyes rest, see you tomorrow! 🌙'],
+      );
 
   // ---------- Sertifikat ----------
-  static const certificateButton = '📜 Sertifikat';
-  static String certificateLocked(int left) => "📜 Sertifikatgacha yana $left ta o'yin qoldi";
-  static const certificateLockedHint = "Guruhingdagi har bir o'yinda kamida 1 ⭐ ol";
-  static const certificateTitle = 'SERTIFIKAT';
-  static const certificateGiven = 'Ushbu sertifikat';
-  static String certificateFor(String module) =>
-      "«$module» bo'limidagi barcha o'yinlarni muvaffaqiyatli o'tgani uchun beriladi";
-  static String certificateStars(int stars) => '⭐ $stars yulduz';
-  static String certificateMedals(int medals) => '🏅 $medals medal';
-  static String certificateDate(String date) => 'Sana: $date';
-  static const certificatePraise = ["Tabriklayman! Sen haqiqiy Aqlli Do'stsan! 🎓"];
-  static const certificateSaveHint = '📸 Saqlash uchun ekranni skrinshot qiling';
+  static String get certificateButton => _t('📜 Sertifikat', '📜 Сертификат', '📜 Certificate');
+  static String certificateLocked(int left) => _t(
+        "📜 Sertifikatgacha yana $left ta o'yin qoldi",
+        '📜 До сертификата осталось игр: $left',
+        '📜 $left more games until your certificate',
+      );
+  static String get certificateLockedHint => _t(
+        "Guruhingdagi har bir o'yinda kamida 1 ⭐ ol",
+        'Получи хотя бы 1 ⭐ в каждой игре своей группы',
+        'Get at least 1 ⭐ in every game of your group',
+      );
+  static String get certificateTitle => _t('SERTIFIKAT', 'СЕРТИФИКАТ', 'CERTIFICATE');
+  static String get certificateGiven =>
+      _t('Ushbu sertifikat', 'Этот сертификат вручается', 'This certificate is awarded to');
+  static String certificateFor(String module) => _t(
+        "«$module» bo'limidagi barcha o'yinlarni muvaffaqiyatli o'tgani uchun beriladi",
+        'за успешное прохождение всех игр раздела «$module»',
+        'for successfully completing every game in "$module"',
+      );
+  static String certificateStars(int stars) =>
+      _t('⭐ $stars yulduz', '⭐ Звёзд: $stars', '⭐ $stars stars');
+  static String certificateMedals(int medals) =>
+      _t('🏅 $medals medal', '🏅 Медалей: $medals', '🏅 $medals medals');
+  static String certificateDate(String date) => _t('Sana: $date', 'Дата: $date', 'Date: $date');
+  static List<String> get certificatePraise => _l(
+        const ["Tabriklayman! Sen haqiqiy Aqlli Do'stsan! 🎓"],
+        const ['Поздравляю! Ты настоящий Умный Друг! 🎓'],
+        const ["Congratulations! You're a true Smart Friend! 🎓"],
+      );
+  static String get certificateSaveHint => _t(
+        '📸 Saqlash uchun ekranni skrinshot qiling',
+        '📸 Чтобы сохранить, сделайте скриншот экрана',
+        '📸 Take a screenshot to save it',
+      );
 
   // ---------- Birinchi ochilish ko'rsatmasi ----------
-  static const onboarding1 = "Salom! Men Donish. Birga o'ynab o'rganamiz! 🎮";
-  static const onboarding2 = "O'yin o'ynab ⭐ yulduz va 🪙 tanga yig'. Tangalarga sovg'a ol! 🎁";
-  static const onboarding3 =
-      "Ota-onalar uchun: 🔒 tugmasi — vaqt chegarasi va hisobot. Ilova internetsiz ishlaydi, reklama yo'q.";
-  static const onboardingNext = 'Keyingi ➡️';
-  static const onboardingStart = 'Boshlash 🚀';
-  static const onboardingSkip = "O'tkazib yuborish";
+  static String get onboarding1 => _t(
+        "Salom! Men Donish. Birga o'ynab o'rganamiz! 🎮",
+        'Привет! Я Дониш. Будем учиться, играя вместе! 🎮',
+        "Hi! I'm Donish. Let's play and learn together! 🎮",
+      );
+  static String get onboarding2 => _t(
+        "O'yin o'ynab ⭐ yulduz va 🪙 tanga yig'. Tangalarga sovg'a ol! 🎁",
+        'Играй и собирай ⭐ звёзды и 🪙 монетки. Меняй монетки на подарки! 🎁',
+        'Play to collect ⭐ stars and 🪙 coins. Trade coins for gifts! 🎁',
+      );
+  static String get onboarding3 => _t(
+        "Ota-onalar uchun: 🔒 tugmasi — vaqt chegarasi va hisobot. Ilova internetsiz ishlaydi, reklama yo'q.",
+        'Для родителей: кнопка 🔒 — лимит времени и отчёт. Приложение работает без интернета, рекламы нет.',
+        'For parents: the 🔒 button opens time limits and reports. Works offline, no ads.',
+      );
+  static String get onboardingNext => _t('Keyingi ➡️', 'Далее ➡️', 'Next ➡️');
+  static String get onboardingStart => _t('Boshlash 🚀', 'Начать 🚀', 'Start 🚀');
+  static String get onboardingSkip => _t("O'tkazib yuborish", 'Пропустить', 'Skip');
 
   // ---------- Kunlik seriya ----------
   static String streakDays(int n) => '🔥 $n';
   static String streakBonus(int days, int coins) => days > 1
-      ? '🔥 $days kun ketma-ket! +$coins 🪙'
-      : "🔥 Bugungi birinchi o'yin! +$coins 🪙";
+      ? _t(
+          '🔥 $days kun ketma-ket! +$coins 🪙',
+          '🔥 $days дн. подряд! +$coins 🪙',
+          '🔥 $days days in a row! +$coins 🪙',
+        )
+      : _t(
+          "🔥 Bugungi birinchi o'yin! +$coins 🪙",
+          '🔥 Первая игра сегодня! +$coins 🪙',
+          '🔥 First game today! +$coins 🪙',
+        );
 }

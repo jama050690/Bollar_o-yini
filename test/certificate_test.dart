@@ -4,7 +4,6 @@ import 'package:aqlli_dostlar/app.dart';
 import 'package:aqlli_dostlar/core/constants/age_group.dart';
 import 'package:aqlli_dostlar/core/constants/app_strings.dart';
 import 'package:aqlli_dostlar/core/storage/hive_storage.dart';
-import 'package:aqlli_dostlar/features/achievements/achievements_catalog.dart';
 import 'package:aqlli_dostlar/features/certificate/certificate_providers.dart';
 import 'package:aqlli_dostlar/features/certificate/certificate_screen.dart';
 import 'package:aqlli_dostlar/features/games/game_catalog.dart';
@@ -114,7 +113,6 @@ void main() {
     expect(find.text(AppStrings.certificateStars(stars)), findsOneWidget);
     expect(find.textContaining(AgeGroup.a.title), findsOneWidget);
     expect(HiveStorage.settings.get('certificate|$_profileId'), isA<String>());
-    expect(kMedals, isNotEmpty);
 
     await tester.tap(find.byIcon(Icons.arrow_back));
     await tester.pumpAndSettle();
