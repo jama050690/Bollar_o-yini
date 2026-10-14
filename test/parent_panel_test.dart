@@ -184,6 +184,25 @@ void main() {
       await tester.pumpAndSettle();
     }
 
+    /// Ota-ona darvozasi: savoldagi misolni yechib kiritadi.
+    Future<void> answerAdultQuestion(WidgetTester tester) async {
+      final question = tester
+          .widgetList<Text>(find.byType(Text))
+          .map((t) => t.data ?? '')
+          .firstWhere((s) => s.contains('×'));
+      final match = RegExp(r'(\d+) × (\d+)').firstMatch(question)!;
+      await tester.enterText(find.byType(TextField), '${int.parse(match[1]!) * int.parse(match[2]!)}');
+      await tester.tap(find.text(AppStrings.confirm));
+      await tester.pumpAndSettle();
+    }
+
+    Future<void> passGate(WidgetTester tester) async {
+      expect(find.text(AppStrings.parentGateTitle), findsOneWidget);
+      await tester.tap(find.text(AppStrings.parentGateButton));
+      await tester.pumpAndSettle();
+      await answerAdultQuestion(tester);
+    }
+
     ProviderContainer containerOf(WidgetTester tester) =>
         ProviderScope.containerOf(tester.element(find.byType(MaterialApp)));
 
@@ -193,6 +212,7 @@ void main() {
 
       await tester.tap(find.text('🔒'));
       await tester.pumpAndSettle();
+      await passGate(tester);
       expect(find.text(AppStrings.pinCreate), findsOneWidget);
 
       await typePin(tester, '1234');
@@ -236,6 +256,7 @@ void main() {
       await openApp(tester);
       await tester.tap(find.text('🔒'));
       await tester.pumpAndSettle();
+      await passGate(tester);
 
       await typePin(tester, '1234');
       await typePin(tester, '4321');

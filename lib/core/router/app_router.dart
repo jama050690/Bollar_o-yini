@@ -8,6 +8,7 @@ import '../../features/games/game_result.dart';
 import '../../features/games/result/result_screen.dart';
 import '../../features/home/home_screen.dart';
 import '../../features/onboarding/onboarding_screen.dart';
+import '../../features/parent_panel/about_screen.dart';
 import '../../features/parent_panel/parent_panel_screen.dart';
 import '../../features/parent_panel/parent_settings.dart';
 import '../../features/parent_panel/pin_screen.dart';
@@ -22,7 +23,10 @@ import 'app_routes.dart';
 export 'app_routes.dart';
 
 bool _isParentArea(String location) =>
-    location == AppRoutes.parentPanel || location == AppRoutes.parentPin;
+    location == AppRoutes.parentPanel || location.startsWith('${AppRoutes.parentPanel}/');
+
+/// PIN ekranidan boshqa barcha ota-ona sahifalari (panel, maxfiylik, ilova haqida).
+bool _needsParentPin(String location) => _isParentArea(location) && location != AppRoutes.parentPin;
 
 final appRouterProvider = Provider<GoRouter>((ref) {
   final router = GoRouter(
@@ -57,7 +61,7 @@ final appRouterProvider = Provider<GoRouter>((ref) {
         return AppRoutes.home;
       }
       // FR-6: panelga PIN kiritmasdan kirib bo'lmaydi.
-      if (location == AppRoutes.parentPanel && !ref.read(parentUnlockedProvider)) {
+      if (_needsParentPin(location) && !ref.read(parentUnlockedProvider)) {
         return AppRoutes.parentPin;
       }
       if (location == AppRoutes.result && state.extra is! GameResult) {
@@ -112,6 +116,14 @@ final appRouterProvider = Provider<GoRouter>((ref) {
         path: AppRoutes.parentPin,
         builder: (context, state) =>
             PinScreen(changePin: state.uri.queryParameters['change'] == '1'),
+      ),
+      GoRoute(
+        path: AppRoutes.parentPrivacy,
+        builder: (context, state) => const PrivacyPolicyScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.parentAbout,
+        builder: (context, state) => const AboutScreen(),
       ),
       GoRoute(
         path: AppRoutes.timeUp,

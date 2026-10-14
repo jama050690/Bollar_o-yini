@@ -169,6 +169,25 @@ class ParentPanelScreen extends ConsumerWidget {
                   label: Text(AppStrings.pinChange),
                 ),
               ),
+              const SizedBox(height: 12),
+              Wrap(
+                spacing: 12,
+                runSpacing: 12,
+                children: [
+                  for (final (label, route) in [
+                    (AppStrings.privacyButton, AppRoutes.parentPrivacy),
+                    (AppStrings.aboutButton, AppRoutes.parentAbout),
+                  ])
+                    OutlinedButton(
+                      style: OutlinedButton.styleFrom(
+                        minimumSize: const Size(AppSizes.minTapTarget, AppSizes.minTapTarget),
+                        textStyle: const TextStyle(fontSize: 18),
+                      ),
+                      onPressed: () => context.push(route),
+                      child: Text(label),
+                    ),
+                ],
+              ),
             ],
           ),
         ),

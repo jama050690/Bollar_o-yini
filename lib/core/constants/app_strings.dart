@@ -356,6 +356,14 @@ abstract final class AppStrings {
         'Вопрос для взрослых: $a × $b = ?',
         'Question for adults: $a × $b = ?',
       );
+  static String get parentGateTitle =>
+      _t("Bu bo'lim kattalar uchun", 'Этот раздел для взрослых', 'This section is for grown-ups');
+  static String get parentGateHint => _t(
+        'Davom etish uchun kattalar savoliga javob bering',
+        'Чтобы продолжить, ответьте на вопрос для взрослых',
+        'To continue, answer a question for adults',
+      );
+  static String get parentGateButton => _t('Men kattaman ➡️', 'Я взрослый ➡️', "I'm a grown-up ➡️");
   static String get adultAnswerHint => _t('Javob', 'Ответ', 'Answer');
   static String get adultWrong => _t("Javob noto'g'ri", 'Неверный ответ', 'Wrong answer');
   static String get cancel => _t('Bekor qilish', 'Отмена', 'Cancel');
@@ -660,4 +668,187 @@ abstract final class AppStrings {
           '🔥 Первая игра сегодня! +$coins 🪙',
           '🔥 First game today! +$coins 🪙',
         );
+
+  // ---------- Maxfiylik siyosati va ilova haqida (Apple 5.1.1) ----------
+  static String get privacyButton =>
+      _t('🔐 Maxfiylik siyosati', '🔐 Политика конфиденциальности', '🔐 Privacy policy');
+  static String get aboutButton => _t('ℹ️ Ilova haqida', 'ℹ️ О приложении', 'ℹ️ About the app');
+  static String get privacyTitle =>
+      _t('Maxfiylik siyosati', 'Политика конфиденциальности', 'Privacy policy');
+  static String get aboutTitle => _t('Ilova haqida', 'О приложении', 'About the app');
+  static String privacyEffective(String date) =>
+      _t('Kuchga kirgan sana: $date', 'Дата вступления в силу: $date', 'Effective date: $date');
+
+  static List<(String, String)> privacySections(String author, String email) => switch (current) {
+        AppLanguage.uz => [
+            (
+              'Qisqacha',
+              "\"Aqlli Do'stlar\" hech qanday shaxsiy ma'lumot yig'maydi, hech kimga yubormaydi va "
+                  "internetdan foydalanmaydi. Barcha ma'lumotlar faqat sizning qurilmangizda saqlanadi.",
+            ),
+            (
+              '1. Ilova haqida',
+              "\"Aqlli Do'stlar\" — 5–12 yoshli bolalar uchun ta'limiy o'yin. Ilova to'liq oflayn "
+                  "ishlaydi va internetga ulanish ruxsatini so'ramaydi.",
+            ),
+            (
+              "2. Qurilmada saqlanadigan ma'lumotlar",
+              "O'yin ishlashi uchun faqat qurilmaning o'zida saqlanadi:\n"
+                  "• Bola profili: ism (yoki laqab), yosh va avatar;\n"
+                  "• O'yin natijalari: yulduzlar, o'ynalganlar soni, o'yin vaqti;\n"
+                  '• Kunlik ekran vaqti hisobi;\n'
+                  '• Ota-ona sozlamalari: PIN kod, kunlik vaqt chegarasi, til.\n'
+                  "Bu ma'lumotlar biz yoki boshqa birov tomonidan ko'rilmaydi, serverga "
+                  'yuborilmaydi va uchinchi tomonlarga berilmaydi.',
+            ),
+            (
+              '3. Biz nimalarni qilmaymiz',
+              "• Reklama ko'rsatmaymiz;\n"
+                  "• Ilova ichida xarid yo'q;\n"
+                  '• Analitika, kuzatuv (tracking) yoki reklama identifikatorlari yo\'q;\n'
+                  "• Joylashuv, kamera, mikrofon, kontaktlar yoki fayllarga kirish so'ramaymiz;\n"
+                  "• Ijtimoiy tarmoqlar yoki tashqi havolalar yo'q.",
+            ),
+            (
+              "4. Ovozli o'qish",
+              "Ba'zi o'yinlarda so'zlarni ovoz chiqarib aytish uchun qurilmaga o'rnatilgan nutq "
+                  "sintezi (Text-to-Speech) ishlatiladi. Ilova unga faqat aytiladigan so'zni beradi "
+                  "va hech qanday ma'lumotni internetga yubormaydi.",
+            ),
+            (
+              '5. Bolalar maxfiyligi',
+              "Ilova bolalardan shaxsiy ma'lumot yig'maydi. Bu COPPA, GDPR-K va Google Play "
+                  '"Families" siyosati tamoyillariga mos. Ota-ona paneli PIN kod bilan himoyalangan.',
+            ),
+            (
+              "6. Ma'lumotlarni o'chirish",
+              "Barcha ma'lumotlarni o'chirish uchun ilovani qurilmadan o'chiring yoki qurilma "
+                  "sozlamalarida ilova ma'lumotlarini tozalang. Bizda hech qanday nusxa saqlanmaydi.",
+            ),
+            (
+              "7. O'zgarishlar",
+              "Siyosat o'zgarsa, yangi versiya yangi sana bilan e'lon qilinadi.",
+            ),
+            ('8. Aloqa', "Savollar bo'lsa: $author — $email"),
+          ],
+        AppLanguage.ru => [
+            (
+              'Кратко',
+              '«Aqlli Do\'stlar» не собирает никаких личных данных, никуда их не передаёт и не '
+                  'использует интернет. Все данные хранятся только на вашем устройстве.',
+            ),
+            (
+              '1. О приложении',
+              '«Aqlli Do\'stlar» — обучающая игра для детей 5–12 лет. Приложение работает полностью '
+                  'офлайн и не запрашивает доступ к интернету.',
+            ),
+            (
+              '2. Данные на устройстве',
+              'Для работы игры только на самом устройстве хранятся:\n'
+                  '• Профиль ребёнка: имя (или прозвище), возраст и аватар;\n'
+                  '• Результаты игр: звёзды, число игр, время игры;\n'
+                  '• Счётчик ежедневного экранного времени;\n'
+                  '• Настройки родителей: PIN-код, дневной лимит, язык.\n'
+                  'Эти данные никто не видит, они не отправляются на сервер и не передаются '
+                  'третьим лицам.',
+            ),
+            (
+              '3. Чего мы не делаем',
+              '• Нет рекламы;\n'
+                  '• Нет встроенных покупок;\n'
+                  '• Нет аналитики, отслеживания и рекламных идентификаторов;\n'
+                  '• Нет доступа к геолокации, камере, микрофону, контактам и файлам;\n'
+                  '• Нет социальных функций и внешних ссылок.',
+            ),
+            (
+              '4. Озвучивание',
+              'В некоторых играх слова читаются вслух встроенным в устройство синтезатором речи '
+                  '(Text-to-Speech). Приложение передаёт ему только произносимое слово и ничего не '
+                  'отправляет в интернет.',
+            ),
+            (
+              '5. Конфиденциальность детей',
+              'Приложение не собирает личные данные детей — в соответствии с COPPA, GDPR-K и '
+                  'политикой Google Play «Families». Панель для родителей защищена PIN-кодом.',
+            ),
+            (
+              '6. Удаление данных',
+              'Чтобы удалить все данные, удалите приложение или очистите его данные в настройках '
+                  'устройства. Мы не храним никаких копий.',
+            ),
+            (
+              '7. Изменения',
+              'При изменении политики новая версия будет опубликована с новой датой.',
+            ),
+            ('8. Контакты', 'Вопросы: $author — $email'),
+          ],
+        AppLanguage.en => [
+            (
+              'Summary',
+              '"Aqlli Do\'stlar" does not collect, share or transmit any personal data and does not '
+                  'use the internet. All data stays on your device.',
+            ),
+            (
+              '1. About the app',
+              '"Aqlli Do\'stlar" ("Smart Friends") is an educational game for children aged 5–12. '
+                  'It works fully offline and does not request internet access.',
+            ),
+            (
+              '2. Data stored on the device',
+              'To make the game work, the following is stored only on the device:\n'
+                  '• Child profile: name (or nickname), age and avatar;\n'
+                  '• Game results: stars, number of plays, play time;\n'
+                  '• Daily screen-time counter;\n'
+                  '• Parental settings: PIN, daily time limit, language.\n'
+                  'This data is never seen by us or anyone else, never sent to a server and never '
+                  'shared with third parties.',
+            ),
+            (
+              '3. What we do not do',
+              '• No advertising;\n'
+                  '• No in-app purchases;\n'
+                  '• No analytics, tracking or advertising identifiers;\n'
+                  '• No access to location, camera, microphone, contacts or files;\n'
+                  '• No social features or external links.',
+            ),
+            (
+              '4. Text-to-speech',
+              "Some games read words aloud using the device's built-in text-to-speech engine. "
+                  'The app only passes the word to be spoken and sends no data over the internet.',
+            ),
+            (
+              "5. Children's privacy",
+              'The app collects no personal information from children, in line with COPPA, GDPR-K '
+                  'and the Google Play Families Policy. The parent panel is protected by a PIN.',
+            ),
+            (
+              '6. Deleting data',
+              "To delete all data, uninstall the app or clear its data in the device settings. "
+                  'We keep no copy.',
+            ),
+            (
+              '7. Changes',
+              'If this policy changes, the new version will be published with a new date.',
+            ),
+            ('8. Contact', 'Questions: $author — $email'),
+          ],
+      };
+
+  static String aboutVersion(String version) =>
+      _t('Versiya $version', 'Версия $version', 'Version $version');
+  static String get aboutDescription => _t(
+        "5–12 yoshli bolalar uchun ta'limiy o'yinlar: matematika, til, mantiq va ijod.",
+        'Обучающие игры для детей 5–12 лет: математика, язык, логика и творчество.',
+        'Educational games for children aged 5–12: maths, language, logic and creativity.',
+      );
+  static List<String> get aboutBadges => _l(
+        ["🚫 Reklama yo'q", "🌐 Internet kerak emas", "🔒 Ma'lumot yig'ilmaydi", "🛒 Xarid yo'q"],
+        ['🚫 Без рекламы', '🌐 Без интернета', '🔒 Данные не собираются', '🛒 Без покупок'],
+        ['🚫 No ads', '🌐 No internet needed', '🔒 No data collected', '🛒 No purchases'],
+      );
+  static String aboutAuthor(String author) =>
+      _t('Muallif: $author', 'Автор: $author', 'Developer: $author');
+  static String get aboutContact => _t('Aloqa:', 'Контакты:', 'Contact:');
+  static String get copy => _t('Nusxa olish', 'Копировать', 'Copy');
+  static String get copied =>_t('Nusxa olindi ✅', 'Скопировано ✅', 'Copied ✅');
 }

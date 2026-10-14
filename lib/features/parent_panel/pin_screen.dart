@@ -30,11 +30,21 @@ class _PinScreenState extends ConsumerState<PinScreen> {
   String? _firstPin;
   String? _error;
 
+  /// Ota-ona darvozasi (Apple Kids 1.3): birinchi PIN o'rnatishdan oldin kattalar savoli.
+  /// PIN bor bo'lsa yoki paneldan o'zgartirilayotgan bo'lsa — kerak emas.
+  late bool _gatePassed;
+
   @override
   void initState() {
     super.initState();
     final hasPin = ref.read(parentSettingsProvider).hasPin;
     _step = hasPin && !widget.changePin ? _PinStep.enter : _PinStep.create;
+    _gatePassed = hasPin || widget.changePin;
+  }
+
+  Future<void> _openGate() async {
+    final ok = await ParentalGateDialog.show(context);
+    if (ok && mounted) setState(() => _gatePassed = true);
   }
 
   String get _title => switch (_step) {
@@ -106,11 +116,8 @@ class _PinScreenState extends ConsumerState<PinScreen> {
   }
 
   Future<void> _onForgot() async {
-    final ok = await showDialog<bool>(
-      context: context,
-      builder: (_) => const _AdultQuestionDialog(),
-    );
-    if (ok != true || !mounted) return;
+    final ok = await ParentalGateDialog.show(context);
+    if (!ok || !mounted) return;
     ref.read(parentSettingsProvider.notifier).resetPin();
     setState(() {
       _input = '';
@@ -139,42 +146,86 @@ class _PinScreenState extends ConsumerState<PinScreen> {
         child: Center(
           child: SingleChildScrollView(
             padding: const EdgeInsets.all(16),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  _title,
-                  textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.titleLarge,
-                ),
-                const SizedBox(height: 24),
-                _PinDots(filled: _input.length),
-                SizedBox(
-                  height: 48,
-                  child: Center(
-                    child: Text(
-                      _error ?? '',
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(fontSize: 18, color: Colors.redAccent),
-                    ),
-                  ),
-                ),
-                _Keypad(onDigit: _onDigit, onDelete: _onDelete),
-                const SizedBox(height: 16),
-                if (_step == _PinStep.enter)
-                  TextButton(
-                    style: TextButton.styleFrom(
-                      minimumSize: const Size(AppSizes.minTapTarget, AppSizes.minTapTarget),
-                      textStyle: const TextStyle(fontSize: 18),
-                    ),
-                    onPressed: _onForgot,
-                    child: Text(AppStrings.pinForgot),
-                  ),
-              ],
-            ),
+            child: _gatePassed ? _pinBody(context) : _ParentalGate(onOpen: _openGate),
           ),
         ),
       ),
+    );
+  }
+
+  Widget _pinBody(BuildContext context) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Text(
+          _title,
+          textAlign: TextAlign.center,
+          style: Theme.of(context).textTheme.titleLarge,
+        ),
+        const SizedBox(height: 24),
+        _PinDots(filled: _input.length),
+        SizedBox(
+          height: 48,
+          child: Center(
+            child: Text(
+              _error ?? '',
+              textAlign: TextAlign.center,
+              style: const TextStyle(fontSize: 18, color: Colors.redAccent),
+            ),
+          ),
+        ),
+        _Keypad(onDigit: _onDigit, onDelete: _onDelete),
+        const SizedBox(height: 16),
+        if (_step == _PinStep.enter)
+          TextButton(
+            style: TextButton.styleFrom(
+              minimumSize: const Size(AppSizes.minTapTarget, AppSizes.minTapTarget),
+              textStyle: const TextStyle(fontSize: 18),
+            ),
+            onPressed: _onForgot,
+            child: Text(AppStrings.pinForgot),
+          ),
+      ],
+    );
+  }
+}
+
+/// Darvoza ekrani: bola PIN klaviaturasini ko'rmaydi, faqat kattalar savoli tugmasi.
+class _ParentalGate extends StatelessWidget {
+  const _ParentalGate({required this.onOpen});
+
+  final VoidCallback onOpen;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        const Text('👨‍👩‍👧', style: TextStyle(fontSize: 72)),
+        const SizedBox(height: 16),
+        Text(
+          AppStrings.parentGateTitle,
+          textAlign: TextAlign.center,
+          style: Theme.of(context).textTheme.titleLarge,
+        ),
+        const SizedBox(height: 8),
+        Text(
+          AppStrings.parentGateHint,
+          textAlign: TextAlign.center,
+          style: const TextStyle(fontSize: 17),
+        ),
+        const SizedBox(height: 24),
+        ElevatedButton(
+          onPressed: onOpen,
+          style: ElevatedButton.styleFrom(
+            backgroundColor: AppColors.primary,
+            foregroundColor: Colors.white,
+            minimumSize: const Size(240, 72),
+            textStyle: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          ),
+          child: Text(AppStrings.parentGateButton),
+        ),
+      ],
     );
   }
 }
@@ -272,19 +323,26 @@ class _Keypad extends StatelessWidget {
   }
 }
 
-/// "PIN ni unutdim": kattalar uchun oddiy savol (bola tasodifan ochmasligi uchun).
-class _AdultQuestionDialog extends StatefulWidget {
-  const _AdultQuestionDialog();
+/// Ota-ona darvozasi (Apple Kids 1.3, 5.1.4): kattalar uchun savol.
+/// Birinchi PIN o'rnatish va "PIN ni unutdim" oldidan so'raladi.
+/// Ko'paytirish jadvalidan tashqari (13–19 × 3–9) — bola tasodifan yecha olmasligi uchun.
+class ParentalGateDialog extends StatefulWidget {
+  const ParentalGateDialog({super.key});
+
+  /// To'g'ri javob berilsa `true`, bekor qilinsa yoki yopilsa `false`.
+  static Future<bool> show(BuildContext context) async =>
+      await showDialog<bool>(context: context, builder: (_) => const ParentalGateDialog()) ??
+      false;
 
   @override
-  State<_AdultQuestionDialog> createState() => _AdultQuestionDialogState();
+  State<ParentalGateDialog> createState() => _ParentalGateDialogState();
 }
 
-class _AdultQuestionDialogState extends State<_AdultQuestionDialog> {
+class _ParentalGateDialogState extends State<ParentalGateDialog> {
   final _random = Random();
   final _controller = TextEditingController();
-  late final int _a = 6 + _random.nextInt(4);
-  late final int _b = 6 + _random.nextInt(4);
+  late final int _a = 13 + _random.nextInt(7);
+  late final int _b = 3 + _random.nextInt(7);
   bool _wrong = false;
 
   @override

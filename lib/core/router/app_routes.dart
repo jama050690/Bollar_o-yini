@@ -13,6 +13,8 @@ abstract final class AppRoutes {
   static const parentPanel = '/parent';
   static const parentPin = '/parent/pin';
   static const parentPinChange = '/parent/pin?change=1';
+  static const parentPrivacy = '/parent/privacy';
+  static const parentAbout = '/parent/about';
   static const timeUp = '/time-up';
 
   static String game(String gameId) => '/game/$gameId';
