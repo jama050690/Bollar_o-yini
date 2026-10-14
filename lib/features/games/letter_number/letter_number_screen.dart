@@ -7,12 +7,25 @@ import '../../../core/constants/age_group.dart';
 import '../../../core/constants/app_strings.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../shared/services/sound_service.dart';
+import '../../../shared/services/tts_service.dart';
 import '../../../shared/widgets/choice_card.dart';
 import '../../../shared/widgets/game_scaffold.dart';
 import '../game_result.dart';
 import 'letter_number_game.dart';
 
 const _gameId = 'letter_number';
+
+/// [SequenceItem.soundKey] → o'zbekcha aytilishi (harf nomi yoki son).
+/// Yozib olingan fayl nomi shu matndan olinadi (assets/sounds/README.md).
+const spokenUzbek = {
+  'a': 'a', 'b': 'be', 'd': 'de', 'e': 'e', 'f': 'ef', 'g': 'ge', //
+  'h': 'he', 'i': 'i', 'j': 'je', 'k': 'ke', 'l': 'el', 'm': 'em',
+  'n': 'en', 'o': 'o', 'p': 'pe', 'q': 'qe', 'r': 'er', 's': 'es',
+  't': 'te', 'u': 'u', 'v': 've', 'x': 'xe', 'y': 'ye', 'z': 'ze',
+  'o_': 'oʻ', 'g_': 'gʻe', 'sh': 'sha', 'ch': 'che', 'ng': 'nge',
+  '1': 'bir', '2': 'ikki', '3': 'uch', '4': 'toʻrt', '5': 'besh',
+  '6': 'olti', '7': 'yetti', '8': 'sakkiz', '9': 'toʻqqiz', '10': 'oʻn',
+};
 
 /// Harf-Raqam bog'chasi: harf/raqamlarni to'g'ri tartibda bosish.
 class LetterNumberScreen extends ConsumerStatefulWidget {
@@ -45,12 +58,12 @@ class _LetterNumberScreenState extends ConsumerState<LetterNumberScreen> {
     _playTarget();
   }
 
+  /// Navbatdagi harf/raqamni aytadi: yozilgan ovoz bo'lsa o'sha, aks holda ovoz dvigateli.
   void _playTarget() {
-    final game = _game!;
-    final key = game.target.soundKey;
-    _sound.play(
-      game.mode == SequenceMode.numbers ? SoundService.number(key) : SoundService.letter(key),
-    );
+    final key = _game!.target.soundKey;
+    final text = spokenUzbek[key];
+    if (text == null) return;
+    ref.read(ttsServiceProvider).speak(text, language: TtsService.uzbek);
   }
 
   void _onTileTap(SequenceItem item) {

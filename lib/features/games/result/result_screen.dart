@@ -5,6 +5,7 @@ import '../../../core/constants/app_strings.dart';
 import '../../../core/router/app_routes.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../shared/widgets/confetti_overlay.dart';
+import '../../../shared/widgets/mascot.dart';
 import '../../../shared/widgets/stars_row.dart';
 import '../../achievements/achievements_catalog.dart';
 import '../../rewards/rewards_catalog.dart';
@@ -23,6 +24,12 @@ class ResultScreen extends StatelessWidget {
         3 => AppStrings.result3,
         2 => AppStrings.result2,
         _ => AppStrings.result1,
+      };
+
+  List<String> get _praise => switch (result.stars) {
+        3 => AppStrings.mascotPraise3,
+        2 => AppStrings.mascotPraise2,
+        _ => AppStrings.mascotPraise1,
       };
 
   @override
@@ -94,7 +101,12 @@ class ResultScreen extends StatelessWidget {
                       AppStrings.duration(result.duration),
                       style: Theme.of(context).textTheme.titleLarge,
                     ),
-                    const SizedBox(height: 40),
+                    const SizedBox(height: 24),
+                    ConstrainedBox(
+                      constraints: const BoxConstraints(maxWidth: 420),
+                      child: Mascot(messages: _praise, size: 56),
+                    ),
+                    const SizedBox(height: 32),
                     ElevatedButton.icon(
                       onPressed: () => context.pushReplacement(AppRoutes.game(result.gameId)),
                       icon: const Icon(Icons.replay_rounded, size: 32),

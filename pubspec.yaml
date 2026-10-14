@@ -75,6 +75,7 @@ flutter:
     - assets/sounds/effects/
     - assets/sounds/uz/letters/
     - assets/sounds/uz/numbers/
+    - assets/sounds/uz/words/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

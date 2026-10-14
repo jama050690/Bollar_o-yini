@@ -323,6 +323,29 @@ abstract final class AppStrings {
   static const medalStreak7 = 'Olovli hafta';
   static const medalStreak7Hint = "7 kun ketma-ket o'yna";
 
+  // ---------- Yordamchi qahramon (Donish 🦉) ----------
+  static const mascotName = "Donish — yordamchi boyo'g'li";
+  static List<String> mascotGreetings(String name) => [
+        "Bugun nima o'ynaymiz, $name? 🎈",
+        "$name, seni ko'rganimdan xursandman! 😊",
+        'Qani, $name, yangi sarguzasht boshlaymizmi? 🚀',
+        'Bugun ham bilimdon bo\'lamiz, $name! 📚',
+      ];
+  static const mascotPraise3 = [
+    "Zo'r! Sen haqiqiy bilimdonsan! 🌟",
+    'Voy-boy! Hammasini topding! 🏆',
+    'Men sen bilan faxrlanaman! 🦉💛',
+  ];
+  static const mascotPraise2 = [
+    "Juda yaxshi! Yana bir oz — va 3 yulduz! ⭐",
+    "Barakalla! Sen tez o'rganyapsan! 👍",
+  ];
+  static const mascotPraise1 = [
+    "Yaxshi boshlanish! Birga yana urinib ko'ramiz! 💪",
+    "Har safar yaxshiroq bo'lyapsan! 🌱",
+  ];
+  static const mascotTimeUp = ["Ko'zlaring dam olsin, ertaga ko'rishamiz! 🌙"];
+
   // ---------- Kunlik seriya ----------
   static String streakDays(int n) => '🔥 $n';
   static String streakBonus(int days, int coins) => days > 1

@@ -7,6 +7,7 @@ import '../../core/constants/app_strings.dart';
 import '../../core/router/app_routes.dart';
 import '../../core/theme/app_theme.dart';
 import '../../shared/widgets/choice_card.dart';
+import '../../shared/widgets/mascot.dart';
 import '../../shared/widgets/stars_row.dart';
 import '../achievements/achievements_catalog.dart';
 import '../achievements/achievements_providers.dart';
@@ -53,6 +54,8 @@ class HomeScreen extends ConsumerWidget {
             padding: const EdgeInsets.all(16),
             children: [
               _Header(profile: profile),
+              const SizedBox(height: 12),
+              Mascot(messages: AppStrings.mascotGreetings(profile.name)),
               const SizedBox(height: 12),
               Row(
                 children: [
