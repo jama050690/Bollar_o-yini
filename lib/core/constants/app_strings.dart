@@ -318,4 +318,14 @@ abstract final class AppStrings {
   static const medalTravelerHint = "O'z guruhingdagi hamma o'yinni o'yna";
   static const medalCollector = 'Yulduzlar kolleksiyasi';
   static const medalCollectorHint = "Jami 25 yulduz yig'";
+  static const medalStreak3 = 'Olovli 3 kun';
+  static const medalStreak3Hint = "3 kun ketma-ket o'yna";
+  static const medalStreak7 = 'Olovli hafta';
+  static const medalStreak7Hint = "7 kun ketma-ket o'yna";
+
+  // ---------- Kunlik seriya ----------
+  static String streakDays(int n) => '🔥 $n';
+  static String streakBonus(int days, int coins) => days > 1
+      ? '🔥 $days kun ketma-ket! +$coins 🪙'
+      : "🔥 Bugungi birinchi o'yin! +$coins 🪙";
 }

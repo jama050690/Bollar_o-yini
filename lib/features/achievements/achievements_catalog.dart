@@ -12,11 +12,17 @@ class MedalStats {
     this.threeStarGames = 0,
     this.bestStarsSum = 0,
     this.moduleComplete = false,
+    this.bestStreak = 0,
   });
 
   /// [progress] — o'yin id → progress (faqat shu bolaniki).
   /// [moduleGameIds] — bolaning yosh moduldagi barcha o'yinlar.
-  factory MedalStats.from(Map<String, GameProgress> progress, Iterable<String> moduleGameIds) {
+  /// [bestStreak] — eng uzun kunlik seriya.
+  factory MedalStats.from(
+    Map<String, GameProgress> progress,
+    Iterable<String> moduleGameIds, {
+    int bestStreak = 0,
+  }) {
     final played = {
       for (final entry in progress.entries)
         if (entry.value.plays > 0) entry.key,
@@ -27,6 +33,7 @@ class MedalStats {
       threeStarGames: progress.values.where((p) => p.bestStars >= 3).length,
       bestStarsSum: progress.values.fold(0, (sum, p) => sum + p.bestStars),
       moduleComplete: moduleGameIds.isNotEmpty && moduleGameIds.every(played.contains),
+      bestStreak: bestStreak,
     );
   }
 
@@ -37,6 +44,9 @@ class MedalStats {
   /// Har o'yindagi eng yaxshi yulduzlar yig'indisi (modulda ko'pi bilan 10 × 3 = 30).
   final int bestStarsSum;
   final bool moduleComplete;
+
+  /// Eng uzun "ketma-ket kunlar" seriyasi.
+  final int bestStreak;
 }
 
 class Medal {
@@ -113,6 +123,20 @@ final List<Medal> kMedals = [
     title: AppStrings.medalCollector,
     hint: AppStrings.medalCollectorHint,
     isUnlocked: (s) => s.bestStarsSum >= 25,
+  ),
+  Medal(
+    id: 'streak3',
+    emoji: '🔥',
+    title: AppStrings.medalStreak3,
+    hint: AppStrings.medalStreak3Hint,
+    isUnlocked: (s) => s.bestStreak >= 3,
+  ),
+  Medal(
+    id: 'streak7',
+    emoji: '☄️',
+    title: AppStrings.medalStreak7,
+    hint: AppStrings.medalStreak7Hint,
+    isUnlocked: (s) => s.bestStreak >= 7,
   ),
 ];
 

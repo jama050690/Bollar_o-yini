@@ -5,6 +5,7 @@ import '../games/game_catalog.dart';
 import '../profile/profile_providers.dart';
 import '../progress/progress_providers.dart';
 import '../rewards/rewards_providers.dart';
+import '../streak/streak_providers.dart';
 import 'achievements_catalog.dart';
 
 /// Faol bolaning medal ko'rsatkichlari (progressdan hisoblanadi).
@@ -17,7 +18,11 @@ final medalStatsProvider = Provider<MedalStats>((ref) {
     for (final entry in ref.watch(progressProvider).entries)
       if (entry.key.startsWith(prefix)) entry.key.substring(prefix.length): entry.value,
   };
-  return MedalStats.from(progress, gamesFor(profile.ageGroup).map((g) => g.id));
+  return MedalStats.from(
+    progress,
+    gamesFor(profile.ageGroup).map((g) => g.id),
+    bestStreak: ref.watch(streakProvider).best,
+  );
 });
 
 /// Faol bolaning ochilgan medallari.

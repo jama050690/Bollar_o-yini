@@ -12,6 +12,7 @@ import 'package:aqlli_dostlar/features/games/result/result_screen.dart';
 import 'package:aqlli_dostlar/features/progress/progress_providers.dart';
 import 'package:aqlli_dostlar/features/rewards/rewards_providers.dart';
 import 'package:aqlli_dostlar/core/constants/age_group.dart';
+import 'package:aqlli_dostlar/shared/widgets/confetti_overlay.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -159,6 +160,30 @@ void main() {
 
       expect(find.text(AppStrings.newMedal), findsOneWidget);
       expect(find.textContaining(AppStrings.medalFirstWin), findsOneWidget);
+    });
+
+    testWidgets("natija ekranida konfetti yog'iladi va tugmalarni to'smaydi", (tester) async {
+      await tester.pumpWidget(MaterialApp(
+        home: ResultScreen(
+          result: GameResult(
+            gameId: 'memory_match',
+            stars: 3,
+            duration: const Duration(seconds: 30),
+          ),
+        ),
+      ));
+      await tester.pump(const Duration(milliseconds: 500));
+
+      final confetti = tester.widget<ConfettiOverlay>(find.byType(ConfettiOverlay));
+      expect(confetti.count, 3 * kConfettiPerStar);
+      expect(
+        find.ancestor(of: find.byType(ConfettiOverlay), matching: find.byType(IgnorePointer)),
+        findsWidgets,
+      );
+
+      // Animatsiya bir marta o'ynab, to'xtaydi.
+      await tester.pumpAndSettle();
+      expect(find.text(AppStrings.playAgain), findsOneWidget);
     });
   });
 }
