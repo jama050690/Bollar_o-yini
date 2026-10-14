@@ -305,6 +305,13 @@ abstract final class AppStrings {
       _t("Yana urinib ko'r! 💪", 'Попробуй ещё раз! 💪', 'Try again! 💪');
   static String get wellDone => _t('Barakalla! 🎉', 'Молодец! 🎉', 'Well done! 🎉');
 
+  // ---------- Ekran o'quvchi (TalkBack / VoiceOver) uchun yozuvlar ----------
+  static String starsLabel(int stars) =>
+      _t('3 dan $stars yulduz', 'Звёзд: $stars из 3', '$stars of 3 stars');
+  static String get homeButtonLabel => _t('Bosh menyu', 'Главное меню', 'Main menu');
+  static String get switchProfileLabel =>
+      _t('Profilni almashtirish', 'Сменить профиль', 'Switch profile');
+
   // ---------- Kutilmagan xato (bolani qo'rqitmaydigan ekran) ----------
   static String get errorTitle =>
       _t('Voy, nimadir chalkashdi! 🙈', 'Ой, что-то запуталось! 🙈', 'Oops, something got mixed up! 🙈');

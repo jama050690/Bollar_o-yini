@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../core/constants/app_strings.dart';
 import '../../core/router/app_routes.dart';
 import '../../core/theme/app_theme.dart';
 
@@ -28,6 +29,7 @@ class GameScaffold extends StatelessWidget {
         toolbarHeight: 72,
         centerTitle: true,
         leading: IconButton(
+          tooltip: AppStrings.homeButtonLabel,
           iconSize: 40,
           icon: const Icon(Icons.home_rounded),
           onPressed: () =>

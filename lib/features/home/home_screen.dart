@@ -137,12 +137,18 @@ class _Header extends StatelessWidget {
     return Row(
       children: [
         // Avatarni bosib profilni almashtirish mumkin.
-        GestureDetector(
-          onTap: () => context.push(AppRoutes.profiles),
-          child: CircleAvatar(
-            radius: 36,
-            backgroundColor: profile.ageGroup.color,
-            child: Text(profile.avatar, style: const TextStyle(fontSize: 40)),
+        Semantics(
+          container: true,
+          button: true,
+          label: AppStrings.switchProfileLabel,
+          excludeSemantics: true,
+          child: GestureDetector(
+            onTap: () => context.push(AppRoutes.profiles),
+            child: CircleAvatar(
+              radius: 36,
+              backgroundColor: profile.ageGroup.color,
+              child: Text(profile.avatar, style: const TextStyle(fontSize: 40)),
+            ),
           ),
         ),
         const SizedBox(width: 16),

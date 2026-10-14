@@ -50,30 +50,34 @@ class ChoiceCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: size,
-      child: Material(
-        color: color,
-        borderRadius: BorderRadius.circular(AppSizes.radius),
-        elevation: 3,
-        child: InkWell(
+    // Karta ekran o'quvchiga bitta tugma bo'lib o'qiladi: "Xotira o'yini, 3 dan 2 yulduz".
+    return MergeSemantics(
+      child: SizedBox(
+        width: size,
+        child: Material(
+          color: color,
           borderRadius: BorderRadius.circular(AppSizes.radius),
-          onTap: onTap,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 8),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(emoji, style: TextStyle(fontSize: size * 0.35)),
-                const SizedBox(height: 8),
-                LayoutBuilder(
-                  builder: (context, constraints) {
-                    final style = _labelStyle(context, constraints.maxWidth);
-                    return Text(label, textAlign: TextAlign.center, style: style);
-                  },
-                ),
-                if (footer != null) ...[const SizedBox(height: 4), footer!],
-              ],
+          elevation: 3,
+          child: InkWell(
+            borderRadius: BorderRadius.circular(AppSizes.radius),
+            onTap: onTap,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 8),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  // Emoji bezak: ekran o'quvchi uni o'qimaydi.
+                  ExcludeSemantics(child: Text(emoji, style: TextStyle(fontSize: size * 0.35))),
+                  const SizedBox(height: 8),
+                  LayoutBuilder(
+                    builder: (context, constraints) {
+                      final style = _labelStyle(context, constraints.maxWidth);
+                      return Text(label, textAlign: TextAlign.center, style: style);
+                    },
+                  ),
+                  if (footer != null) ...[const SizedBox(height: 4), footer!],
+                ],
+              ),
             ),
           ),
         ),
