@@ -10,13 +10,18 @@ enum GeoAsk { perimeter, area, missingSide }
 
 /// Daraja: ① perimetr ② yuz ③ uchburchak yuzi va noma'lum tomon.
 enum GeometryLevel {
-  perimeter(label: AppStrings.levelPerimeter, emoji: '📏'),
-  area(label: AppStrings.levelArea, emoji: '🟦'),
-  mix(label: AppStrings.levelGeoMix, emoji: '📐');
+  perimeter(emoji: '📏'),
+  area(emoji: '🟦'),
+  mix(emoji: '📐');
 
-  const GeometryLevel({required this.label, required this.emoji});
+  const GeometryLevel({required this.emoji});
 
-  final String label;
+  String get label => switch (this) {
+        GeometryLevel.perimeter => AppStrings.levelPerimeter,
+        GeometryLevel.area => AppStrings.levelArea,
+        GeometryLevel.mix => AppStrings.levelGeoMix,
+      };
+
   final String emoji;
 }
 

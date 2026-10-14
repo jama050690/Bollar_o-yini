@@ -16,13 +16,18 @@ enum Operation {
 
 /// Darajalar: ① + − ② × ÷ ③ hammasi aralash.
 enum ArithmeticLevel {
-  addSub(label: AppStrings.levelAddSub, emoji: '🐢', ops: [Operation.add, Operation.subtract]),
-  mulDiv(label: AppStrings.levelMulDiv, emoji: '🐇', ops: [Operation.multiply, Operation.divide]),
-  mixed(label: AppStrings.levelMixed, emoji: '🚀', ops: Operation.values);
+  addSub(emoji: '🐢', ops: [Operation.add, Operation.subtract]),
+  mulDiv(emoji: '🐇', ops: [Operation.multiply, Operation.divide]),
+  mixed(emoji: '🚀', ops: Operation.values);
 
-  const ArithmeticLevel({required this.label, required this.emoji, required this.ops});
+  const ArithmeticLevel({required this.emoji, required this.ops});
 
-  final String label;
+  String get label => switch (this) {
+        ArithmeticLevel.addSub => AppStrings.levelAddSub,
+        ArithmeticLevel.mulDiv => AppStrings.levelMulDiv,
+        ArithmeticLevel.mixed => AppStrings.levelMixed,
+      };
+
   final String emoji;
   final List<Operation> ops;
 }

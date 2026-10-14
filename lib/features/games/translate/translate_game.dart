@@ -6,12 +6,16 @@ import '../game_result.dart';
 
 /// Tarjima tili: rus yoki ingliz.
 enum TargetLanguage {
-  russian(label: AppStrings.langRussian, flag: '🇷🇺', ttsLanguage: TtsService.russian),
-  english(label: AppStrings.langEnglish, flag: '🇬🇧', ttsLanguage: TtsService.english);
+  russian(flag: '🇷🇺', ttsLanguage: TtsService.russian),
+  english(flag: '🇬🇧', ttsLanguage: TtsService.english);
 
-  const TargetLanguage({required this.label, required this.flag, required this.ttsLanguage});
+  const TargetLanguage({required this.flag, required this.ttsLanguage});
 
-  final String label;
+  String get label => switch (this) {
+        TargetLanguage.russian => AppStrings.langRussian,
+        TargetLanguage.english => AppStrings.langEnglish,
+      };
+
   final String flag;
   final String ttsLanguage;
 }

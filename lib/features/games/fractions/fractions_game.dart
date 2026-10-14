@@ -28,19 +28,23 @@ class Fraction {
 
 /// Daraja: ① maxraj 2–4, ② maxraj 5–8, ③ ikki kasrni solishtirish.
 enum FractionLevel {
-  basic(label: AppStrings.fracBasic, emoji: '🍕', minDen: 2, maxDen: 4, compare: false),
-  more(label: AppStrings.fracMore, emoji: '🥧', minDen: 5, maxDen: 8, compare: false),
-  versus(label: AppStrings.fracCompare, emoji: '⚖️', minDen: 2, maxDen: 8, compare: true);
+  basic(emoji: '🍕', minDen: 2, maxDen: 4, compare: false),
+  more(emoji: '🥧', minDen: 5, maxDen: 8, compare: false),
+  versus(emoji: '⚖️', minDen: 2, maxDen: 8, compare: true);
 
   const FractionLevel({
-    required this.label,
     required this.emoji,
     required this.minDen,
     required this.maxDen,
     required this.compare,
   });
 
-  final String label;
+  String get label => switch (this) {
+        FractionLevel.basic => AppStrings.fracBasic,
+        FractionLevel.more => AppStrings.fracMore,
+        FractionLevel.versus => AppStrings.fracCompare,
+      };
+
   final String emoji;
   final int minDen;
   final int maxDen;

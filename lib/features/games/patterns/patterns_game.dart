@@ -13,15 +13,15 @@ const patternSymbolSets = [
 
 /// Bosqichlar. [units] — takrorlanuvchi bo'lak shablonlari (0 = A, 1 = B, ...).
 enum PatternLevel {
-  easy(label: AppStrings.levelEasy, emoji: '🐣', options: 3, units: [
+  easy(emoji: '🐣', options: 3, units: [
     [0, 1],
   ]),
-  medium(label: AppStrings.levelMedium, emoji: '🐥', options: 4, units: [
+  medium(emoji: '🐥', options: 4, units: [
     [0, 1, 2],
     [0, 0, 1],
     [0, 1, 1],
   ]),
-  hard(label: AppStrings.levelHard, emoji: '🦅', options: 4, units: [
+  hard(emoji: '🦅', options: 4, units: [
     [0, 1, 2, 3],
     [0, 1, 1],
     [0, 0, 1, 1],
@@ -29,13 +29,17 @@ enum PatternLevel {
   ]);
 
   const PatternLevel({
-    required this.label,
     required this.emoji,
     required this.options,
     required this.units,
   });
 
-  final String label;
+  String get label => switch (this) {
+        PatternLevel.easy => AppStrings.levelEasy,
+        PatternLevel.medium => AppStrings.levelMedium,
+        PatternLevel.hard => AppStrings.levelHard,
+      };
+
   final String emoji;
   final int options;
   final List<List<int>> units;

@@ -5,13 +5,18 @@ import '../game_result.dart';
 
 /// Daraja: ① qo'shish/ayirish ② ko'paytirish/bo'lish ③ ikki amalli tenglama.
 enum EquationLevel {
-  addSub(label: AppStrings.levelEqAdd, emoji: '🐣'),
-  mulDiv(label: AppStrings.levelEqMul, emoji: '🐥'),
-  twoStep(label: AppStrings.levelEqTwo, emoji: '🦅');
+  addSub(emoji: '🐣'),
+  mulDiv(emoji: '🐥'),
+  twoStep(emoji: '🦅');
 
-  const EquationLevel({required this.label, required this.emoji});
+  const EquationLevel({required this.emoji});
 
-  final String label;
+  String get label => switch (this) {
+        EquationLevel.addSub => AppStrings.levelEqAdd,
+        EquationLevel.mulDiv => AppStrings.levelEqMul,
+        EquationLevel.twoStep => AppStrings.levelEqTwo,
+      };
+
   final String emoji;
 }
 

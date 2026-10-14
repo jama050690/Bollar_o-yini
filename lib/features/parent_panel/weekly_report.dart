@@ -4,16 +4,22 @@ import 'screen_time_providers.dart';
 
 /// O'yinlar qaysi fanga tegishli (ota-ona hisoboti uchun).
 enum Subject {
-  math('🔢', AppStrings.subjectMath),
-  language('🔤', AppStrings.subjectLanguage),
-  logic('🧩', AppStrings.subjectLogic),
-  creative('🎨', AppStrings.subjectCreative),
-  world('🌍', AppStrings.subjectWorld);
+  math('🔢'),
+  language('🔤'),
+  logic('🧩'),
+  creative('🎨'),
+  world('🌍');
 
-  const Subject(this.emoji, this.label);
+  const Subject(this.emoji, );
 
   final String emoji;
-  final String label;
+  String get label => switch (this) {
+        Subject.math => AppStrings.subjectMath,
+        Subject.language => AppStrings.subjectLanguage,
+        Subject.logic => AppStrings.subjectLogic,
+        Subject.creative => AppStrings.subjectCreative,
+        Subject.world => AppStrings.subjectWorld,
+      };
 }
 
 /// O'yin id → fan. Har bir o'yin aynan bitta fanga kiradi.

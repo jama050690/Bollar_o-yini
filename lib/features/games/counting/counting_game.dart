@@ -5,12 +5,16 @@ import '../../../shared/services/tts_service.dart';
 import '../game_result.dart';
 
 enum CountingLanguage {
-  uzbek(AppStrings.langUzbek, '🇺🇿', TtsService.uzbek),
-  russian(AppStrings.langRussian, '🇷🇺', TtsService.russian);
+  uzbek('🇺🇿', TtsService.uzbek),
+  russian('🇷🇺', TtsService.russian);
 
-  const CountingLanguage(this.label, this.flag, this.language);
+  const CountingLanguage(this.flag, this.language);
 
-  final String label;
+  String get label => switch (this) {
+        CountingLanguage.uzbek => AppStrings.langUzbek,
+        CountingLanguage.russian => AppStrings.langRussian,
+      };
+
   final String flag;
   final String language;
 

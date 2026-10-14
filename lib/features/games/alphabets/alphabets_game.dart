@@ -21,13 +21,18 @@ class AlphabetLetter {
 }
 
 enum Alphabet {
-  uzbek(AppStrings.langUzbek, '🇺🇿', TtsService.uzbek),
-  russian(AppStrings.langRussian, '🇷🇺', TtsService.russian),
-  english(AppStrings.langEnglish, '🇬🇧', TtsService.english);
+  uzbek('🇺🇿', TtsService.uzbek),
+  russian('🇷🇺', TtsService.russian),
+  english('🇬🇧', TtsService.english);
 
-  const Alphabet(this.label, this.flag, this.language);
+  const Alphabet(this.flag, this.language);
 
-  final String label;
+  String get label => switch (this) {
+        Alphabet.uzbek => AppStrings.langUzbek,
+        Alphabet.russian => AppStrings.langRussian,
+        Alphabet.english => AppStrings.langEnglish,
+      };
+
   final String flag;
   final String language;
 

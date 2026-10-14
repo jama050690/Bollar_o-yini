@@ -4,20 +4,24 @@ import '../../../core/constants/app_strings.dart';
 
 /// Qiyinlik darajalari (TZ Modul A-1): 4x4, 4x6, 6x6.
 enum MemoryDifficulty {
-  easy(columns: 4, rows: 4, label: AppStrings.levelEasy, emoji: '🐣'),
-  medium(columns: 4, rows: 6, label: AppStrings.levelMedium, emoji: '🐥'),
-  hard(columns: 6, rows: 6, label: AppStrings.levelHard, emoji: '🦅');
+  easy(columns: 4, rows: 4, emoji: '🐣'),
+  medium(columns: 4, rows: 6, emoji: '🐥'),
+  hard(columns: 6, rows: 6, emoji: '🦅');
 
   const MemoryDifficulty({
     required this.columns,
     required this.rows,
-    required this.label,
     required this.emoji,
   });
 
   final int columns;
   final int rows;
-  final String label;
+  String get label => switch (this) {
+        MemoryDifficulty.easy => AppStrings.levelEasy,
+        MemoryDifficulty.medium => AppStrings.levelMedium,
+        MemoryDifficulty.hard => AppStrings.levelHard,
+      };
+
   final String emoji;
 
   int get pairCount => columns * rows ~/ 2;

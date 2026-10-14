@@ -30,18 +30,22 @@ const shopItems = [
 const shopBills = [10, 20, 50];
 
 enum ShopLevel {
-  two(label: AppStrings.shopLevelTwo, emoji: '🛒', items: 2, withChange: false),
-  three(label: AppStrings.shopLevelThree, emoji: '🛍️', items: 3, withChange: false),
-  change(label: AppStrings.shopLevelChange, emoji: '💵', items: 2, withChange: true);
+  two(emoji: '🛒', items: 2, withChange: false),
+  three(emoji: '🛍️', items: 3, withChange: false),
+  change(emoji: '💵', items: 2, withChange: true);
 
   const ShopLevel({
-    required this.label,
     required this.emoji,
     required this.items,
     required this.withChange,
   });
 
-  final String label;
+  String get label => switch (this) {
+        ShopLevel.two => AppStrings.shopLevelTwo,
+        ShopLevel.three => AppStrings.shopLevelThree,
+        ShopLevel.change => AppStrings.shopLevelChange,
+      };
+
   final String emoji;
   final int items;
 

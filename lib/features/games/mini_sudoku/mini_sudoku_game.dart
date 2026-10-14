@@ -5,14 +5,19 @@ import '../game_result.dart';
 
 /// Daraja = nechta katak bo'sh qoldiriladi.
 enum SudokuLevel {
-  easy(empty: 3, label: AppStrings.levelEasy, emoji: '🐢'),
-  medium(empty: 4, label: AppStrings.levelMedium, emoji: '🐇'),
-  hard(empty: 6, label: AppStrings.levelHard, emoji: '🚀');
+  easy(empty: 3, emoji: '🐢'),
+  medium(empty: 4, emoji: '🐇'),
+  hard(empty: 6, emoji: '🚀');
 
-  const SudokuLevel({required this.empty, required this.label, required this.emoji});
+  const SudokuLevel({required this.empty, required this.emoji});
 
   final int empty;
-  final String label;
+  String get label => switch (this) {
+        SudokuLevel.easy => AppStrings.levelEasy,
+        SudokuLevel.medium => AppStrings.levelMedium,
+        SudokuLevel.hard => AppStrings.levelHard,
+      };
+
   final String emoji;
 }
 

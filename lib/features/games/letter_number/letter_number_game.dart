@@ -4,12 +4,16 @@ import '../../../core/constants/app_strings.dart';
 import '../game_result.dart';
 
 enum SequenceMode {
-  numbers(label: AppStrings.modeNumbers, emoji: '🔢'),
-  letters(label: AppStrings.modeLetters, emoji: '🔤');
+  numbers(emoji: '🔢'),
+  letters(emoji: '🔤');
 
-  const SequenceMode({required this.label, required this.emoji});
+  const SequenceMode({required this.emoji});
 
-  final String label;
+  String get label => switch (this) {
+        SequenceMode.numbers => AppStrings.modeNumbers,
+        SequenceMode.letters => AppStrings.modeLetters,
+      };
+
   final String emoji;
 }
 

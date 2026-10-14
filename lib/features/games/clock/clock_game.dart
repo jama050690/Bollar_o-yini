@@ -5,13 +5,18 @@ import '../game_result.dart';
 
 /// Daraja: daqiqa qadami (butun soat, yarim soat, 5 daqiqa).
 enum ClockLevel {
-  hours(label: AppStrings.clockHours, emoji: '🕐', minuteStep: 60),
-  halves(label: AppStrings.clockHalves, emoji: '🕧', minuteStep: 30),
-  fives(label: AppStrings.clockFives, emoji: '🕔', minuteStep: 5);
+  hours(emoji: '🕐', minuteStep: 60),
+  halves(emoji: '🕧', minuteStep: 30),
+  fives(emoji: '🕔', minuteStep: 5);
 
-  const ClockLevel({required this.label, required this.emoji, required this.minuteStep});
+  const ClockLevel({required this.emoji, required this.minuteStep});
 
-  final String label;
+  String get label => switch (this) {
+        ClockLevel.hours => AppStrings.clockHours,
+        ClockLevel.halves => AppStrings.clockHalves,
+        ClockLevel.fives => AppStrings.clockFives,
+      };
+
   final String emoji;
   final int minuteStep;
 

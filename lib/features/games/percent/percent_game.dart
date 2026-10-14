@@ -5,13 +5,18 @@ import '../game_result.dart';
 
 /// Daraja: ① 50%, 25%, 10% ② 5% … 75% ③ chegirmadan keyingi narx.
 enum PercentLevel {
-  easy(label: AppStrings.levelPercentEasy, emoji: '🐣', percents: [50, 25, 10]),
-  more(label: AppStrings.levelPercentMore, emoji: '🐥', percents: [5, 20, 30, 40, 60, 75]),
-  discount(label: AppStrings.levelDiscount, emoji: '🏷️', percents: [10, 20, 25, 50]);
+  easy(emoji: '🐣', percents: [50, 25, 10]),
+  more(emoji: '🐥', percents: [5, 20, 30, 40, 60, 75]),
+  discount(emoji: '🏷️', percents: [10, 20, 25, 50]);
 
-  const PercentLevel({required this.label, required this.emoji, required this.percents});
+  const PercentLevel({required this.emoji, required this.percents});
 
-  final String label;
+  String get label => switch (this) {
+        PercentLevel.easy => AppStrings.levelPercentEasy,
+        PercentLevel.more => AppStrings.levelPercentMore,
+        PercentLevel.discount => AppStrings.levelDiscount,
+      };
+
   final String emoji;
   final List<int> percents;
 }

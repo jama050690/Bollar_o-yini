@@ -65,13 +65,18 @@ const _earthSkyItems = [
 
 /// Daraja: ① hayvonlar ② oʻsimliklar ③ Yer va osmon (fasllar, hodisalar, sayyoralar).
 enum NatureLevel {
-  animals(label: AppStrings.levelAnimals, emoji: '🐾', items: _animalItems),
-  plants(label: AppStrings.levelPlants, emoji: '🌱', items: _plantItems),
-  earthSky(label: AppStrings.levelEarthSky, emoji: '🌦️', items: _earthSkyItems);
+  animals(emoji: '🐾', items: _animalItems),
+  plants(emoji: '🌱', items: _plantItems),
+  earthSky(emoji: '🌦️', items: _earthSkyItems);
 
-  const NatureLevel({required this.label, required this.emoji, required this.items});
+  const NatureLevel({required this.emoji, required this.items});
 
-  final String label;
+  String get label => switch (this) {
+        NatureLevel.animals => AppStrings.levelAnimals,
+        NatureLevel.plants => AppStrings.levelPlants,
+        NatureLevel.earthSky => AppStrings.levelEarthSky,
+      };
+
   final String emoji;
   final List<NatureItem> items;
 }

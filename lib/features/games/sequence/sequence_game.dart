@@ -5,13 +5,18 @@ import '../game_result.dart';
 
 /// Daraja: ① +k / −k ② ×2, ×3, navbatma-navbat +a −b ③ kvadratlar, o'suvchi farq, Fibonachchi.
 enum SequenceLevel {
-  plus(label: AppStrings.levelSeqPlus, emoji: '🐣'),
-  times(label: AppStrings.levelSeqTimes, emoji: '🐥'),
-  tricky(label: AppStrings.levelSeqTricky, emoji: '🦅');
+  plus(emoji: '🐣'),
+  times(emoji: '🐥'),
+  tricky(emoji: '🦅');
 
-  const SequenceLevel({required this.label, required this.emoji});
+  const SequenceLevel({required this.emoji});
 
-  final String label;
+  String get label => switch (this) {
+        SequenceLevel.plus => AppStrings.levelSeqPlus,
+        SequenceLevel.times => AppStrings.levelSeqTimes,
+        SequenceLevel.tricky => AppStrings.levelSeqTricky,
+      };
+
   final String emoji;
 }
 

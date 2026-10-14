@@ -4,13 +4,18 @@ import '../../../core/constants/app_strings.dart';
 
 /// Daraja: ① qo'shish/ayirish (100 gacha) ② karra jadvali va bo'lish ③ aralash.
 enum SpeedLevel {
-  addSub(label: AppStrings.levelAddSub, emoji: '➕'),
-  mulDiv(label: AppStrings.levelMulDiv, emoji: '✖️'),
-  mixed(label: AppStrings.levelMixed, emoji: '⚡');
+  addSub(emoji: '➕'),
+  mulDiv(emoji: '✖️'),
+  mixed(emoji: '⚡');
 
-  const SpeedLevel({required this.label, required this.emoji});
+  const SpeedLevel({required this.emoji});
 
-  final String label;
+  String get label => switch (this) {
+        SpeedLevel.addSub => AppStrings.levelAddSub,
+        SpeedLevel.mulDiv => AppStrings.levelMulDiv,
+        SpeedLevel.mixed => AppStrings.levelMixed,
+      };
+
   final String emoji;
 }
 

@@ -74,13 +74,18 @@ const _sentenceItems = [
 
 /// Daraja: ① so'zlar ② so'z birikmalari ③ qisqa gaplar.
 enum TranslatePlusLevel {
-  words(label: AppStrings.levelWords, emoji: '🔤', items: _wordItems),
-  phrases(label: AppStrings.levelPhrases, emoji: '🧩', items: _phraseItems),
-  sentences(label: AppStrings.levelSentences, emoji: '💬', items: _sentenceItems);
+  words(emoji: '🔤', items: _wordItems),
+  phrases(emoji: '🧩', items: _phraseItems),
+  sentences(emoji: '💬', items: _sentenceItems);
 
-  const TranslatePlusLevel({required this.label, required this.emoji, required this.items});
+  const TranslatePlusLevel({required this.emoji, required this.items});
 
-  final String label;
+  String get label => switch (this) {
+        TranslatePlusLevel.words => AppStrings.levelWords,
+        TranslatePlusLevel.phrases => AppStrings.levelPhrases,
+        TranslatePlusLevel.sentences => AppStrings.levelSentences,
+      };
+
   final String emoji;
   final List<PhraseItem> items;
 }

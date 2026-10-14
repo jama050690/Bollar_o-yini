@@ -79,18 +79,22 @@ const _worldItems = [
 
 /// Daraja: ① Oʻzbekiston shaharlari ② Osiyo poytaxtlari ③ dunyo poytaxtlari.
 enum GeoLevel {
-  uzbekistan(label: AppStrings.levelUzbekistan, emoji: '🇺🇿', items: _uzbekistanItems),
-  asia(label: AppStrings.levelAsia, emoji: '🌏', items: _asiaItems, capitals: true),
-  world(label: AppStrings.levelWorld, emoji: '🌍', items: _worldItems, capitals: true);
+  uzbekistan(emoji: '🇺🇿', items: _uzbekistanItems),
+  asia(emoji: '🌏', items: _asiaItems, capitals: true),
+  world(emoji: '🌍', items: _worldItems, capitals: true);
 
   const GeoLevel({
-    required this.label,
     required this.emoji,
     required this.items,
     this.capitals = false,
   });
 
-  final String label;
+  String get label => switch (this) {
+        GeoLevel.uzbekistan => AppStrings.levelUzbekistan,
+        GeoLevel.asia => AppStrings.levelAsia,
+        GeoLevel.world => AppStrings.levelWorld,
+      };
+
   final String emoji;
   final List<GeoItem> items;
 

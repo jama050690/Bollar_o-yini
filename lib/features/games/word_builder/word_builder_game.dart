@@ -81,18 +81,22 @@ const wordBank = [
 
 /// Daraja so'zdagi harflar soni bilan belgilanadi.
 enum WordLevel {
-  short(label: AppStrings.wordLevelShort, emoji: '🐣', minLetters: 3, maxLetters: 4),
-  medium(label: AppStrings.wordLevelMedium, emoji: '🐥', minLetters: 5, maxLetters: 5),
-  long(label: AppStrings.wordLevelLong, emoji: '🦅', minLetters: 6, maxLetters: 99);
+  short(emoji: '🐣', minLetters: 3, maxLetters: 4),
+  medium(emoji: '🐥', minLetters: 5, maxLetters: 5),
+  long(emoji: '🦅', minLetters: 6, maxLetters: 99);
 
   const WordLevel({
-    required this.label,
     required this.emoji,
     required this.minLetters,
     required this.maxLetters,
   });
 
-  final String label;
+  String get label => switch (this) {
+        WordLevel.short => AppStrings.wordLevelShort,
+        WordLevel.medium => AppStrings.wordLevelMedium,
+        WordLevel.long => AppStrings.wordLevelLong,
+      };
+
   final String emoji;
   final int minLetters;
   final int maxLetters;

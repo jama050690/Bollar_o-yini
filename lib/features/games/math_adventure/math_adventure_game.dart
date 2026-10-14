@@ -5,14 +5,19 @@ import '../game_result.dart';
 
 /// Darajalar: sonlar chegarasi 20, 50, 100 gacha.
 enum MathLevel {
-  upTo20(max: 20, label: AppStrings.levelEasy, emoji: '🐢'),
-  upTo50(max: 50, label: AppStrings.levelMedium, emoji: '🐇'),
-  upTo100(max: 100, label: AppStrings.levelHard, emoji: '🚀');
+  upTo20(max: 20, emoji: '🐢'),
+  upTo50(max: 50, emoji: '🐇'),
+  upTo100(max: 100, emoji: '🚀');
 
-  const MathLevel({required this.max, required this.label, required this.emoji});
+  const MathLevel({required this.max, required this.emoji});
 
   final int max;
-  final String label;
+  String get label => switch (this) {
+        MathLevel.upTo20 => AppStrings.levelEasy,
+        MathLevel.upTo50 => AppStrings.levelMedium,
+        MathLevel.upTo100 => AppStrings.levelHard,
+      };
+
   final String emoji;
 }
 

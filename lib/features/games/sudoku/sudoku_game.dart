@@ -5,19 +5,23 @@ import '../game_result.dart';
 
 /// Daraja: o'lcham (4×4 — 2×2 qutilar, 6×6 — 2×3 qutilar) va bo'sh kataklar soni.
 enum SudokuLevel {
-  easy4(label: AppStrings.level4Easy, emoji: '🐣', boxRows: 2, boxCols: 2, blanks: 6),
-  hard4(label: AppStrings.level4Hard, emoji: '🐥', boxRows: 2, boxCols: 2, blanks: 10),
-  six(label: AppStrings.level6, emoji: '🦅', boxRows: 2, boxCols: 3, blanks: 18);
+  easy4(emoji: '🐣', boxRows: 2, boxCols: 2, blanks: 6),
+  hard4(emoji: '🐥', boxRows: 2, boxCols: 2, blanks: 10),
+  six(emoji: '🦅', boxRows: 2, boxCols: 3, blanks: 18);
 
   const SudokuLevel({
-    required this.label,
     required this.emoji,
     required this.boxRows,
     required this.boxCols,
     required this.blanks,
   });
 
-  final String label;
+  String get label => switch (this) {
+        SudokuLevel.easy4 => AppStrings.level4Easy,
+        SudokuLevel.hard4 => AppStrings.level4Hard,
+        SudokuLevel.six => AppStrings.level6,
+      };
+
   final String emoji;
   final int boxRows;
   final int boxCols;

@@ -39,13 +39,18 @@ const toolPairs = [
 
 /// Bosqichlar: ① ovqat (3 variant) ② asbob (4 variant) ③ aralash (6 variant).
 enum PairsLevel {
-  food(label: AppStrings.pairsFood, emoji: '🐰', options: 3),
-  tools(label: AppStrings.pairsTools, emoji: '👨‍🍳', options: 4),
-  mixed(label: AppStrings.pairsMixed, emoji: '🌈', options: 6);
+  food(emoji: '🐰', options: 3),
+  tools(emoji: '👨‍🍳', options: 4),
+  mixed(emoji: '🌈', options: 6);
 
-  const PairsLevel({required this.label, required this.emoji, required this.options});
+  const PairsLevel({required this.emoji, required this.options});
 
-  final String label;
+  String get label => switch (this) {
+        PairsLevel.food => AppStrings.pairsFood,
+        PairsLevel.tools => AppStrings.pairsTools,
+        PairsLevel.mixed => AppStrings.pairsMixed,
+      };
+
   final String emoji;
   final int options;
 

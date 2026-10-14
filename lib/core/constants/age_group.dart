@@ -5,21 +5,25 @@ import 'app_strings.dart';
 
 /// Yosh guruhlari va ularga mos modullar (TZ 2-bo'lim, FR-2).
 enum AgeGroup {
-  a(minAge: 5, maxAge: 7, title: AppStrings.moduleATitle, emoji: '🧸', color: AppColors.moduleA),
-  b(minAge: 8, maxAge: 9, title: AppStrings.moduleBTitle, emoji: '🧮', color: AppColors.moduleB),
-  c(minAge: 10, maxAge: 12, title: AppStrings.moduleCTitle, emoji: '🌱', color: AppColors.moduleC);
+  a(minAge: 5, maxAge: 7, emoji: '🧸', color: AppColors.moduleA),
+  b(minAge: 8, maxAge: 9, emoji: '🧮', color: AppColors.moduleB),
+  c(minAge: 10, maxAge: 12, emoji: '🌱', color: AppColors.moduleC);
 
   const AgeGroup({
     required this.minAge,
     required this.maxAge,
-    required this.title,
     required this.emoji,
     required this.color,
   });
 
   final int minAge;
   final int maxAge;
-  final String title;
+  String get title => switch (this) {
+        AgeGroup.a => AppStrings.moduleATitle,
+        AgeGroup.b => AppStrings.moduleBTitle,
+        AgeGroup.c => AppStrings.moduleCTitle,
+      };
+
   final String emoji;
   final Color color;
 
