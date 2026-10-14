@@ -61,7 +61,7 @@ Claude quyidagi har qanday amaldan **OLDIN** menga reja ko'rsatadi va
 | Lokal DB | Hive (sozlamalar uchun SharedPreferences) |
 | Animatsiya | Flutter native + lottie/rive |
 | Ovoz | audioplayers |
-| Lokalizatsiya | flutter_localizations (MVP: faqat o'zbek) |
+| Lokalizatsiya | flutter_localizations + `AppStrings` (interfeys: uz/ru/en, ota-ona panelida tanlanadi; o'yin mazmuni: faqat o'zbek) |
 
 **Firebase / internet talab qiladigan paketlar ISHLATILMAYDI** — ilova to'liq offline (FR-9, NFR-3).
 

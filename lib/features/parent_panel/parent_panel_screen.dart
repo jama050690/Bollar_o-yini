@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../core/constants/app_language.dart';
 import '../../core/constants/app_strings.dart';
 import '../../core/router/app_routes.dart';
 import '../../core/theme/app_theme.dart';
@@ -127,6 +128,15 @@ class ParentPanelScreen extends ConsumerWidget {
                 ],
               ),
               _Section(
+                title: AppStrings.reportTitle,
+                children: [
+                  if (profiles.isEmpty)
+                    Text(AppStrings.reportEmpty, style: TextStyle(fontSize: 18))
+                  else
+                    for (final profile in profiles) _ProfileReportCard(profile: profile),
+                ],
+              ),
+              _Section(
                 title: AppStrings.languageTitle,
                 children: [
                   Text(AppStrings.languageHint, style: const TextStyle(fontSize: 16)),
@@ -145,15 +155,6 @@ class ParentPanelScreen extends ConsumerWidget {
                         ),
                     ],
                   ),
-                ],
-              ),
-              _Section(
-                title: AppStrings.reportTitle,
-                children: [
-                  if (profiles.isEmpty)
-                    Text(AppStrings.reportEmpty, style: TextStyle(fontSize: 18))
-                  else
-                    for (final profile in profiles) _ProfileReportCard(profile: profile),
                 ],
               ),
               Align(
