@@ -67,7 +67,8 @@ class Medal {
   final bool Function(MedalStats stats) isUnlocked;
 }
 
-final List<Medal> kMedals = [
+/// Getter: matnlar har safar joriy tilda olinadi.
+List<Medal> get kMedals => [
   Medal(
     id: 'first_win',
     emoji: '🥇',

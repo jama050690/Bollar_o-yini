@@ -25,9 +25,11 @@ class ShapePart {
 }
 
 class BuildObject {
-  const BuildObject(this.name, this.emoji, this.parts);
+  const BuildObject(this._name, this.emoji, this.parts);
 
-  final String name;
+  /// Nom joriy tilda olinadi.
+  final String Function() _name;
+  String get name => _name();
   final String emoji;
   final List<ShapePart> parts;
 }
@@ -41,31 +43,37 @@ const _dark = 0xFF455A64;
 const _sky = 0xFF81D4FA;
 const _orange = 0xFFFB8C00;
 
+String _objHouse() => AppStrings.objHouse;
+String _objCar() => AppStrings.objCar;
+String _objTree() => AppStrings.objTree;
+String _objRocket() => AppStrings.objRocket;
+String _objCat() => AppStrings.objCat;
+
 const buildObjects = [
-  BuildObject(AppStrings.objHouse, '🏠', [
+  BuildObject(_objHouse, '🏠', [
     ShapePart(PieceShape.triangle, _red, 0.1, 0.08, 0.8, 0.37),
     ShapePart(PieceShape.square, _yellow, 0.25, 0.45, 0.5, 0.5),
     ShapePart(PieceShape.rectangle, _brown, 0.43, 0.68, 0.14, 0.27),
   ]),
-  BuildObject(AppStrings.objCar, '🚗', [
+  BuildObject(_objCar, '🚗', [
     ShapePart(PieceShape.square, _sky, 0.32, 0.14, 0.3, 0.3),
     ShapePart(PieceShape.rectangle, _blue, 0.05, 0.42, 0.9, 0.26),
     ShapePart(PieceShape.circle, _dark, 0.14, 0.58, 0.24, 0.24),
     ShapePart(PieceShape.circle, _dark, 0.62, 0.58, 0.24, 0.24),
   ]),
-  BuildObject(AppStrings.objTree, '🌳', [
+  BuildObject(_objTree, '🌳', [
     ShapePart(PieceShape.triangle, _green, 0.18, 0.04, 0.64, 0.34),
     ShapePart(PieceShape.triangle, _green, 0.08, 0.3, 0.84, 0.4),
     ShapePart(PieceShape.rectangle, _brown, 0.42, 0.7, 0.16, 0.28),
   ]),
-  BuildObject(AppStrings.objRocket, '🚀', [
+  BuildObject(_objRocket, '🚀', [
     ShapePart(PieceShape.triangle, _red, 0.35, 0.02, 0.3, 0.2),
     ShapePart(PieceShape.rectangle, _blue, 0.35, 0.22, 0.3, 0.56),
     ShapePart(PieceShape.circle, _sky, 0.42, 0.3, 0.16, 0.16),
     ShapePart(PieceShape.triangle, _orange, 0.17, 0.6, 0.18, 0.3),
     ShapePart(PieceShape.triangle, _orange, 0.65, 0.6, 0.18, 0.3),
   ]),
-  BuildObject(AppStrings.objCat, '🐱', [
+  BuildObject(_objCat, '🐱', [
     ShapePart(PieceShape.circle, _orange, 0.2, 0.42, 0.56, 0.56),
     ShapePart(PieceShape.circle, _orange, 0.3, 0.08, 0.4, 0.4),
     ShapePart(PieceShape.triangle, _orange, 0.3, 0.0, 0.14, 0.14),

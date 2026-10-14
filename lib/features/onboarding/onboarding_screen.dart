@@ -31,7 +31,8 @@ class _OnboardingPage {
   final String message;
 }
 
-const _pages = [
+// Getter: matnlar har safar joriy tilda olinadi.
+List<_OnboardingPage> get _pages => [
   _OnboardingPage('🎮', AppStrings.onboarding1),
   _OnboardingPage('⭐🪙🎁', AppStrings.onboarding2),
   _OnboardingPage('🔒', AppStrings.onboarding3),

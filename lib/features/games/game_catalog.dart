@@ -50,7 +50,8 @@ class GameInfo {
   final Widget Function() builder;
 }
 
-final List<GameInfo> gameCatalog = [
+/// Getter: o'yin nomlari har safar joriy tilda olinadi.
+List<GameInfo> get gameCatalog => [
   GameInfo(
     id: 'memory_match',
     title: AppStrings.memoryTitle,

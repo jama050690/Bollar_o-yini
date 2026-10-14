@@ -29,13 +29,15 @@ class BackgroundReward extends RewardItem {
   const BackgroundReward({
     required String key,
     required this.emoji,
-    required this.label,
+    required String Function() label,
     required this.colors,
     required super.price,
-  }) : super(id: 'bg:$key');
+  })  : _label = label,
+        super(id: 'bg:$key');
 
   final String emoji;
-  final String label;
+  final String Function() _label;
+  String get label => _label();
   final List<Color> colors;
 }
 
@@ -52,11 +54,19 @@ const kShopAvatars = [
 
 const kDefaultBackgroundId = 'bg:default';
 
+// Fon nomlari joriy tilda olinadi (const katalogda funksiya sifatida saqlanadi).
+String _bgDefault() => AppStrings.bgDefault;
+String _bgSky() => AppStrings.bgSky;
+String _bgMeadow() => AppStrings.bgMeadow;
+String _bgCandy() => AppStrings.bgCandy;
+String _bgSunset() => AppStrings.bgSunset;
+String _bgSpace() => AppStrings.bgSpace;
+
 /// Bepul, har doim ochiq fon.
 const kDefaultBackground = BackgroundReward(
   key: 'default',
   emoji: '☀️',
-  label: AppStrings.bgDefault,
+  label: _bgDefault,
   colors: [AppColors.background, AppColors.background],
   price: 0,
 );
@@ -67,35 +77,35 @@ const kBackgrounds = [
   BackgroundReward(
     key: 'sky',
     emoji: '🌤️',
-    label: AppStrings.bgSky,
+    label: _bgSky,
     colors: [Color(0xFFE1F5FE), Color(0xFFB3E5FC)],
     price: 20,
   ),
   BackgroundReward(
     key: 'meadow',
     emoji: '🌿',
-    label: AppStrings.bgMeadow,
+    label: _bgMeadow,
     colors: [Color(0xFFF1F8E9), Color(0xFFC5E1A5)],
     price: 30,
   ),
   BackgroundReward(
     key: 'candy',
     emoji: '🍭',
-    label: AppStrings.bgCandy,
+    label: _bgCandy,
     colors: [Color(0xFFFCE4EC), Color(0xFFF8BBD0)],
     price: 40,
   ),
   BackgroundReward(
     key: 'sunset',
     emoji: '🌅',
-    label: AppStrings.bgSunset,
+    label: _bgSunset,
     colors: [Color(0xFFFFF3E0), Color(0xFFFFCC80)],
     price: 50,
   ),
   BackgroundReward(
     key: 'space',
     emoji: '🌌',
-    label: AppStrings.bgSpace,
+    label: _bgSpace,
     colors: [Color(0xFFEDE7F6), Color(0xFFB39DDB)],
     price: 60,
   ),
