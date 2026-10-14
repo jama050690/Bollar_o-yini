@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -260,10 +262,22 @@ class _ModuleSection extends StatelessWidget {
               if (games.isEmpty)
                 Text(AppStrings.comingSoon, style: TextStyle(fontSize: 20))
               else
-                Wrap(
-                  spacing: 12,
-                  runSpacing: 12,
-                  children: [for (final game in games) _GameCard(game: game)],
+                LayoutBuilder(
+                  builder: (context, constraints) {
+                    // Kartalar butun kenglikni teng to'ldiradi: kamida 140dp, kamida 2 ustun.
+                    const spacing = 12.0;
+                    const minCard = 140.0;
+                    final width = constraints.maxWidth;
+                    final columns = max(2, ((width + spacing) / (minCard + spacing)).floor());
+                    final cardSize = (width - spacing * (columns - 1)) / columns;
+                    return Wrap(
+                      spacing: spacing,
+                      runSpacing: spacing,
+                      children: [
+                        for (final game in games) _GameCard(game: game, size: cardSize),
+                      ],
+                    );
+                  },
                 ),
             ],
           ],
@@ -274,9 +288,10 @@ class _ModuleSection extends StatelessWidget {
 }
 
 class _GameCard extends ConsumerWidget {
-  const _GameCard({required this.game});
+  const _GameCard({required this.game, required this.size});
 
   final GameInfo game;
+  final double size;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -286,7 +301,7 @@ class _GameCard extends ConsumerWidget {
       emoji: game.emoji,
       label: game.title,
       color: Colors.white,
-      size: 140,
+      size: size,
       footer: StarsRow(stars: progress.bestStars),
       onTap: () => context.push(AppRoutes.game(game.id)),
     );
