@@ -361,6 +361,20 @@ abstract final class AppStrings {
   ];
   static const mascotTimeUp = ["Ko'zlaring dam olsin, ertaga ko'rishamiz! 🌙"];
 
+  // ---------- Sertifikat ----------
+  static const certificateButton = '📜 Sertifikat';
+  static String certificateLocked(int left) => "📜 Sertifikatgacha yana $left ta o'yin qoldi";
+  static const certificateLockedHint = "Guruhingdagi har bir o'yinda kamida 1 ⭐ ol";
+  static const certificateTitle = 'SERTIFIKAT';
+  static const certificateGiven = 'Ushbu sertifikat';
+  static String certificateFor(String module) =>
+      "«$module» bo'limidagi barcha o'yinlarni muvaffaqiyatli o'tgani uchun beriladi";
+  static String certificateStars(int stars) => '⭐ $stars yulduz';
+  static String certificateMedals(int medals) => '🏅 $medals medal';
+  static String certificateDate(String date) => 'Sana: $date';
+  static const certificatePraise = ["Tabriklayman! Sen haqiqiy Aqlli Do'stsan! 🎓"];
+  static const certificateSaveHint = '📸 Saqlash uchun ekranni skrinshot qiling';
+
   // ---------- Birinchi ochilish ko'rsatmasi ----------
   static const onboarding1 = "Salom! Men Donish. Birga o'ynab o'rganamiz! 🎮";
   static const onboarding2 = "O'yin o'ynab ⭐ yulduz va 🪙 tanga yig'. Tangalarga sovg'a ol! 🎁";

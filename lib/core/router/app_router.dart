@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../features/achievements/achievements_screen.dart';
+import '../../features/certificate/certificate_screen.dart';
 import '../../features/games/game_catalog.dart';
 import '../../features/games/game_result.dart';
 import '../../features/games/result/result_screen.dart';
@@ -94,6 +95,10 @@ final appRouterProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: AppRoutes.achievements,
         builder: (context, state) => const AchievementsScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.certificate,
+        builder: (context, state) => const CertificateScreen(),
       ),
       GoRoute(
         path: AppRoutes.rewards,

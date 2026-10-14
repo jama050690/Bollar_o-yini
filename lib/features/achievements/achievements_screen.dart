@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../core/constants/app_strings.dart';
 import '../../core/theme/app_theme.dart';
+import '../certificate/certificate_screen.dart';
 import 'achievements_catalog.dart';
 import 'achievements_providers.dart';
 
@@ -33,6 +34,8 @@ class AchievementsScreen extends ConsumerWidget {
         child: ListView(
           padding: const EdgeInsets.all(16),
           children: [
+            const CertificateButton(),
+            const SizedBox(height: 16),
             Wrap(
               spacing: 12,
               runSpacing: 12,
