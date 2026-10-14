@@ -1,5 +1,6 @@
 import 'package:aqlli_dostlar/app.dart';
 import 'package:aqlli_dostlar/core/constants/age_group.dart';
+import 'package:aqlli_dostlar/core/constants/app_strings.dart';
 import 'package:aqlli_dostlar/core/router/app_router.dart';
 import 'package:aqlli_dostlar/core/storage/hive_storage.dart';
 import 'package:aqlli_dostlar/features/games/game_catalog.dart';
@@ -67,6 +68,60 @@ Future<void> _wait(WidgetTester tester, [int ms = 1500]) async {
   }
 }
 
+/// Xotira o'yinida [pairs] ta juftni topadi va yana bitta kartani ochiq qoldiradi —
+/// skrinshotda o'yin jarayoni ko'rinadi.
+Future<void> _playMemory(WidgetTester tester, {int pairs = 3}) async {
+  final cards = find.byWidgetPredicate((w) => w.runtimeType.toString() == '_FlipCard');
+  final count = cards.evaluate().length;
+  final known = <int, String>{};
+  final matched = <int>{};
+
+  Future<String> flip(int i) async {
+    await tester.tap(cards.at(i));
+    await _wait(tester, 450);
+    return tester
+        .widgetList<Text>(find.descendant(of: cards.at(i), matching: find.byType(Text)))
+        .first
+        .data!;
+  }
+
+  int? pairOf(int i) => known.entries
+      .where((e) => e.key != i && e.value == known[i] && !matched.contains(e.key))
+      .map((e) => e.key)
+      .firstOrNull;
+
+  var found = 0;
+  for (var i = 0; i < count && found < pairs; i++) {
+    if (matched.contains(i) || known.containsKey(i)) continue;
+    known[i] = await flip(i);
+    var j = pairOf(i);
+    if (j == null) {
+      // Juftini hali bilmaymiz — keyingi noma'lum kartani ochamiz.
+      j = List.generate(count, (k) => k)
+          .firstWhere((k) => k != i && !known.containsKey(k) && !matched.contains(k));
+      known[j] = await flip(j);
+      if (known[j] != known[i]) {
+        await _wait(tester, 1100); // Mos kelmagan kartalar yopiladi.
+        final pairForJ = pairOf(j);
+        if (pairForJ != null) {
+          await flip(pairForJ);
+          await flip(j);
+          matched.addAll([pairForJ, j]);
+          found++;
+        }
+        continue;
+      }
+    } else {
+      await flip(j);
+    }
+    matched.addAll([i, j]);
+    found++;
+  }
+
+  final open = List.generate(count, (k) => k).firstWhere((k) => !matched.contains(k));
+  await flip(open);
+}
+
 void main() {
   final binding = IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
@@ -93,7 +148,9 @@ void main() {
     final levels = find.byType(ChoiceCard);
     if (levels.evaluate().isNotEmpty) {
       await tester.tap(levels.first);
+      await _wait(tester, 800);
     }
+    await _playMemory(tester);
     await shot('02_oyin');
 
     router.go(
@@ -115,6 +172,12 @@ void main() {
 
     container.read(parentUnlockedProvider.notifier).unlock();
     router.go(AppRoutes.parentPanel);
+    await _wait(tester);
+    // Hisobot bo'limini ekran tepasiga olib chiqamiz.
+    await Scrollable.ensureVisible(
+      tester.element(find.text(AppStrings.reportTitle)),
+      alignment: 0,
+    );
     await shot('06_ota_ona_hisoboti');
   });
 }
