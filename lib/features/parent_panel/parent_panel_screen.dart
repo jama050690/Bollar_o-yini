@@ -11,6 +11,8 @@ import '../profile/profile_providers.dart';
 import '../progress/progress_providers.dart';
 import 'parent_settings.dart';
 import 'screen_time_providers.dart';
+import 'weekly_chart.dart';
+import 'weekly_report.dart';
 
 /// Bitta profil bo'yicha jamlangan hisobot.
 class ProfileReport {
@@ -217,7 +219,10 @@ class _ProfileReportCard extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final todaySeconds = ref.watch(todaySecondsProvider(profile.id));
-    final report = ProfileReport.from(profile.id, ref.watch(progressProvider));
+    final progress = ref.watch(progressProvider);
+    final report = ProfileReport.from(profile.id, progress);
+    final today = DateTime.parse(ref.watch(currentDayProvider));
+    final week = weekMinutes(profile.id, ref.watch(screenTimeProvider), today);
     const style = TextStyle(fontSize: 16, color: AppColors.text);
 
     return Container(
@@ -227,7 +232,21 @@ class _ProfileReportCard extends ConsumerWidget {
         color: profile.ageGroup.color.withValues(alpha: 0.25),
         borderRadius: BorderRadius.circular(AppSizes.radius / 2),
       ),
-      child: Row(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _reportSummary(report, todaySeconds, style),
+          const SizedBox(height: 16),
+          WeeklyChart(days: week),
+          const SizedBox(height: 16),
+          SubjectSummary(scores: subjectScores(profile.id, progress)),
+        ],
+      ),
+    );
+  }
+
+  Widget _reportSummary(ProfileReport report, int todaySeconds, TextStyle style) {
+    return Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(profile.avatar, style: const TextStyle(fontSize: 40)),
@@ -259,7 +278,6 @@ class _ProfileReportCard extends ConsumerWidget {
             ),
           ),
         ],
-      ),
     );
   }
 }

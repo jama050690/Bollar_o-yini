@@ -274,6 +274,21 @@ abstract final class AppStrings {
   static String totalTime(int minutes) => "Jami o'yin vaqti: $minutes daqiqa";
   static const favoriteGames = "Eng ko'p o'ynagani:";
 
+  // Haftalik grafik va fanlar
+  static const weekdaysShort = ['Du', 'Se', 'Ch', 'Pa', 'Ju', 'Sh', 'Ya'];
+  static String weekTotal(int minutes) => 'Oxirgi 7 kun: $minutes daqiqa';
+  static String dayMinutes(String day, int minutes) => '$day: $minutes daqiqa';
+  static const subjectsTitle = 'Fanlar bo\'yicha (o\'rtacha ⭐):';
+  static const subjectsEmpty = "Hali o'ynalmagan";
+  static String subjectStars(String subject, String stars) => '$subject — $stars ⭐';
+  static String strongSubject(String subject) => '💪 Kuchli tomoni: $subject';
+  static String practiceSubject(String subject) => "🌱 Ko'proq mashq kerak: $subject";
+  static const subjectMath = 'Matematika';
+  static const subjectLanguage = "Til va o'qish";
+  static const subjectLogic = 'Mantiq va xotira';
+  static const subjectCreative = 'Shakllar va ijod';
+  static const subjectWorld = 'Atrof-olam';
+
   static const timeUpTitle = "Bugun yaxshi o'ynading!";
   static const timeUpBody = "Endi dam olamiz. Ertaga ko'rishamiz! 🌙";
 
