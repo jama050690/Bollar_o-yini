@@ -9,9 +9,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 class SoundService {
   AudioPlayer? _player;
 
-  static const correct = 'sounds/effects/correct.mp3';
-  static const tryAgain = 'sounds/effects/try_again.mp3';
-  static const win = 'sounds/effects/win.mp3';
+  static const correct = 'sounds/effects/correct.wav';
+  static const tryAgain = 'sounds/effects/try_again.wav';
+  static const win = 'sounds/effects/win.wav';
 
   static String letter(String key) => 'sounds/uz/letters/$key.mp3';
   static String number(String key) => 'sounds/uz/numbers/$key.mp3';

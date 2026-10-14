@@ -6,9 +6,9 @@ Format: `.mp3`, qisqa (1-2 soniya), o'zbek tilida, bolalarga yoqimli ovoz.
 ## effects/
 | Fayl | Qachon |
 |---|---|
-| `correct.mp3` | To'g'ri javob |
-| `try_again.mp3` | Xato (muloyim, qo'rqitmaydigan ovoz) |
-| `win.mp3` | O'yin tugadi |
+| `correct.wav` | To'g'ri javob |
+| `try_again.wav` | Xato (muloyim, qo'rqitmaydigan ovoz) |
+| `win.wav` | O'yin tugadi |
 
 ## uz/numbers/
 `1.mp3` ... `10.mp3` — "bir", "ikki", ... "o'n"
