@@ -16,6 +16,7 @@ import '../profile/profile_providers.dart';
 import '../progress/progress_providers.dart';
 import '../rewards/rewards_catalog.dart';
 import '../rewards/rewards_providers.dart';
+import '../streak/streak_providers.dart';
 
 /// Bosh menyu: bolaning yoshiga mos modul ochiq, qolganlari
 /// "qulflangan, lekin ko'rinadi" holatda (TZ 3-bo'lim, FR-2).
@@ -35,6 +36,7 @@ class HomeScreen extends ConsumerWidget {
 
     final wallet = ref.watch(walletProvider);
     final background = backgroundById(wallet.backgroundId);
+    final streak = ref.watch(currentStreakProvider);
 
     return Scaffold(
       body: DecoratedBox(
@@ -56,6 +58,10 @@ class HomeScreen extends ConsumerWidget {
                 children: [
                   Expanded(child: _CoinsButton(coins: wallet.coins)),
                   const SizedBox(width: 12),
+                  if (streak > 0) ...[
+                    _StreakBadge(days: streak),
+                    const SizedBox(width: 12),
+                  ],
                   _MedalsButton(unlocked: ref.watch(unlockedMedalsProvider).length),
                 ],
               ),
@@ -141,6 +147,30 @@ class _Header extends StatelessWidget {
           icon: const Text('🔒', style: TextStyle(fontSize: 32)),
         ),
       ],
+    );
+  }
+}
+
+/// Necha kun ketma-ket o'ynagani.
+class _StreakBadge extends StatelessWidget {
+  const _StreakBadge({required this.days});
+
+  final int days;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      constraints: const BoxConstraints(minHeight: AppSizes.minTapTarget),
+      padding: const EdgeInsets.symmetric(horizontal: 14),
+      alignment: Alignment.center,
+      decoration: BoxDecoration(
+        color: const Color(0xFFFFE0B2),
+        borderRadius: BorderRadius.circular(AppSizes.radius),
+      ),
+      child: Text(
+        AppStrings.streakDays(days),
+        style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+      ),
     );
   }
 }

@@ -91,6 +91,14 @@ void main() {
       expect(_unlockedIds(const MedalStats(moduleComplete: true)), {'traveler'});
       expect(_unlockedIds(const MedalStats(bestStarsSum: 24)), isEmpty);
       expect(_unlockedIds(const MedalStats(bestStarsSum: 25)), {'collector'});
+      expect(_unlockedIds(const MedalStats(bestStreak: 2)), isEmpty);
+      expect(_unlockedIds(const MedalStats(bestStreak: 3)), {'streak3'});
+      expect(_unlockedIds(const MedalStats(bestStreak: 7)), {'streak3', 'streak7'});
+    });
+
+    test("jami 10 ta medal, id'lar takrorlanmaydi", () {
+      expect(kMedals.length, 10);
+      expect(kMedals.map((m) => m.id).toSet().length, kMedals.length);
     });
 
     test("har bir modulda 25 yulduz yig'ish mumkin", () {

@@ -8,6 +8,7 @@ import '../../../shared/widgets/confetti_overlay.dart';
 import '../../../shared/widgets/stars_row.dart';
 import '../../achievements/achievements_catalog.dart';
 import '../../rewards/rewards_catalog.dart';
+import '../../streak/streak_providers.dart';
 import '../game_catalog.dart';
 import '../game_result.dart';
 
@@ -72,6 +73,18 @@ class ResultScreen extends StatelessWidget {
                         ),
                       ),
                     ),
+                    if (result.streakDays case final days?) ...[
+                      const SizedBox(height: 12),
+                      Text(
+                        AppStrings.streakBonus(days, kDailyBonusCoins),
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                          fontSize: 22,
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xFFE65100),
+                        ),
+                      ),
+                    ],
                     if (result.newMedals.isNotEmpty) ...[
                       const SizedBox(height: 20),
                       _NewMedals(medals: result.newMedals),
