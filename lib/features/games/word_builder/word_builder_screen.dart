@@ -242,27 +242,33 @@ class _LetterTile extends StatelessWidget {
     return AnimatedOpacity(
       duration: const Duration(milliseconds: 200),
       opacity: used ? 0.25 : 1,
-      child: GestureDetector(
-        onTap: onTap,
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 200),
-          width: 80,
-          height: 80,
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-            color: wrong ? const Color(0xFFFFE0B2) : Colors.white,
-            borderRadius: BorderRadius.circular(20),
-            border: Border.all(color: Colors.black12, width: 2),
-            boxShadow: used
-                ? null
-                : const [BoxShadow(color: Colors.black12, blurRadius: 6, offset: Offset(0, 3))],
-          ),
-          child: Text(
-            letter,
-            style: const TextStyle(
-              fontSize: 38,
-              fontWeight: FontWeight.bold,
-              color: AppColors.text,
+      // Ekran o'quvchi uchun: harf tugmasi; ishlatilganda "o'chirilgan" deb aytiladi.
+      child: Semantics(
+        container: true,
+        button: true,
+        enabled: !used,
+        child: GestureDetector(
+          onTap: onTap,
+          child: AnimatedContainer(
+            duration: const Duration(milliseconds: 200),
+            width: 80,
+            height: 80,
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              color: wrong ? const Color(0xFFFFE0B2) : Colors.white,
+              borderRadius: BorderRadius.circular(20),
+              border: Border.all(color: Colors.black12, width: 2),
+              boxShadow: used
+                  ? null
+                  : const [BoxShadow(color: Colors.black12, blurRadius: 6, offset: Offset(0, 3))],
+            ),
+            child: Text(
+              letter,
+              style: const TextStyle(
+                fontSize: 38,
+                fontWeight: FontWeight.bold,
+                color: AppColors.text,
+              ),
             ),
           ),
         ),

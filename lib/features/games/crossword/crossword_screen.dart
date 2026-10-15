@@ -143,6 +143,8 @@ class _CrosswordScreenState extends ConsumerState<CrosswordScreen> {
                             width: cellSize,
                             height: cellSize,
                             child: _CellView(
+                              row: cell.$1 + 1,
+                              col: cell.$2 + 1,
                               letter: game.filled[cell],
                               highlighted: !_finished && selectedCells.contains(cell),
                               isCursor: !_finished && cell == cursor,
@@ -269,12 +271,17 @@ class _ClueButton extends StatelessWidget {
 
 class _CellView extends StatelessWidget {
   const _CellView({
+    required this.row,
+    required this.col,
     required this.letter,
     required this.highlighted,
     required this.isCursor,
     required this.onTap,
   });
 
+  /// Ekran o'quvchi uchun (1 dan boshlanadi).
+  final int row;
+  final int col;
   final String? letter;
   final bool highlighted;
   final bool isCursor;
@@ -282,30 +289,38 @@ class _CellView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        margin: const EdgeInsets.all(1),
-        decoration: BoxDecoration(
-          color: isCursor
-              ? const Color(0xFFFFE082)
-              : highlighted
-                  ? const Color(0xFFFFF9C4)
-                  : Colors.white,
-          borderRadius: BorderRadius.circular(6),
-          border: Border.all(color: highlighted ? AppColors.text : Colors.black26, width: 1.5),
-        ),
-        child: Center(
-          child: FittedBox(
-            fit: BoxFit.scaleDown,
-            child: Padding(
-              padding: const EdgeInsets.all(2),
-              child: Text(
-                letter?.toUpperCase() ?? '',
-                style: const TextStyle(
-                  fontSize: 26,
-                  fontWeight: FontWeight.bold,
-                  color: AppColors.text,
+    // Ekran o'quvchi: "2-qator, 3-ustun, A" yoki "…, bo'sh".
+    return Semantics(
+      container: true,
+      button: true,
+      selected: isCursor,
+      label: AppStrings.cellLabel(row, col, letter?.toUpperCase()),
+      excludeSemantics: true,
+      child: GestureDetector(
+        onTap: onTap,
+        child: Container(
+          margin: const EdgeInsets.all(1),
+          decoration: BoxDecoration(
+            color: isCursor
+                ? const Color(0xFFFFE082)
+                : highlighted
+                    ? const Color(0xFFFFF9C4)
+                    : Colors.white,
+            borderRadius: BorderRadius.circular(6),
+            border: Border.all(color: highlighted ? AppColors.text : Colors.black26, width: 1.5),
+          ),
+          child: Center(
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Padding(
+                padding: const EdgeInsets.all(2),
+                child: Text(
+                  letter?.toUpperCase() ?? '',
+                  style: const TextStyle(
+                    fontSize: 26,
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.text,
+                  ),
                 ),
               ),
             ),

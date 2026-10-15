@@ -165,27 +165,35 @@ class _FlipCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: TweenAnimationBuilder<double>(
-        tween: Tween(end: card.isFaceUp ? 1 : 0),
-        duration: const Duration(milliseconds: 300),
-        builder: (context, value, _) {
-          final showFront = value >= 0.5;
-          return Transform(
-            alignment: Alignment.center,
-            transform: Matrix4.identity()
-              ..setEntry(3, 2, 0.001)
-              ..rotateY(value * pi),
-            child: showFront
-                ? Transform(
-                    alignment: Alignment.center,
-                    transform: Matrix4.rotationY(pi),
-                    child: _front(),
-                  )
-                : _back(),
-          );
-        },
+    // Ekran o'quvchi: yopiq karta "Yopiq karta", ochig'i — ustidagi belgi.
+    return Semantics(
+      container: true,
+      button: true,
+      selected: card.isMatched,
+      label: card.isFaceUp ? card.symbol : AppStrings.hiddenCardLabel,
+      excludeSemantics: true,
+      child: GestureDetector(
+        onTap: onTap,
+        child: TweenAnimationBuilder<double>(
+          tween: Tween(end: card.isFaceUp ? 1 : 0),
+          duration: const Duration(milliseconds: 300),
+          builder: (context, value, _) {
+            final showFront = value >= 0.5;
+            return Transform(
+              alignment: Alignment.center,
+              transform: Matrix4.identity()
+                ..setEntry(3, 2, 0.001)
+                ..rotateY(value * pi),
+              child: showFront
+                  ? Transform(
+                      alignment: Alignment.center,
+                      transform: Matrix4.rotationY(pi),
+                      child: _front(),
+                    )
+                  : _back(),
+            );
+          },
+        ),
       ),
     );
   }
