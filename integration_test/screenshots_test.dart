@@ -19,6 +19,8 @@ import 'package:integration_test/integration_test.dart';
 /// `flutter drive --driver=test_driver/integration_test.dart`
 /// `--target=integration_test/screenshots_test.dart -d SIMULATOR_ID`
 ///
+/// Boshqa til uchun: `SHOTS_DIR=ipad_ru` va `--dart-define=SHOTS_LANG=ru` qo'shiladi.
+///
 /// Diqqat: qurilmadagi ilova ma'lumotlarini o'chirib, demo ma'lumot yozadi.
 const _profileId = 'demo';
 
@@ -35,6 +37,8 @@ Future<void> _seedDemo() async {
     'createdAt': 0,
   });
   final settings = HiveStorage.settings;
+  // Interfeys tili: `--dart-define=SHOTS_LANG=ru` (yoki en). Standart — o'zbekcha.
+  await settings.put('language', const String.fromEnvironment('SHOTS_LANG', defaultValue: 'uz'));
   await settings.put('onboardingDone', true);
   await settings.put('activeProfileId', _profileId);
   await settings.put('coins|$_profileId', 240);
