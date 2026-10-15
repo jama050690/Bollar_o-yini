@@ -131,37 +131,42 @@ class _TranslateScreenState extends ConsumerState<TranslateScreen> {
     return ListView(
       padding: const EdgeInsets.all(16),
       children: [
-        GestureDetector(
-          // Teskari darajada kartochkani bosib so'zni qayta eshitish mumkin.
-          onTap: reverse && _solved == null ? () => _speakPrompt(game) : null,
-          child: Container(
-            padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(AppSizes.radius),
-            ),
-            child: Column(
-              children: [
-                Text(q.word.emoji, style: const TextStyle(fontSize: 88)),
-                FittedBox(
-                  fit: BoxFit.scaleDown,
-                  child: Text(
-                    reverse ? '${game.language.flag}  ${q.prompt}  🔊' : q.prompt,
-                    style: const TextStyle(
-                      fontSize: 40,
-                      fontWeight: FontWeight.bold,
-                      color: AppColors.text,
+        Semantics(
+          // Bosish mumkin bo'lganda ekran o'quvchi buni tugma deb aytadi.
+          button: reverse && _solved == null,
+          hint: reverse && _solved == null ? AppStrings.listenAgainLabel : null,
+          child: GestureDetector(
+            // Teskari darajada kartochkani bosib so'zni qayta eshitish mumkin.
+            onTap: reverse && _solved == null ? () => _speakPrompt(game) : null,
+            child: Container(
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(AppSizes.radius),
+              ),
+              child: Column(
+                children: [
+                  ExcludeSemantics(child: Text(q.word.emoji, style: const TextStyle(fontSize: 88))),
+                  FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: Text(
+                      reverse ? '${game.language.flag}  ${q.prompt}  🔊' : q.prompt,
+                      style: const TextStyle(
+                        fontSize: 40,
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.text,
+                      ),
                     ),
                   ),
-                ),
-                const SizedBox(height: 8),
-                Text(switch ((_solved != null, reverse)) {
-                  (true, false) => '${game.language.flag}  $_solved  ✅',
-                  (true, true) => '$_solved  ✅',
-                  (false, false) => '${game.language.flag}  ${AppStrings.translateHint}',
-                  (false, true) => AppStrings.translateReverseHint,
-                }, style: const TextStyle(fontSize: 26, color: AppColors.primary)),
-              ],
+                  const SizedBox(height: 8),
+                  Text(switch ((_solved != null, reverse)) {
+                    (true, false) => '${game.language.flag}  $_solved  ✅',
+                    (true, true) => '$_solved  ✅',
+                    (false, false) => '${game.language.flag}  ${AppStrings.translateHint}',
+                    (false, true) => AppStrings.translateReverseHint,
+                  }, style: const TextStyle(fontSize: 26, color: AppColors.primary)),
+                ],
+              ),
             ),
           ),
         ),

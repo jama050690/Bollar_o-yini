@@ -311,6 +311,17 @@ abstract final class AppStrings {
   static String get homeButtonLabel => _t('Bosh menyu', 'Главное меню', 'Main menu');
   static String get switchProfileLabel =>
       _t('Profilni almashtirish', 'Сменить профиль', 'Switch profile');
+  static String cellLabel(int row, int col, String? value) => _t(
+        "$row-qator, $col-ustun, ${value ?? "bo'sh"}",
+        'Строка $row, столбец $col, ${value ?? 'пусто'}',
+        'Row $row, column $col, ${value ?? 'empty'}',
+      );
+  static String get hiddenCardLabel => _t('Yopiq karta', 'Закрытая карточка', 'Hidden card');
+  static String colorLabel(int n) => _t('$n-rang', 'Цвет $n', 'Color $n');
+  static String get coloringPictureLabel =>
+      _t("Bo'yash rasmi", 'Картинка для раскрашивания', 'Coloring picture');
+  static String get listenAgainLabel =>
+      _t("So'zni qayta eshitish", 'Прослушать слово ещё раз', 'Listen to the word again');
 
   // ---------- Kutilmagan xato (bolani qo'rqitmaydigan ekran) ----------
   static String get errorTitle =>

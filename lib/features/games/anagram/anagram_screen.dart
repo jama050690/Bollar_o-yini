@@ -156,24 +156,35 @@ class _AnagramScreenState extends ConsumerState<AnagramScreen> {
           runSpacing: 8,
           children: [
             for (var i = 0; i < game.tiles.length; i++)
-              GestureDetector(
-                onTap: () => _onSlotTap(i),
-                child: AnimatedContainer(
-                  duration: const Duration(milliseconds: 200),
-                  width: 64,
-                  height: 72,
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    color: i < game.placed.length ? slotColor : Colors.white54,
-                    borderRadius: BorderRadius.circular(16),
-                    border: Border.all(color: Colors.black26, width: 2),
-                  ),
-                  child: Text(
-                    i < game.placed.length ? game.tiles[game.placed[i]] : '',
-                    style: const TextStyle(
-                      fontSize: 34,
-                      fontWeight: FontWeight.bold,
-                      color: AppColors.text,
+              // Ekran o'quvchi: "1-qator, 2-ustun, A" yoki "…, bo'sh".
+              Semantics(
+                container: true,
+                button: true,
+                label: AppStrings.cellLabel(
+                  1,
+                  i + 1,
+                  i < game.placed.length ? game.tiles[game.placed[i]] : null,
+                ),
+                excludeSemantics: true,
+                child: GestureDetector(
+                  onTap: () => _onSlotTap(i),
+                  child: AnimatedContainer(
+                    duration: const Duration(milliseconds: 200),
+                    width: 64,
+                    height: 72,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      color: i < game.placed.length ? slotColor : Colors.white54,
+                      borderRadius: BorderRadius.circular(16),
+                      border: Border.all(color: Colors.black26, width: 2),
+                    ),
+                    child: Text(
+                      i < game.placed.length ? game.tiles[game.placed[i]] : '',
+                      style: const TextStyle(
+                        fontSize: 34,
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.text,
+                      ),
                     ),
                   ),
                 ),

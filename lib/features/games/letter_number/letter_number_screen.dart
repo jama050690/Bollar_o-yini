@@ -289,31 +289,39 @@ class _Tile extends StatelessWidget {
             ? const Color(0xFFFFE0B2)
             : Colors.white;
 
-    return GestureDetector(
-      onTap: onTap,
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 200),
-        width: 88,
-        height: 88,
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          color: color,
-          borderRadius: BorderRadius.circular(20),
-          border: Border.all(color: Colors.black12, width: 2),
-          boxShadow: done
-              ? null
-              : const [BoxShadow(color: Colors.black12, blurRadius: 6, offset: Offset(0, 3))],
-        ),
-        child: done
-            ? const Icon(Icons.check_rounded, size: 48, color: Color(0xFF43A047))
-            : Text(
-                item.label,
-                style: const TextStyle(
-                  fontSize: 40,
-                  fontWeight: FontWeight.bold,
-                  color: AppColors.text,
+    // Ekran o'quvchi uchun: tugma, ustidagi belgi va topilganmi.
+    return Semantics(
+      container: true,
+      button: true,
+      label: item.label,
+      selected: done,
+      excludeSemantics: true,
+      child: GestureDetector(
+        onTap: onTap,
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 200),
+          width: 88,
+          height: 88,
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+            color: color,
+            borderRadius: BorderRadius.circular(20),
+            border: Border.all(color: Colors.black12, width: 2),
+            boxShadow: done
+                ? null
+                : const [BoxShadow(color: Colors.black12, blurRadius: 6, offset: Offset(0, 3))],
+          ),
+          child: done
+              ? const Icon(Icons.check_rounded, size: 48, color: Color(0xFF43A047))
+              : Text(
+                  item.label,
+                  style: const TextStyle(
+                    fontSize: 40,
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.text,
+                  ),
                 ),
-              ),
+        ),
       ),
     );
   }

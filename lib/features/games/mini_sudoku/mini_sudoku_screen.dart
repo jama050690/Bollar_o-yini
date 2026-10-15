@@ -230,32 +230,40 @@ class _Board extends StatelessWidget {
     final isGiven = game.givens.contains(index);
     final isSelected = index == selected;
 
-    return GestureDetector(
-      onTap: () => onSelect(index),
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 200),
-        width: _cellSize,
-        height: _cellSize,
-        margin: const EdgeInsets.all(4),
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          color: isGiven
-              ? const Color(0xFFFFF3C4)
-              : value != null
-                  ? const Color(0xFFC8E6C9)
-                  : Colors.white,
-          borderRadius: BorderRadius.circular(16),
-          border: Border.all(
-            color: isSelected ? AppColors.primary : Colors.black12,
-            width: isSelected ? 5 : 2,
+    // Ekran o'quvchi: "2-qator, 3-ustun, 5" yoki "…, bo'sh".
+    return Semantics(
+      container: true,
+      button: true,
+      selected: isSelected,
+      label: AppStrings.cellLabel(index ~/ 3 + 1, index % 3 + 1, value?.toString()),
+      excludeSemantics: true,
+      child: GestureDetector(
+        onTap: () => onSelect(index),
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 200),
+          width: _cellSize,
+          height: _cellSize,
+          margin: const EdgeInsets.all(4),
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+            color: isGiven
+                ? const Color(0xFFFFF3C4)
+                : value != null
+                    ? const Color(0xFFC8E6C9)
+                    : Colors.white,
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(
+              color: isSelected ? AppColors.primary : Colors.black12,
+              width: isSelected ? 5 : 2,
+            ),
           ),
-        ),
-        child: Text(
-          value?.toString() ?? '?',
-          style: TextStyle(
-            fontSize: 42,
-            fontWeight: FontWeight.bold,
-            color: value == null ? Colors.black26 : AppColors.text,
+          child: Text(
+            value?.toString() ?? '?',
+            style: TextStyle(
+              fontSize: 42,
+              fontWeight: FontWeight.bold,
+              color: value == null ? Colors.black26 : AppColors.text,
+            ),
           ),
         ),
       ),
