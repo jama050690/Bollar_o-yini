@@ -97,33 +97,46 @@ class _CoinsButton extends StatelessWidget {
         minimumSize: const Size.fromHeight(AppSizes.minTapTarget),
         padding: const EdgeInsets.symmetric(horizontal: 20),
       ),
-      child: Row(
-        children: [
-          Text(AppStrings.coins(coins)),
-          const SizedBox(width: 12),
-          Expanded(
-            child: LayoutBuilder(
-              builder: (context, constraints) {
-                // Matn sig'masa kichraytirmaymiz — faqat 🎁 qoladi.
-                final label = '${AppStrings.rewardsTitle} 🎁';
-                final painter = TextPainter(
-                  text: TextSpan(text: label, style: DefaultTextStyle.of(context).style),
-                  textDirection: Directionality.of(context),
-                  textScaler: MediaQuery.textScalerOf(context),
-                  maxLines: 1,
-                )..layout();
-                final fits = painter.width <= constraints.maxWidth;
-                painter.dispose();
-                return Align(
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          const gap = 12.0;
+          final balance = AppStrings.coins(coins);
+          final label = '${AppStrings.rewardsTitle} 🎁';
+          final balanceWidth = _textWidth(context, balance);
+
+          // Katta shriftda balansning o'zi ham sig'masa — faqat u, sig'adigan qilib kichraytirilgan.
+          if (balanceWidth + gap + _textWidth(context, '🎁') > constraints.maxWidth) {
+            return FittedBox(fit: BoxFit.scaleDown, child: Text(balance, maxLines: 1));
+          }
+          // Matn sig'masa kichraytirmaymiz — faqat 🎁 qoladi.
+          final fits = balanceWidth + gap + _textWidth(context, label) <= constraints.maxWidth;
+          return Row(
+            children: [
+              Text(balance, maxLines: 1),
+              const SizedBox(width: gap),
+              Expanded(
+                child: Align(
                   alignment: Alignment.centerRight,
                   child: Text(fits ? label : '🎁', maxLines: 1),
-                );
-              },
-            ),
-          ),
-        ],
+                ),
+              ),
+            ],
+          );
+        },
       ),
     );
+  }
+
+  double _textWidth(BuildContext context, String text) {
+    final painter = TextPainter(
+      text: TextSpan(text: text, style: DefaultTextStyle.of(context).style),
+      textDirection: Directionality.of(context),
+      textScaler: MediaQuery.textScalerOf(context),
+      maxLines: 1,
+    )..layout();
+    final width = painter.width;
+    painter.dispose();
+    return width;
   }
 }
 
