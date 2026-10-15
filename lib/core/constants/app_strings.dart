@@ -320,6 +320,7 @@ abstract final class AppStrings {
   static String colorLabel(int n) => _t('$n-rang', 'Цвет $n', 'Color $n');
   static String get coloringPictureLabel =>
       _t("Bo'yash rasmi", 'Картинка для раскрашивания', 'Coloring picture');
+  static String get listenLabel => _t('Ovozni eshitish', 'Послушать', 'Listen');
   static String get listenAgainLabel =>
       _t("So'zni qayta eshitish", 'Прослушать слово ещё раз', 'Listen to the word again');
 

@@ -230,6 +230,7 @@ class _TargetPanel extends StatelessWidget {
                   ),
                 ),
                 IconButton(
+                  tooltip: AppStrings.listenLabel,
                   iconSize: 44,
                   onPressed: onSpeakerTap,
                   icon: const Icon(Icons.volume_up_rounded),
