@@ -143,3 +143,7 @@ secrets/
 *.lock
 !pubspec.lock
 !**/ios/Podfile.lock
+
+# ---------- Skrinshot testi yaratadigan rasmlar (git'ga kerak emas) ----------
+store/screenshots/ipad*/
+store/screenshots/iphone*/
