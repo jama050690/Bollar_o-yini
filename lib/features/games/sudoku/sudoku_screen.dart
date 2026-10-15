@@ -206,31 +206,39 @@ class _SudokuScreenState extends ConsumerState<SudokuScreen> {
     // Qutilar chegarasi qalinroq.
     final thickRight = (c + 1) % game.level.boxCols == 0 && c != game.size - 1;
     final thickBottom = (r + 1) % game.level.boxRows == 0 && r != game.size - 1;
-    return GestureDetector(
-      onTap: () => _onCellTap(r, c),
-      child: Container(
-        width: size,
-        height: size,
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          color: selected
-              ? const Color(0xFFFFF59D)
-              : _done
-              ? const Color(0xFFC8E6C9)
-              : given
-              ? const Color(0xFFF1F1F1)
-              : Colors.white,
-          border: Border(
-            right: BorderSide(color: AppColors.text, width: thickRight ? 3 : 0.5),
-            bottom: BorderSide(color: AppColors.text, width: thickBottom ? 3 : 0.5),
+    // Ekran o'quvchi: "2-qator, 3-ustun, 5" yoki "…, bo'sh".
+    return Semantics(
+      container: true,
+      button: true,
+      selected: selected,
+      label: AppStrings.cellLabel(r + 1, c + 1, value?.toString()),
+      excludeSemantics: true,
+      child: GestureDetector(
+        onTap: () => _onCellTap(r, c),
+        child: Container(
+          width: size,
+          height: size,
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+            color: selected
+                ? const Color(0xFFFFF59D)
+                : _done
+                ? const Color(0xFFC8E6C9)
+                : given
+                ? const Color(0xFFF1F1F1)
+                : Colors.white,
+            border: Border(
+              right: BorderSide(color: AppColors.text, width: thickRight ? 3 : 0.5),
+              bottom: BorderSide(color: AppColors.text, width: thickBottom ? 3 : 0.5),
+            ),
           ),
-        ),
-        child: Text(
-          value == null ? '' : '$value',
-          style: TextStyle(
-            fontSize: size * 0.5,
-            fontWeight: FontWeight.bold,
-            color: given ? AppColors.text : const Color(0xFF1E88E5),
+          child: Text(
+            value == null ? '' : '$value',
+            style: TextStyle(
+              fontSize: size * 0.5,
+              fontWeight: FontWeight.bold,
+              color: given ? AppColors.text : const Color(0xFF1E88E5),
+            ),
           ),
         ),
       ),

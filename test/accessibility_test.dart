@@ -1,9 +1,12 @@
 import 'dart:io';
 
 import 'package:aqlli_dostlar/app.dart';
+import 'package:aqlli_dostlar/core/constants/age_group.dart';
 import 'package:aqlli_dostlar/core/constants/app_strings.dart';
 import 'package:aqlli_dostlar/core/router/app_router.dart';
 import 'package:aqlli_dostlar/core/storage/hive_storage.dart';
+import 'package:aqlli_dostlar/features/games/game_catalog.dart';
+import 'package:aqlli_dostlar/shared/widgets/choice_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -104,6 +107,48 @@ void main() {
     await _close(tester);
     handle.dispose();
   });
+
+  // Maxsus bosiladigan joylari (katak, plitka, karta, rang) bor o'yinlar.
+  const customTapGames = [
+    'memory_match',
+    'letter_number',
+    'coloring',
+    'word_builder',
+    'mini_sudoku',
+    'crossword',
+    'translate',
+    'anagram',
+    'sudoku',
+  ];
+  for (final id in customTapGames) {
+    testWidgets("O'yin $id: bosiladigan joylar yozuvli", (tester) async {
+      final game = gameCatalog.firstWhere((g) => g.id == id);
+      await HiveStorage.profiles.put(_profileId, {
+        ...HiveStorage.profiles.get(_profileId)!,
+        'age': switch (game.group) {
+          AgeGroup.a => 6,
+          AgeGroup.b => 8,
+          AgeGroup.c => 11,
+        },
+      });
+      final handle = tester.ensureSemantics();
+      final container = await _openApp(tester);
+      container.read(appRouterProvider).go(AppRoutes.game(id));
+      await _settle(tester);
+
+      // Daraja tanlash bo'lsa — birinchi darajaga kirib, o'yin maydonini tekshiradi.
+      final levels = find.byType(ChoiceCard);
+      if (levels.evaluate().isNotEmpty) {
+        await tester.ensureVisible(levels.first);
+        await tester.tap(levels.first);
+        await _settle(tester);
+      }
+
+      await expectLater(tester, meetsGuideline(labeledTapTargetGuideline));
+      await _close(tester);
+      handle.dispose();
+    });
+  }
 
   testWidgets('Katta shrift (1.5x): bosh menyu va o\'yin sig\'adi', (tester) async {
     final container = await _openApp(tester, textScale: 1.5);

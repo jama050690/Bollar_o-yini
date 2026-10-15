@@ -146,22 +146,28 @@ class _SelectableCircle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 200),
-        width: 72,
-        height: 72,
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          color: color,
-          shape: BoxShape.circle,
-          border: Border.all(
-            color: selected ? AppColors.primary : Colors.black12,
-            width: selected ? 5 : 2,
+    // Ekran o'quvchi uchun: tugma va tanlanganmi (ichidagi matn o'qiladi).
+    return Semantics(
+      container: true,
+      button: true,
+      selected: selected,
+      child: GestureDetector(
+        onTap: onTap,
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 200),
+          width: 72,
+          height: 72,
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+            color: color,
+            shape: BoxShape.circle,
+            border: Border.all(
+              color: selected ? AppColors.primary : Colors.black12,
+              width: selected ? 5 : 2,
+            ),
           ),
+          child: child,
         ),
-        child: child,
       ),
     );
   }

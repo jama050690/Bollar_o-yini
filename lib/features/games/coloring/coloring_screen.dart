@@ -92,17 +92,22 @@ class _ColoringScreenState extends ConsumerState<ColoringScreen> {
               builder: (context, constraints) {
                 final side = min(constraints.maxWidth, constraints.maxHeight);
                 return Center(
-                  child: GestureDetector(
-                    onTapUp: (details) => _onTap(details.localPosition, side),
-                    child: Container(
-                      width: side,
-                      height: side,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(AppSizes.radius),
-                      ),
-                      child: CustomPaint(
-                        painter: _PicturePainter(game.picture, [...game.colors]),
+                  // Ekran o'quvchi rasmning qaysi qismi ekanini aytolmaydi — faqat nomi.
+                  child: Semantics(
+                    container: true,
+                    label: AppStrings.coloringPictureLabel,
+                    child: GestureDetector(
+                      onTapUp: (details) => _onTap(details.localPosition, side),
+                      child: Container(
+                        width: side,
+                        height: side,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(AppSizes.radius),
+                        ),
+                        child: CustomPaint(
+                          painter: _PicturePainter(game.picture, [...game.colors]),
+                        ),
                       ),
                     ),
                   ),
@@ -121,21 +126,28 @@ class _ColoringScreenState extends ConsumerState<ColoringScreen> {
               itemBuilder: (context, i) {
                 final color = coloringPalette[i];
                 final selected = color == game.selectedColor;
-                return GestureDetector(
-                  onTap: () => setState(() => game.selectedColor = color),
-                  child: AnimatedContainer(
-                    duration: const Duration(milliseconds: 150),
-                    width: 64,
-                    height: 64,
-                    margin: EdgeInsets.all(selected ? 0 : 6),
-                    decoration: BoxDecoration(
-                      color: Color(color),
-                      shape: BoxShape.circle,
-                      border: Border.all(
-                        color: selected ? AppColors.text : Colors.white,
-                        width: selected ? 5 : 3,
+                // Ekran o'quvchi: "1-rang", "2-rang"… va tanlanganmi.
+                return Semantics(
+                  container: true,
+                  button: true,
+                  selected: selected,
+                  label: AppStrings.colorLabel(i + 1),
+                  child: GestureDetector(
+                    onTap: () => setState(() => game.selectedColor = color),
+                    child: AnimatedContainer(
+                      duration: const Duration(milliseconds: 150),
+                      width: 64,
+                      height: 64,
+                      margin: EdgeInsets.all(selected ? 0 : 6),
+                      decoration: BoxDecoration(
+                        color: Color(color),
+                        shape: BoxShape.circle,
+                        border: Border.all(
+                          color: selected ? AppColors.text : Colors.white,
+                          width: selected ? 5 : 3,
+                        ),
+                        boxShadow: const [BoxShadow(color: Colors.black26, blurRadius: 4)],
                       ),
-                      boxShadow: const [BoxShadow(color: Colors.black26, blurRadius: 4)],
                     ),
                   ),
                 );
