@@ -30,7 +30,7 @@ class GameResult {
   /// Shu o'yin natijasida ochilgan yangi medallar (natija ekranida ko'rsatiladi).
   final List<Medal> newMedals;
 
-  /// Kunning birinchi o'yini bo'lsa — ketma-ket kunlar soni (bonus tanga berildi).
+  /// Kunning birinchi o'yini bo'lsa — jami o'ynagan kunlar soni (bonus tanga berildi).
   /// Bugun allaqachon o'ynagan bo'lsa null.
   final int? streakDays;
 }
@@ -49,7 +49,7 @@ void finishGame(BuildContext context, WidgetRef ref, GameResult result) {
   if (profile != null) {
     ref.read(progressProvider.notifier).record(profile.id, result);
     ref.read(walletProvider.notifier).earn(coinsForStars(result.stars));
-    // Seriya medallardan oldin yangilanadi — "3 kun ketma-ket" shu o'yinda ochilishi uchun.
+    // Kunlar medallardan oldin yangilanadi — "3 quvnoq kun" shu o'yinda ochilishi uchun.
     final streakDays = ref.read(streakProvider.notifier).recordPlay();
     final medals = ref.read(awardedMedalsProvider.notifier).claimNew();
     shown = GameResult(
