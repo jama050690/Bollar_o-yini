@@ -8,26 +8,19 @@ import '../rewards/rewards_providers.dart';
 /// Kunning birinchi o'yini uchun bonus tanga.
 const kDailyBonusCoins = 10;
 
-/// Bitta bolaning kunlik seriyasi: necha kun ketma-ket o'ynagan.
+/// Bitta bolaning o'ynagan kunlari.
+///
+/// Manipulyatsiyasiz: "ketma-ket kunlar" emas, jami kunlar sanaladi. Kun o'tkazib
+/// yuborilsa hech narsa yo'qolmaydi — bola ilovaga qaytishga majburlanmaydi.
 class Streak {
-  const Streak({this.count = 0, this.lastDay, this.best = 0});
+  const Streak({this.days = 0, this.lastDay});
 
-  /// Oxirgi o'ynagan kungacha ketma-ket kunlar soni.
-  final int count;
+  /// Jami o'ynagan kunlar soni (faqat oshadi).
+  final int days;
 
   /// Oxirgi o'yin tugatilgan kun ("yyyy-MM-dd"), hali o'ynamagan bo'lsa null.
   final String? lastDay;
-
-  /// Eng uzun seriya — medallar shunga qarab ochiladi (seriya uzilsa ham saqlanadi).
-  final int best;
-
-  /// Bugun ko'rsatiladigan seriya: bugun yoki kecha o'ynagan bo'lsa davom etadi,
-  /// aks holda uzilgan (0).
-  int currentAt(DateTime now) =>
-      lastDay == dayKey(now) || lastDay == dayKey(_yesterday(now)) ? count : 0;
 }
-
-DateTime _yesterday(DateTime now) => DateTime(now.year, now.month, now.day - 1);
 
 String _streakKey(String profileId) => 'streak|$profileId';
 
@@ -41,40 +34,34 @@ class StreakNotifier extends Notifier<Streak> {
 
     final saved = HiveStorage.settings.get(_streakKey(profileId)) as Map?;
     if (saved == null) return const Streak();
+    // Eski formatda (`count`/`best` — ketma-ket seriya) `days` yo'q: eng uzun seriya
+    // olinadi, shunda avval ochilgan medallar yopilib qolmaydi.
+    final oldBest = saved['best'] as int? ?? 0;
+    final oldCount = saved['count'] as int? ?? 0;
     return Streak(
-      count: saved['count'] as int? ?? 0,
+      days: saved['days'] as int? ?? (oldBest > oldCount ? oldBest : oldCount),
       lastDay: saved['lastDay'] as String?,
-      best: saved['best'] as int? ?? 0,
     );
   }
 
-  /// O'yin tugaganda chaqiriladi. Kunning birinchi o'yini bo'lsa seriyani
-  /// yangilaydi, bonus tanga beradi va yangi seriyani qaytaradi; aks holda null.
+  /// O'yin tugaganda chaqiriladi. Kunning birinchi o'yini bo'lsa kunlar sonini
+  /// oshiradi, bonus tanga beradi va yangi sonni qaytaradi; aks holda null.
   int? recordPlay([DateTime? now]) {
     final profileId = _profileId;
     if (profileId == null) return null;
 
-    now ??= DateTime.now();
-    final today = dayKey(now);
+    final today = dayKey(now ?? DateTime.now());
     if (state.lastDay == today) return null;
 
-    final count = state.lastDay == dayKey(_yesterday(now)) ? state.count + 1 : 1;
-    final best = count > state.best ? count : state.best;
-    HiveStorage.settings.put(_streakKey(profileId), {
-      'count': count,
-      'lastDay': today,
-      'best': best,
-    });
-    state = Streak(count: count, lastDay: today, best: best);
+    final days = state.days + 1;
+    HiveStorage.settings.put(_streakKey(profileId), {'days': days, 'lastDay': today});
+    state = Streak(days: days, lastDay: today);
     ref.read(walletProvider.notifier).earn(kDailyBonusCoins);
-    return count;
+    return days;
   }
 }
 
 final streakProvider = NotifierProvider<StreakNotifier, Streak>(StreakNotifier.new);
 
-/// Faol bolaning bugungi seriyasi (bosh ekranda ko'rsatiladi).
-final currentStreakProvider = Provider<int>((ref) {
-  ref.watch(currentDayProvider); // Yarim tunda qayta hisoblanadi.
-  return ref.watch(streakProvider).currentAt(DateTime.now());
-});
+/// Faol bolaning jami o'ynagan kunlari (bosh ekranda ko'rsatiladi).
+final currentStreakProvider = Provider<int>((ref) => ref.watch(streakProvider).days);

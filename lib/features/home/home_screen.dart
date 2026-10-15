@@ -189,7 +189,7 @@ class _Header extends StatelessWidget {
   }
 }
 
-/// Necha kun ketma-ket o'ynagani.
+/// Jami necha kun o'ynagani (kun o'tkazib yuborilsa kamaymaydi).
 class _StreakBadge extends StatelessWidget {
   const _StreakBadge({required this.days});
 

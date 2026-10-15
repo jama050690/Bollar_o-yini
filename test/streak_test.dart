@@ -49,7 +49,7 @@ void main() {
     await tempDir.delete(recursive: true);
   });
 
-  group('Kunlik seriya', () {
+  group("O'ynagan kunlar", () {
     test("kunning faqat birinchi o'yini hisoblanadi va bonus beradi", () async {
       await _seedProfile();
       final container = ProviderContainer();
@@ -61,7 +61,7 @@ void main() {
       expect(container.read(walletProvider).coins, kDailyBonusCoins);
     });
 
-    test("ketma-ket kunlarda o'sadi, kun o'tkazib yuborilsa 1 dan boshlanadi", () async {
+    test("kun o'tkazib yuborilsa ham hisob yo'qolmaydi", () async {
       await _seedProfile();
       final container = ProviderContainer();
       addTearDown(container.dispose);
@@ -70,42 +70,42 @@ void main() {
       expect(streak.recordPlay(_day(1)), 1);
       expect(streak.recordPlay(_day(2)), 2);
       expect(streak.recordPlay(_day(3)), 3);
-      expect(streak.recordPlay(_day(5)), 1);
+      expect(streak.recordPlay(_day(20)), 4);
 
-      final state = container.read(streakProvider);
-      expect(state.count, 1);
-      expect(state.best, 3);
+      expect(container.read(streakProvider).days, 4);
+      expect(container.read(currentStreakProvider), 4);
+      // Bonus har kuni bir xil — oshib boradigan mukofot yo'q.
+      expect(container.read(walletProvider).coins, 4 * kDailyBonusCoins);
     });
 
-    test("oy almashganda ham ketma-ketlik saqlanadi", () async {
+    test("eski formatdagi seriya eng uzun qiymat bilan ko'chiriladi", () async {
       await _seedProfile();
+      await HiveStorage.settings.put('streak|$_profileId', {
+        'count': 1,
+        'lastDay': '2020-01-01',
+        'best': 5,
+      });
       final container = ProviderContainer();
       addTearDown(container.dispose);
-      final streak = container.read(streakProvider.notifier);
 
-      expect(streak.recordPlay(DateTime(2026, 2, 28, 20)), 1);
-      expect(streak.recordPlay(DateTime(2026, 3, 1, 8)), 2);
+      expect(container.read(streakProvider).days, 5);
+      expect(container.read(streakProvider.notifier).recordPlay(_day(1)), 6);
+      final medals = container.read(unlockedMedalsProvider).map((m) => m.id);
+      expect(medals, contains('streak3'));
     });
 
-    test("bugungi seriya: kecha o'ynagan bo'lsa davom etadi, undan oldin bo'lsa 0", () {
-      final streak = Streak(count: 4, lastDay: dayKey(_day(10)), best: 4);
-      expect(streak.currentAt(_day(10)), 4);
-      expect(streak.currentAt(_day(11)), 4);
-      expect(streak.currentAt(_day(12)), 0);
-    });
-
-    test("seriya qayta ochilganda eslab qolinadi va medal ochadi", () async {
+    test("kunlar qayta ochilganda eslab qolinadi va medal ochadi", () async {
       await _seedProfile();
       final first = ProviderContainer();
       first.read(streakProvider.notifier)
         ..recordPlay(_day(1))
-        ..recordPlay(_day(2))
-        ..recordPlay(_day(3));
+        ..recordPlay(_day(5))
+        ..recordPlay(_day(9));
       first.dispose();
 
       final second = ProviderContainer();
       addTearDown(second.dispose);
-      expect(second.read(streakProvider).best, 3);
+      expect(second.read(streakProvider).days, 3);
       final medals = second.read(unlockedMedalsProvider).map((m) => m.id);
       expect(medals, contains('streak3'));
       expect(medals, isNot(contains('streak7')));
@@ -113,12 +113,11 @@ void main() {
   });
 
   group('Ekranlar', () {
-    testWidgets("bosh ekranda seriya ko'rinadi", (tester) async {
+    testWidgets("bosh ekranda o'ynagan kunlar ko'rinadi", (tester) async {
       await _seedProfile();
       await HiveStorage.settings.put('streak|$_profileId', {
-        'count': 3,
+        'days': 3,
         'lastDay': dayKey(DateTime.now()),
-        'best': 3,
       });
       await tester.pumpWidget(const ProviderScope(child: AqlliDostlarApp()));
       await tester.pumpAndSettle();
@@ -126,17 +125,16 @@ void main() {
       expect(find.text(AppStrings.streakDays(3)), findsOneWidget);
     });
 
-    testWidgets("seriya uzilgan bo'lsa bosh ekranda ko'rinmaydi", (tester) async {
+    testWidgets("uzoq vaqt o'ynamagan bo'lsa ham kunlar saqlanadi", (tester) async {
       await _seedProfile();
       await HiveStorage.settings.put('streak|$_profileId', {
-        'count': 3,
+        'days': 3,
         'lastDay': '2020-01-01',
-        'best': 3,
       });
       await tester.pumpWidget(const ProviderScope(child: AqlliDostlarApp()));
       await tester.pumpAndSettle();
 
-      expect(find.textContaining('🔥'), findsNothing);
+      expect(find.text(AppStrings.streakDays(3)), findsOneWidget);
     });
 
     testWidgets("natija ekranida kunlik bonus ko'rsatiladi", (tester) async {
@@ -167,7 +165,7 @@ void main() {
       ));
       await tester.pumpAndSettle();
 
-      expect(find.textContaining('🔥'), findsNothing);
+      expect(find.textContaining('📅'), findsNothing);
     });
   });
 }

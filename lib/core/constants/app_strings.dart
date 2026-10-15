@@ -548,12 +548,12 @@ abstract final class AppStrings {
       _t('Yulduzlar kolleksiyasi', 'Коллекция звёзд', 'Star collector');
   static String get medalCollectorHint =>
       _t("Jami 25 yulduz yig'", 'Собери 25 звёзд', 'Collect 25 stars');
-  static String get medalStreak3 => _t('Olovli 3 kun', 'Огненные 3 дня', 'Fiery 3 days');
+  static String get medalStreak3 => _t('3 quvnoq kun', '3 весёлых дня', '3 happy days');
   static String get medalStreak3Hint =>
-      _t("3 kun ketma-ket o'yna", 'Играй 3 дня подряд', 'Play 3 days in a row');
-  static String get medalStreak7 => _t('Olovli hafta', 'Огненная неделя', 'Fiery week');
+      _t("3 xil kunda o'yna", 'Поиграй в 3 разных дня', 'Play on 3 different days');
+  static String get medalStreak7 => _t('7 quvnoq kun', '7 весёлых дней', '7 happy days');
   static String get medalStreak7Hint =>
-      _t("7 kun ketma-ket o'yna", 'Играй 7 дней подряд', 'Play 7 days in a row');
+      _t("7 xil kunda o'yna", 'Поиграй в 7 разных дней', 'Play on 7 different days');
 
   // ---------- Yordamchi qahramon (Donish 🦉) ----------
   static String get mascotName =>
@@ -685,19 +685,14 @@ abstract final class AppStrings {
   static String get onboardingStart => _t('Boshlash 🚀', 'Начать 🚀', 'Start 🚀');
   static String get onboardingSkip => _t("O'tkazib yuborish", 'Пропустить', 'Skip');
 
-  // ---------- Kunlik seriya ----------
-  static String streakDays(int n) => '🔥 $n';
-  static String streakBonus(int days, int coins) => days > 1
-      ? _t(
-          '🔥 $days kun ketma-ket! +$coins 🪙',
-          '🔥 $days дн. подряд! +$coins 🪙',
-          '🔥 $days days in a row! +$coins 🪙',
-        )
-      : _t(
-          "🔥 Bugungi birinchi o'yin! +$coins 🪙",
-          '🔥 Первая игра сегодня! +$coins 🪙',
-          '🔥 First game today! +$coins 🪙',
-        );
+  // ---------- O'ynagan kunlar (manipulyatsiyasiz kunlik bonus) ----------
+  static String streakDays(int n) => '📅 $n';
+  // [days] ataylab ko'rsatilmaydi: "ketma-ket" bosimi yo'q, faqat bugungi quvonch.
+  static String streakBonus(int days, int coins) => _t(
+        "📅 Bugungi birinchi o'yin! +$coins 🪙",
+        '📅 Первая игра сегодня! +$coins 🪙',
+        '📅 First game today! +$coins 🪙',
+      );
 
   // ---------- Maxfiylik siyosati va ilova haqida (Apple 5.1.1) ----------
   static String get privacyButton =>

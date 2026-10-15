@@ -21,7 +21,7 @@ final medalStatsProvider = Provider<MedalStats>((ref) {
   return MedalStats.from(
     progress,
     gamesFor(profile.ageGroup).map((g) => g.id),
-    bestStreak: ref.watch(streakProvider).best,
+    playDays: ref.watch(streakProvider).days,
   );
 });
 
