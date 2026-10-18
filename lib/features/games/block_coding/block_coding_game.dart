@@ -87,7 +87,8 @@ class CodingPuzzle {
 
 enum BlockType { forward, left, right, loop }
 
-enum RunOutcome { empty, success, crashed, notReached }
+/// [empty] va [emptyLoop] — dastur hali tayyor emas, xato sanalmaydi.
+enum RunOutcome { empty, emptyLoop, success, crashed, notReached }
 
 /// Dastur bajarilishi natijasi: robot bosib o'tgan holatlar va yakun.
 class RunResult {
@@ -175,8 +176,12 @@ class BlockCodingGame {
   bool add(BlockType type) {
     if (!canAdd(type)) return false;
     _target.add(type);
+    // 🔁 ichi hali bo'sh — bola keyingi qadamni ko'rishi uchun o'sha qatorga o'tamiz.
+    if (type == BlockType.loop && loopBody.isEmpty) editingLoop = true;
     return true;
   }
+
+  bool get hasEmptyLoop => program.contains(BlockType.loop) && loopBody.isEmpty;
 
   void removeLast() {
     final target = _target;
@@ -207,9 +212,10 @@ class BlockCodingGame {
   /// Dasturni bajaradi. Robot maqsadga yetsa, darhol to'xtaydi.
   /// Yiqilish yoki yetib bormaslik — xato sifatida sanaladi.
   RunResult run() {
-    final commands = compile();
     var state = puzzle.start;
     final trace = [state];
+    if (hasEmptyLoop) return RunResult(trace, RunOutcome.emptyLoop);
+    final commands = compile();
     if (commands.isEmpty) return RunResult(trace, RunOutcome.empty);
 
     for (final command in commands) {

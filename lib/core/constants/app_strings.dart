@@ -337,6 +337,11 @@ abstract final class AppStrings {
         '💥 Препятствие! Исправь программу',
         '💥 Obstacle! Fix your program',
       );
+  static String get codingEmptyLoop => _t(
+        "🔁 ichi bo'sh! Avval «🔁 Takrorlash ichi»ga blok qo'y",
+        '🔁 пустой! Сначала положи блок во «🔁 Внутри повтора»',
+        '🔁 is empty! First put a block in «🔁 Inside repeat»',
+      );
   static String get codingNotReached => _t(
         "🔋 gacha yetmadi. Dasturni to'ldir!",
         'Робот не дошёл до 🔋. Дополни программу!',

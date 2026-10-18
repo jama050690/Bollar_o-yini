@@ -22,10 +22,11 @@ void _write(BlockCodingGame game, String main, [String body = '']) {
     }
   }
 
-  addAll(main);
+  // Avval takrorlash ichi, keyin asosiy dastur (🔁 qo'shilganda tab o'zi almashmasligi uchun).
   game.editingLoop = true;
   addAll(body);
   game.editingLoop = false;
+  addAll(main);
 }
 
 /// Har bir topshiriq uchun namunaviy yechim (asosiy dastur, takrorlash ichi).
@@ -160,6 +161,29 @@ void main() {
         BlockType.forward,
         BlockType.forward,
       ]);
+    });
+
+    test("bo'sh 🔁 — xato emas, robot yurmaydi", () {
+      final game = BlockCodingGame(level: CodingLevel.hard);
+      _write(game, 'FF2');
+      expect(game.hasEmptyLoop, isTrue);
+      final result = game.run();
+      expect(result.outcome, RunOutcome.emptyLoop);
+      expect(result.trace, hasLength(1));
+      expect(game.mistakes, 0);
+    });
+
+    test("ichi bo'sh 🔁 qo'shilganda tab takrorlash ichiga o'tadi", () {
+      final game = BlockCodingGame(level: CodingLevel.hard)..puzzleIndex = 3;
+      game.add(BlockType.loop);
+      expect(game.editingLoop, isTrue);
+      game.add(BlockType.forward);
+      expect(game.loopBody, [BlockType.forward]);
+
+      // Ichi to'la bo'lsa — tab almashmaydi.
+      game.editingLoop = false;
+      game.add(BlockType.loop);
+      expect(game.editingLoop, isFalse);
     });
 
     test('tozalash takrorlash sonini ham qaytaradi', () {

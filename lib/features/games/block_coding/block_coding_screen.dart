@@ -86,6 +86,14 @@ class _BlockCodingScreenState extends ConsumerState<BlockCodingScreen> {
     if (_running) return;
     final result = game.run();
     if (result.outcome == RunOutcome.empty) return;
+    if (result.outcome == RunOutcome.emptyLoop) {
+      // Xato emas — faqat keyingi qadamni ko'rsatamiz.
+      setState(() {
+        _message = AppStrings.codingEmptyLoop;
+        game.editingLoop = true;
+      });
+      return;
+    }
 
     setState(() {
       _running = true;
@@ -288,6 +296,7 @@ class _BlockCodingScreenState extends ConsumerState<BlockCodingScreen> {
             _ProgramRow(
               title: AppStrings.codingProgram,
               blocks: game.program,
+              loopBody: game.loopBody,
               loopCount: game.loopCount,
               selected: hasLoop && !game.editingLoop,
               onSelect: hasLoop ? () => _edit(() => game.editingLoop = false) : null,
@@ -297,6 +306,7 @@ class _BlockCodingScreenState extends ConsumerState<BlockCodingScreen> {
               _ProgramRow(
                 title: AppStrings.codingLoopInside(game.loopCount),
                 blocks: game.loopBody,
+                loopBody: game.loopBody,
                 loopCount: game.loopCount,
                 selected: game.editingLoop,
                 onSelect: () => _edit(() => game.editingLoop = true),
@@ -561,6 +571,7 @@ class _ProgramRow extends StatelessWidget {
   const _ProgramRow({
     required this.title,
     required this.blocks,
+    required this.loopBody,
     required this.loopCount,
     required this.selected,
     this.onSelect,
@@ -569,6 +580,9 @@ class _ProgramRow extends StatelessWidget {
 
   final String title;
   final List<BlockType> blocks;
+
+  /// 🔁 bloki ichida nima takrorlanishini ko'rsatish uchun.
+  final List<BlockType> loopBody;
   final int loopCount;
   final bool selected;
   final VoidCallback? onSelect;
@@ -631,16 +645,46 @@ class _ProgramRow extends StatelessWidget {
             color: _blockColor[type],
             borderRadius: BorderRadius.circular(14),
           ),
+          child: isLoop ? _loopContent() : Text(_blockEmoji[type]!, style: _chipStyle),
+        ),
+      ),
+    );
+  }
+
+  static const _chipStyle = TextStyle(
+    fontSize: 30,
+    fontWeight: FontWeight.bold,
+    color: AppColors.text,
+  );
+
+  /// `🔁×3 [ ⬆️ ↪️ ]` — ichi bo'sh bo'lsa `[ ? ]`.
+  Widget _loopContent() {
+    final empty = loopBody.isEmpty;
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Text('${_blockEmoji[BlockType.loop]}×$loopCount', style: _chipStyle),
+        const SizedBox(width: 4),
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
+          decoration: BoxDecoration(
+            color: empty ? const Color(0xFFFFE0B2) : Colors.white,
+            borderRadius: BorderRadius.circular(10),
+            border: Border.all(
+              color: empty ? const Color(0xFFFB8C00) : Colors.transparent,
+              width: 2,
+            ),
+          ),
           child: Text(
-            isLoop ? '${_blockEmoji[type]}×$loopCount' : _blockEmoji[type]!,
+            empty ? '?' : loopBody.map((t) => _blockEmoji[t]).join(),
             style: const TextStyle(
-              fontSize: 30,
+              fontSize: 22,
               fontWeight: FontWeight.bold,
               color: AppColors.text,
             ),
           ),
         ),
-      ),
+      ],
     );
   }
 }
