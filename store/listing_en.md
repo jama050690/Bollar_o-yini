@@ -18,7 +18,7 @@ Aqlli Do'stlar: Kids Learning
 
 **Short description** (up to 80 characters):
 ```
-30 learning games in Uzbek for kids aged 5–12. No ads, no internet needed!
+31 learning games in Uzbek for kids aged 5–12. No ads, no internet needed!
 ```
 
 **Full description** (up to 4000 characters):
@@ -50,6 +50,7 @@ Your child enters their age and the app opens the games that fit it. Every game 
 • Geography — countries and capitals
 • Nature — animals, plants, Earth and sky
 • Anagram, Translator+, Sudoku
+• 🤖 Robot coder — first steps in coding with blocks: sequences and loops
 
 👨‍👩‍👧 FOR PARENTS
 • Separate profiles for several children
@@ -76,7 +77,7 @@ Your child enters their age and the app opens the games that fit it. Every game 
 
 **Promotional text** (up to 170 characters):
 ```
-30 ad-free, offline learning games in Uzbek: math, reading, logic and memory. English interface included.
+31 ad-free, offline learning games in Uzbek: math, reading, logic and memory. English interface included.
 ```
 
 **Keywords** (up to 100 characters, comma-separated, no spaces):

@@ -26,7 +26,7 @@ Aqlli Do'stlar
 
 **Short description** (80 belgigacha):
 ```
-5–12 yoshli bolalar uchun 30 ta ta'limiy o'yin. Reklamasiz va internetsiz!
+5–12 yoshli bolalar uchun 31 ta ta'limiy o'yin. Reklamasiz va internetsiz!
 ```
 
 **Full description** (4000 belgigacha):
@@ -56,6 +56,7 @@ Bola yoshini kiritadi va ilova unga mos o'yinlarni ochib beradi. Har bir o'yinda
 • Geografiya — davlatlar va poytaxtlar
 • Tabiat — hayvonlar, o'simliklar, Yer va osmon
 • Anagramma, Tarjimon+, Sudoku
+• 🤖 Robot dasturchi — bloklar bilan dasturlash asoslari: ketma-ketlik va takrorlash
 
 👨‍👩‍👧 OTA-ONALAR UCHUN
 • Bir nechta bola uchun alohida profillar
@@ -168,6 +169,20 @@ Birinchi versiya: 30 ta ta'limiy o'yin, ota-ona paneli va kunlik vaqt chegarasi.
 
 > Yangi shaxsiy developer akkaunt bo'lsa: Production'dan oldin **Closed testing** da
 > kamida **12 ta tester** **14 kun** davomida ilovani sinashi shart.
+
+### 1.0.1 (2) — release notes
+```
+<uz-UZ>
+Yangi o'yin: 🤖 Robot dasturchi — bloklar bilan dasturlash asoslarini o'rgan! Endi 31 ta ta'limiy o'yin.
+</uz-UZ>
+<ru-RU>
+Новая игра: 🤖 Робот-программист — основы программирования блоками! Теперь 31 развивающая игра.
+</ru-RU>
+<en-US>
+New game: 🤖 Robot coder — learn the basics of coding with blocks! Now 31 learning games.
+</en-US>
+```
+App Store Connect → **What's New in This Version** maydoniga ham shu matnlar (har til uchun alohida).
 
 ### Keyingi versiyalar
 Har yangi yuklashda `pubspec.yaml` dagi `version: 1.0.0+1` dagi `+` dan keyingi raqam
