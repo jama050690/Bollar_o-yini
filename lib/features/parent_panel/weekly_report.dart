@@ -57,6 +57,7 @@ const kGameSubjects = {
   'translate_plus': Subject.language,
   'speed_math': Subject.math,
   'sudoku': Subject.logic,
+  'block_coding': Subject.logic,
 };
 
 /// Bir kunlik o'yin vaqti.

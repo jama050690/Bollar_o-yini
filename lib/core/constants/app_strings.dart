@@ -300,6 +300,42 @@ abstract final class AppStrings {
   static String get level4Hard => _t('4×4 qiyin', '4×4 сложно', '4×4 hard');
   static const level6 = '6×6';
 
+  static String get codingTitle => _t('Robot dasturchi', 'Робот-программист', 'Robot coder');
+  static String get codingHint => _t(
+        '🤖 Robotni 🔋 gacha olib bor!',
+        '🤖 Доведи робота до 🔋!',
+        '🤖 Get the robot to the 🔋!',
+      );
+  static String get codingLoopHint => _t(
+        '🤖 Bloklar kam — 🔁 dan foydalan!',
+        '🤖 Блоков мало — используй 🔁!',
+        '🤖 Few blocks — use 🔁!',
+      );
+  static String get codingForward => _t('Oldinga', 'Вперёд', 'Forward');
+  static String get codingLeft => _t('Chapga', 'Налево', 'Left');
+  static String get codingRight => _t("O'ngga", 'Направо', 'Right');
+  static String get codingLoop => _t('Takrorla', 'Повтори', 'Repeat');
+  static String get codingProgram => _t('📜 Dastur', '📜 Программа', '📜 Program');
+  static String get codingLoopBody =>
+      _t('🔁 Nimani takrorlaymiz', '🔁 Что повторяем', '🔁 What to repeat');
+  static String get codingRun => _t('Ishga tushir', 'Запустить', 'Run');
+  static String get codingUndo => _t("O'chir", 'Стереть', 'Undo');
+  static String get codingClear => _t('Tozala', 'Очистить', 'Clear');
+  static String codingBlocks(int used, int max) =>
+      _t('Bloklar: $used / $max', 'Блоки: $used / $max', 'Blocks: $used / $max');
+  static String codingLoopTimes(int count) =>
+      _t('$count marta takrorla', 'Повторить $count раз', 'Repeat $count times');
+  static String get codingCrash => _t(
+        "💥 To'siq! Dasturni tuzatib ko'r",
+        '💥 Препятствие! Исправь программу',
+        '💥 Obstacle! Fix your program',
+      );
+  static String get codingNotReached => _t(
+        "🔋 gacha yetmadi. Dasturni to'ldir!",
+        'Робот не дошёл до 🔋. Дополни программу!',
+        "Didn't reach the 🔋. Add to your program!",
+      );
+
   static String round(int current, int total) => '$current / $total';
   static String get tryAgain =>
       _t("Yana urinib ko'r! 💪", 'Попробуй ещё раз! 💪', 'Try again! 💪');

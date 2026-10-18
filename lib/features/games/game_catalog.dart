@@ -5,6 +5,7 @@ import '../../core/constants/app_strings.dart';
 import 'alphabets/alphabets_screen.dart';
 import 'anagram/anagram_screen.dart';
 import 'arithmetic/arithmetic_screen.dart';
+import 'block_coding/block_coding_screen.dart';
 import 'clock/clock_screen.dart';
 import 'coloring/coloring_screen.dart';
 import 'counting/counting_screen.dart';
@@ -262,6 +263,13 @@ List<GameInfo> get gameCatalog => [
     emoji: '🧩',
     group: AgeGroup.c,
     builder: () => const SudokuScreen(),
+  ),
+  GameInfo(
+    id: 'block_coding',
+    title: AppStrings.codingTitle,
+    emoji: '🤖',
+    group: AgeGroup.c,
+    builder: () => const BlockCodingScreen(),
   ),
 ];
 
