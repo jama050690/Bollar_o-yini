@@ -87,14 +87,6 @@ class CodingPuzzle {
 
 enum BlockType { forward, left, right, loop }
 
-/// Dasturdagi bitta blok. Faqat [BlockType.loop] uchun [count] ma'noga ega.
-class ProgramBlock {
-  ProgramBlock(this.type, {this.count = BlockCodingGame.minLoopCount});
-
-  final BlockType type;
-  int count;
-}
-
 enum RunOutcome { empty, success, crashed, notReached }
 
 /// Dastur bajarilishi natijasi: robot bosib o'tgan holatlar va yakun.
@@ -153,10 +145,13 @@ class BlockCodingGame {
   int mistakes = 0;
 
   /// Asosiy dastur.
-  final List<ProgramBlock> program = [];
+  final List<BlockType> program = [];
 
   /// 🔁 bloki takrorlaydigan qism (faqat qiyin darajada).
-  final List<ProgramBlock> loopBody = [];
+  final List<BlockType> loopBody = [];
+
+  /// Takrorlash ichi necha marta bajariladi (dasturdagi har bir 🔁 uchun bir xil).
+  int loopCount = minLoopCount;
 
   /// true — yangi bloklar takrorlash ichiga qo'shiladi.
   bool editingLoop = false;
@@ -168,7 +163,7 @@ class BlockCodingGame {
 
   int get usedBlocks => program.length + loopBody.length;
 
-  List<ProgramBlock> get _target => editingLoop ? loopBody : program;
+  List<BlockType> get _target => editingLoop ? loopBody : program;
 
   bool canAdd(BlockType type) {
     if (type == BlockType.loop && (!level.hasLoop || editingLoop)) return false;
@@ -179,7 +174,7 @@ class BlockCodingGame {
 
   bool add(BlockType type) {
     if (!canAdd(type)) return false;
-    _target.add(ProgramBlock(type));
+    _target.add(type);
     return true;
   }
 
@@ -191,23 +186,22 @@ class BlockCodingGame {
   void clear() {
     program.clear();
     loopBody.clear();
+    loopCount = minLoopCount;
     editingLoop = false;
   }
 
-  /// 🔁 blokining sonini aylantiradi: 2 → 3 → 4 → 5 → 2.
-  void cycleLoopCount(int index) {
-    final block = program[index];
-    if (block.type != BlockType.loop) return;
-    block.count = block.count >= maxLoopCount ? minLoopCount : block.count + 1;
+  /// Takrorlash sonini ➖ / ➕ bilan o'zgartiradi ([minLoopCount]..[maxLoopCount]).
+  void changeLoopCount(int delta) {
+    loopCount = (loopCount + delta).clamp(minLoopCount, maxLoopCount);
   }
 
   /// Dasturni oddiy buyruqlar ro'yxatiga yoyadi (takrorlash ichida takrorlash yo'q).
   List<BlockType> compile() => [
-    for (final block in program)
-      if (block.type == BlockType.loop)
-        for (var i = 0; i < block.count; i++) ...loopBody.map((b) => b.type)
+    for (final type in program)
+      if (type == BlockType.loop)
+        for (var i = 0; i < loopCount; i++) ...loopBody
       else
-        block.type,
+        type,
   ];
 
   /// Dasturni bajaradi. Robot maqsadga yetsa, darhol to'xtaydi.

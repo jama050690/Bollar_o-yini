@@ -306,10 +306,10 @@ abstract final class AppStrings {
         '🤖 Доведи робота до 🔋!',
         '🤖 Get the robot to the 🔋!',
       );
-  static String get codingLoopHint => _t(
-        '🤖 Bloklar kam — 🔁 dan foydalan!',
-        '🤖 Блоков мало — используй 🔁!',
-        '🤖 Few blocks — use 🔁!',
+  static String get codingLoopSteps => _t(
+        "1) 🔁 Takrorlash ichiga bloklar qo'y\n2) 📜 Dasturga 🔁 qo'sh\n3) ▶️ Ishga tushir",
+        '1) Положи блоки в 🔁 «Внутри повтора»\n2) Добавь 🔁 в 📜 программу\n3) ▶️ Запусти',
+        '1) Put blocks inside the 🔁 repeat\n2) Add 🔁 to the 📜 program\n3) ▶️ Run',
       );
   static String get codingForward => _t('Oldinga', 'Вперёд', 'Forward');
   static String get codingLeft => _t('Chapga', 'Налево', 'Left');
@@ -317,7 +317,14 @@ abstract final class AppStrings {
   static String get codingLoop => _t('Takrorla', 'Повтори', 'Repeat');
   static String get codingProgram => _t('📜 Dastur', '📜 Программа', '📜 Program');
   static String get codingLoopBody =>
-      _t('🔁 Nimani takrorlaymiz', '🔁 Что повторяем', '🔁 What to repeat');
+      _t('🔁 Takrorlash ichi', '🔁 Внутри повтора', '🔁 Inside repeat');
+  static String codingLoopInside(int count) => _t(
+        '🔁 $count marta takrorlanadi:',
+        '🔁 Повторится $count раз:',
+        '🔁 Repeats $count times:',
+      );
+  static String get codingLess => _t('Kamroq', 'Меньше', 'Fewer');
+  static String get codingMore => _t("Ko'proq", 'Больше', 'More');
   static String get codingRun => _t('Ishga tushir', 'Запустить', 'Run');
   static String get codingUndo => _t("O'chir", 'Стереть', 'Undo');
   static String get codingClear => _t('Tozala', 'Очистить', 'Clear');

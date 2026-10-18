@@ -176,15 +176,29 @@ class _BlockCodingScreenState extends ConsumerState<BlockCodingScreen> {
     final limit = game.puzzle.maxBlocks;
     return LayoutBuilder(
       builder: (context, constraints) {
-        final side = min(constraints.maxWidth - 32, constraints.maxHeight * 0.42);
+        final side = min(constraints.maxWidth - 32, constraints.maxHeight * 0.38);
+        final hasLoop = game.level.hasLoop;
         return ListView(
           padding: const EdgeInsets.all(16),
           children: [
-            Text(
-              game.level.hasLoop ? AppStrings.codingLoopHint : AppStrings.codingHint,
-              textAlign: TextAlign.center,
-              style: const TextStyle(fontSize: 20, color: AppColors.text),
-            ),
+            if (hasLoop)
+              Container(
+                padding: const EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  color: _blockColor[BlockType.loop]!.withValues(alpha: 0.35),
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                child: Text(
+                  AppStrings.codingLoopSteps,
+                  style: const TextStyle(fontSize: 18, color: AppColors.text, height: 1.35),
+                ),
+              )
+            else
+              Text(
+                AppStrings.codingHint,
+                textAlign: TextAlign.center,
+                style: const TextStyle(fontSize: 20, color: AppColors.text),
+              ),
             const SizedBox(height: 8),
             Center(
               child: SizedBox.square(
@@ -211,43 +225,7 @@ class _BlockCodingScreenState extends ConsumerState<BlockCodingScreen> {
                 ),
               ),
             ),
-            _Palette(
-              types: [
-                BlockType.forward,
-                BlockType.left,
-                BlockType.right,
-                if (game.level.hasLoop) BlockType.loop,
-              ],
-              enabled: (type) => !_running && game.canAdd(type),
-              onAdd: (type) => _edit(() => game.add(type)),
-            ),
-            const SizedBox(height: 12),
-            _ProgramRow(
-              title: AppStrings.codingProgram,
-              blocks: game.program,
-              selected: game.level.hasLoop && !game.editingLoop,
-              onSelect: game.level.hasLoop ? () => _edit(() => game.editingLoop = false) : null,
-              onLoopTap: (index) => _edit(() => game.cycleLoopCount(index)),
-            ),
-            if (game.level.hasLoop) ...[
-              const SizedBox(height: 8),
-              _ProgramRow(
-                title: AppStrings.codingLoopBody,
-                blocks: game.loopBody,
-                selected: game.editingLoop,
-                onSelect: () => _edit(() => game.editingLoop = true),
-              ),
-            ],
-            if (limit != null)
-              Padding(
-                padding: const EdgeInsets.only(top: 8),
-                child: Text(
-                  AppStrings.codingBlocks(game.usedBlocks, limit),
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                ),
-              ),
-            const SizedBox(height: 12),
+            // "Ishga tushir" maydon ostida — ekranni aylantirmasdan ko'rinadi.
             Wrap(
               alignment: WrapAlignment.center,
               spacing: 12,
@@ -273,6 +251,75 @@ class _BlockCodingScreenState extends ConsumerState<BlockCodingScreen> {
                 ),
               ],
             ),
+            const SizedBox(height: 16),
+            if (hasLoop) ...[
+              Row(
+                children: [
+                  Expanded(
+                    child: _TabButton(
+                      label: AppStrings.codingProgram,
+                      selected: !game.editingLoop,
+                      onTap: () => _edit(() => game.editingLoop = false),
+                    ),
+                  ),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: _TabButton(
+                      label: AppStrings.codingLoopBody,
+                      selected: game.editingLoop,
+                      onTap: () => _edit(() => game.editingLoop = true),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 12),
+            ],
+            _Palette(
+              types: [
+                BlockType.forward,
+                BlockType.left,
+                BlockType.right,
+                if (hasLoop) BlockType.loop,
+              ],
+              enabled: (type) => !_running && game.canAdd(type),
+              onAdd: (type) => _edit(() => game.add(type)),
+            ),
+            const SizedBox(height: 12),
+            _ProgramRow(
+              title: AppStrings.codingProgram,
+              blocks: game.program,
+              loopCount: game.loopCount,
+              selected: hasLoop && !game.editingLoop,
+              onSelect: hasLoop ? () => _edit(() => game.editingLoop = false) : null,
+            ),
+            if (hasLoop) ...[
+              const SizedBox(height: 8),
+              _ProgramRow(
+                title: AppStrings.codingLoopInside(game.loopCount),
+                blocks: game.loopBody,
+                loopCount: game.loopCount,
+                selected: game.editingLoop,
+                onSelect: () => _edit(() => game.editingLoop = true),
+                counter: _LoopCounter(
+                  count: game.loopCount,
+                  onLess: _running || game.loopCount <= BlockCodingGame.minLoopCount
+                      ? null
+                      : () => _edit(() => game.changeLoopCount(-1)),
+                  onMore: _running || game.loopCount >= BlockCodingGame.maxLoopCount
+                      ? null
+                      : () => _edit(() => game.changeLoopCount(1)),
+                ),
+              ),
+            ],
+            if (limit != null)
+              Padding(
+                padding: const EdgeInsets.only(top: 8),
+                child: Text(
+                  AppStrings.codingBlocks(game.usedBlocks, limit),
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+              ),
           ],
         );
       },
@@ -423,26 +470,115 @@ class _Palette extends StatelessWidget {
   }
 }
 
-/// Dastur qatori. Qiyin darajada qatorni bosib, bloklar qayerga qo'shilishini tanlaydi.
+/// Qiyin darajada bloklar qayerga qo'shilishini tanlaydigan katta tab tugma.
+class _TabButton extends StatelessWidget {
+  const _TabButton({required this.label, required this.selected, required this.onTap});
+
+  final String label;
+  final bool selected;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return Semantics(
+      selected: selected,
+      child: Material(
+        color: selected ? AgeGroup.c.color : Colors.white,
+        elevation: selected ? 3 : 1,
+        borderRadius: BorderRadius.circular(18),
+        child: InkWell(
+          borderRadius: BorderRadius.circular(18),
+          onTap: onTap,
+          child: Container(
+            constraints: const BoxConstraints(minHeight: AppSizes.minTapTarget),
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
+            alignment: Alignment.center,
+            child: Text(
+              label,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: selected ? Colors.white : AppColors.text,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// Takrorlash soni: ➖ son ➕.
+class _LoopCounter extends StatelessWidget {
+  const _LoopCounter({required this.count, required this.onLess, required this.onMore});
+
+  final int count;
+  final VoidCallback? onLess;
+  final VoidCallback? onMore;
+
+  @override
+  Widget build(BuildContext context) {
+    Widget button(IconData icon, String label, VoidCallback? onTap) => Opacity(
+      opacity: onTap == null ? 0.4 : 1,
+      child: Material(
+        color: _blockColor[BlockType.loop],
+        borderRadius: BorderRadius.circular(16),
+        child: InkWell(
+          borderRadius: BorderRadius.circular(16),
+          onTap: onTap,
+          child: Tooltip(
+            message: label,
+            child: SizedBox.square(
+              dimension: AppSizes.minTapTarget,
+              child: Icon(icon, size: 36, color: AppColors.text),
+            ),
+          ),
+        ),
+      ),
+    );
+
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        button(Icons.remove_rounded, AppStrings.codingLess, onLess),
+        SizedBox(
+          width: 52,
+          child: Text(
+            '$count',
+            textAlign: TextAlign.center,
+            style: const TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
+          ),
+        ),
+        button(Icons.add_rounded, AppStrings.codingMore, onMore),
+      ],
+    );
+  }
+}
+
+/// Dastur qatori. Tanlangan qator (bloklar shu yerga qo'shiladi) rangli ramka bilan ajraladi.
 class _ProgramRow extends StatelessWidget {
   const _ProgramRow({
     required this.title,
     required this.blocks,
+    required this.loopCount,
     required this.selected,
     this.onSelect,
-    this.onLoopTap,
+    this.counter,
   });
 
   final String title;
-  final List<ProgramBlock> blocks;
+  final List<BlockType> blocks;
+  final int loopCount;
   final bool selected;
   final VoidCallback? onSelect;
-  final ValueChanged<int>? onLoopTap;
+  final Widget? counter;
 
   @override
   Widget build(BuildContext context) {
+    final accent = AgeGroup.c.color;
     return Material(
-      color: Colors.white,
+      color: selected ? Color.alphaBlend(accent.withValues(alpha: 0.12), Colors.white) : Colors.white,
       borderRadius: BorderRadius.circular(AppSizes.radius),
       child: InkWell(
         borderRadius: BorderRadius.circular(AppSizes.radius),
@@ -452,22 +588,25 @@ class _ProgramRow extends StatelessWidget {
           padding: const EdgeInsets.all(10),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(AppSizes.radius),
-            border: Border.all(
-              color: selected ? AgeGroup.c.color : Colors.transparent,
-              width: 4,
-            ),
+            border: Border.all(color: selected ? accent : Colors.transparent, width: 4),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(title, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+              Wrap(
+                crossAxisAlignment: WrapCrossAlignment.center,
+                spacing: 12,
+                runSpacing: 6,
+                children: [
+                  Text(title, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                  ?counter,
+                ],
+              ),
               const SizedBox(height: 6),
               Wrap(
                 spacing: 6,
                 runSpacing: 6,
-                children: [
-                  for (var i = 0; i < blocks.length; i++) _chip(i, blocks[i]),
-                ],
+                children: [for (final type in blocks) _chip(type)],
               ),
             ],
           ),
@@ -476,32 +615,31 @@ class _ProgramRow extends StatelessWidget {
     );
   }
 
-  Widget _chip(int index, ProgramBlock block) {
-    final isLoop = block.type == BlockType.loop;
-    final chip = Container(
-      constraints: const BoxConstraints(
-        minWidth: AppSizes.minTapTarget,
-        minHeight: AppSizes.minTapTarget,
-      ),
-      padding: const EdgeInsets.symmetric(horizontal: 6),
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        color: _blockColor[block.type],
-        borderRadius: BorderRadius.circular(14),
-      ),
-      child: Text(
-        isLoop ? '${_blockEmoji[block.type]}×${block.count}' : _blockEmoji[block.type]!,
-        style: const TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: AppColors.text),
-      ),
-    );
-    if (!isLoop || onLoopTap == null) {
-      return Semantics(label: _blockLabel(block.type), child: ExcludeSemantics(child: chip));
-    }
+  Widget _chip(BlockType type) {
+    final isLoop = type == BlockType.loop;
     return Semantics(
-      button: true,
-      label: AppStrings.codingLoopTimes(block.count),
+      label: isLoop ? AppStrings.codingLoopTimes(loopCount) : _blockLabel(type),
       child: ExcludeSemantics(
-        child: GestureDetector(onTap: () => onLoopTap!(index), child: chip),
+        child: Container(
+          constraints: const BoxConstraints(
+            minWidth: AppSizes.minTapTarget,
+            minHeight: AppSizes.minTapTarget,
+          ),
+          padding: const EdgeInsets.symmetric(horizontal: 6),
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+            color: _blockColor[type],
+            borderRadius: BorderRadius.circular(14),
+          ),
+          child: Text(
+            isLoop ? '${_blockEmoji[type]}×$loopCount' : _blockEmoji[type]!,
+            style: const TextStyle(
+              fontSize: 30,
+              fontWeight: FontWeight.bold,
+              color: AppColors.text,
+            ),
+          ),
+        ),
       ),
     );
   }

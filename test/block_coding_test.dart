@@ -10,10 +10,7 @@ void _write(BlockCodingGame game, String main, [String body = '']) {
       final digit = int.tryParse(ch);
       if (digit != null) {
         expect(game.add(BlockType.loop), isTrue, reason: 'loop: $code');
-        final index = game.program.length - 1;
-        while (game.program[index].count != digit) {
-          game.cycleLoopCount(index);
-        }
+        game.changeLoopCount(digit - game.loopCount);
         continue;
       }
       final type = switch (ch) {
@@ -135,7 +132,7 @@ void main() {
       expect(game.loopBody, isEmpty);
     });
 
-    test('🔁 soni 2 → 5 oralig\'ida aylanadi va dastur yoyiladi', () {
+    test('🔁 soni 2..5 oralig\'ida ➖/➕ bilan o\'zgaradi va dastur yoyiladi', () {
       final game = BlockCodingGame(level: CodingLevel.hard);
       _write(game, '2', 'FR');
       expect(game.compile(), [
@@ -144,12 +141,33 @@ void main() {
         BlockType.forward,
         BlockType.right,
       ]);
-      for (var i = 0; i < 3; i++) {
-        game.cycleLoopCount(0);
+      game.changeLoopCount(-1);
+      expect(game.loopCount, BlockCodingGame.minLoopCount);
+      for (var i = 0; i < 5; i++) {
+        game.changeLoopCount(1);
       }
-      expect(game.program.first.count, 5);
-      game.cycleLoopCount(0);
-      expect(game.program.first.count, BlockCodingGame.minLoopCount);
+      expect(game.loopCount, BlockCodingGame.maxLoopCount);
+      expect(game.compile().length, 10);
+    });
+
+    test('ikki 🔁 bloki bir xil takrorlash ichini bajaradi', () {
+      final game = BlockCodingGame(level: CodingLevel.hard)..puzzleIndex = 3; // chegara: 7
+      _write(game, '2L2', 'F');
+      expect(game.compile(), [
+        BlockType.forward,
+        BlockType.forward,
+        BlockType.left,
+        BlockType.forward,
+        BlockType.forward,
+      ]);
+    });
+
+    test('tozalash takrorlash sonini ham qaytaradi', () {
+      final game = BlockCodingGame(level: CodingLevel.hard);
+      _write(game, '4', 'F');
+      game.clear();
+      expect(game.loopCount, BlockCodingGame.minLoopCount);
+      expect(game.editingLoop, isFalse);
     });
 
     test('keyingi topshiriqda dastur tozalanadi', () {
