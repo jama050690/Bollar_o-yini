@@ -13,7 +13,7 @@ Matnlarni shu yerdan nusxalab qo'ying.
 | Default language | Uzbek – uz |
 | App or game | **Game** |
 | Free or paid | **Free** |
-| Package name | `uz.aqllidostlar.aqlli_dostlar` (o'zgartirib bo'lmaydi) |
+| Package name | `uz.jamshiddin.aqlli_dostlar` (o'zgartirib bo'lmaydi) |
 
 ---
 

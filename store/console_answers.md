@@ -8,7 +8,7 @@ Umumiy ma'lumotlar:
 
 | | Qiymat |
 |---|---|
-| Android package | `uz.aqllidostlar.aqlli_dostlar` |
+| Android package | `uz.jamshiddin.aqlli_dostlar` |
 | iOS Bundle ID | `uz.aqllidostlar.aqlliDostlar` |
 | Versiya | `1.0.0 (1)` |
 | Maxfiylik siyosati | https://jama050690.github.io/Bollar_o-yini/privacy-policy.html |
