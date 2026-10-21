@@ -15,7 +15,7 @@ import 'counting_game.dart';
 
 const _gameId = 'counting';
 
-/// Sanash: o'zbek yoki rus tilida aytilgan sonni raqamlardan topish (100 gacha).
+/// Sanash: o'zbek, rus, koreys yoki arab tilida aytilgan sonni raqamlardan topish (100 gacha).
 class CountingScreen extends ConsumerStatefulWidget {
   const CountingScreen({super.key});
 
