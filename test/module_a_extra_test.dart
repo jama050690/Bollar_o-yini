@@ -35,11 +35,11 @@ void main() {
   });
 
   group('Alifbolar', () {
-    test("harflar soni: o'zbek 29, rus 33, ingliz 26, koreys 24, arab 28 — takrorsiz", () {
+    test("harflar soni: o'zbek 29, rus 33, ingliz 26, koreys 40, arab 28 — takrorsiz", () {
       expect(Alphabet.uzbek.letters.length, 29);
       expect(Alphabet.russian.letters.length, 33);
       expect(Alphabet.english.letters.length, 26);
-      expect(Alphabet.korean.letters.length, 24);
+      expect(Alphabet.korean.letters.length, 40);
       expect(Alphabet.arabic.letters.length, 28);
       for (final a in Alphabet.values) {
         expect(a.letters.map((l) => l.upper).toSet().length, a.letters.length);
