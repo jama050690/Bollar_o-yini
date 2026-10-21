@@ -151,6 +151,7 @@ class _TranslateScreenState extends ConsumerState<TranslateScreen> {
                     fit: BoxFit.scaleDown,
                     child: Text(
                       reverse ? '${game.language.flag}  ${q.prompt}  🔊' : q.prompt,
+                      textDirection: reverse && game.language.isRtl ? TextDirection.rtl : null,
                       style: const TextStyle(
                         fontSize: 40,
                         fontWeight: FontWeight.bold,
@@ -208,6 +209,9 @@ class _TranslateScreenState extends ConsumerState<TranslateScreen> {
                         padding: const EdgeInsets.symmetric(horizontal: 8),
                         child: Text(
                           option,
+                          // Teskari darajada variantlar o'zbekcha bo'ladi.
+                          textDirection:
+                              !reverse && game.language.isRtl ? TextDirection.rtl : null,
                           style: const TextStyle(
                             fontSize: 30,
                             fontWeight: FontWeight.bold,

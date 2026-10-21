@@ -182,6 +182,7 @@ class _TranslatePlusScreenState extends ConsumerState<TranslatePlusScreen> {
                         padding: const EdgeInsets.symmetric(horizontal: 12),
                         child: Text(
                           option,
+                          textDirection: game.language.isRtl ? TextDirection.rtl : null,
                           style: const TextStyle(
                             fontSize: 26,
                             fontWeight: FontWeight.bold,

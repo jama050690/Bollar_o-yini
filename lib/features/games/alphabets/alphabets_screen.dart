@@ -15,7 +15,7 @@ import 'alphabets_game.dart';
 
 const _gameId = 'alphabets';
 
-/// Alifbolar: o'zbek (lotin), rus, ingliz harflarini eshitib/ko'rib topish.
+/// Alifbolar: o'zbek (lotin), rus, ingliz, koreys, arab harflarini eshitib/ko'rib topish.
 class AlphabetsScreen extends ConsumerStatefulWidget {
   const AlphabetsScreen({super.key});
 
@@ -126,15 +126,18 @@ class _AlphabetsScreenState extends ConsumerState<AlphabetsScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   // Kichik harf ko'rsatiladi, bola katta harfini topadi.
-                  Text(
-                    q.target.lower,
-                    style: const TextStyle(
-                      fontSize: 80,
-                      fontWeight: FontWeight.bold,
-                      color: AppColors.primary,
+                  // Katta-kichik harfi yo'q alifboda faqat ovoz qoladi.
+                  if (game.alphabet.hasCase) ...[
+                    Text(
+                      q.target.lower,
+                      style: const TextStyle(
+                        fontSize: 80,
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.primary,
+                      ),
                     ),
-                  ),
-                  const SizedBox(width: 12),
+                    const SizedBox(width: 12),
+                  ],
                   IconButton(
                     iconSize: 56,
                     onPressed: _speak,

@@ -4,66 +4,124 @@ import '../../../core/constants/app_strings.dart';
 import '../../../shared/services/tts_service.dart';
 import '../game_result.dart';
 
-/// Tarjima tili: rus yoki ingliz.
+/// Tarjima tili: rus, ingliz, koreys yoki arab.
 enum TargetLanguage {
   russian(flag: '🇷🇺', ttsLanguage: TtsService.russian),
-  english(flag: '🇬🇧', ttsLanguage: TtsService.english);
+  english(flag: '🇬🇧', ttsLanguage: TtsService.english),
+  korean(flag: '🇰🇷', ttsLanguage: TtsService.korean),
+  arabic(flag: '🇸🇦', ttsLanguage: TtsService.arabic, isRtl: true);
 
-  const TargetLanguage({required this.flag, required this.ttsLanguage});
+  const TargetLanguage({required this.flag, required this.ttsLanguage, this.isRtl = false});
 
   String get label => switch (this) {
         TargetLanguage.russian => AppStrings.langRussian,
         TargetLanguage.english => AppStrings.langEnglish,
+        TargetLanguage.korean => AppStrings.langKorean,
+        TargetLanguage.arabic => AppStrings.langArabic,
       };
 
   final String flag;
   final String ttsLanguage;
+
+  /// O'ngdan chapga yoziladimi (arab).
+  final bool isRtl;
 }
 
 class TranslateWord {
-  const TranslateWord(this.uzbek, this.emoji, this.russian, this.english);
+  const TranslateWord(
+    this.uzbek,
+    this.emoji,
+    this.russian,
+    this.english,
+    this.korean,
+    this.arabic,
+  );
 
   final String uzbek;
   final String emoji;
   final String russian;
   final String english;
+  final String korean;
+  final String arabic;
 
-  String translation(TargetLanguage language) =>
-      language == TargetLanguage.russian ? russian : english;
+  String translation(TargetLanguage language) => switch (language) {
+        TargetLanguage.russian => russian,
+        TargetLanguage.english => english,
+        TargetLanguage.korean => korean,
+        TargetLanguage.arabic => arabic,
+      };
 }
 
+// dart format off
 const translateWords = [
-  TranslateWord('olma', '🍎', 'яблоко', 'apple'),
-  TranslateWord('nok', '🍐', 'груша', 'pear'),
-  TranslateWord('banan', '🍌', 'банан', 'banana'),
-  TranslateWord('uzum', '🍇', 'виноград', 'grapes'),
-  TranslateWord('qulupnay', '🍓', 'клубника', 'strawberry'),
-  TranslateWord('tarvuz', '🍉', 'арбуз', 'watermelon'),
-  TranslateWord('non', '🍞', 'хлеб', 'bread'),
-  TranslateWord('sut', '🥛', 'молоко', 'milk'),
-  TranslateWord('tuxum', '🥚', 'яйцо', 'egg'),
-  TranslateWord('mushuk', '🐱', 'кошка', 'cat'),
-  TranslateWord('it', '🐶', 'собака', 'dog'),
-  TranslateWord('ot', '🐴', 'лошадь', 'horse'),
-  TranslateWord('sigir', '🐮', 'корова', 'cow'),
-  TranslateWord('baliq', '🐟', 'рыба', 'fish'),
-  TranslateWord('qush', '🐦', 'птица', 'bird'),
-  TranslateWord('quyon', '🐰', 'заяц', 'rabbit'),
-  TranslateWord('ayiq', '🐻', 'медведь', 'bear'),
-  TranslateWord('sher', '🦁', 'лев', 'lion'),
-  TranslateWord('uy', '🏠', 'дом', 'house'),
-  TranslateWord('mashina', '🚗', 'машина', 'car'),
-  TranslateWord('kitob', '📖', 'книга', 'book'),
-  TranslateWord('quyosh', '☀️', 'солнце', 'sun'),
-  TranslateWord('oy', '🌙', 'луна', 'moon'),
-  TranslateWord('yulduz', '⭐', 'звезда', 'star'),
-  TranslateWord('gul', '🌸', 'цветок', 'flower'),
-  TranslateWord('daraxt', '🌳', 'дерево', 'tree'),
-  TranslateWord('suv', '💧', 'вода', 'water'),
-  TranslateWord('koptok', '⚽', 'мяч', 'ball'),
-  TranslateWord('soat', '⏰', 'часы', 'clock'),
-  TranslateWord('qalam', '✏️', 'карандаш', 'pencil'),
+  TranslateWord('olma', '🍎', 'яблоко', 'apple', '사과', 'تفاحة'),
+  TranslateWord('nok', '🍐', 'груша', 'pear', '배', 'كمثرى'),
+  TranslateWord('banan', '🍌', 'банан', 'banana', '바나나', 'موز'),
+  TranslateWord('uzum', '🍇', 'виноград', 'grapes', '포도', 'عنب'),
+  TranslateWord('qulupnay', '🍓', 'клубника', 'strawberry', '딸기', 'فراولة'),
+  TranslateWord('tarvuz', '🍉', 'арбуз', 'watermelon', '수박', 'بطيخ'),
+  TranslateWord('non', '🍞', 'хлеб', 'bread', '빵', 'خبز'),
+  TranslateWord('sut', '🥛', 'молоко', 'milk', '우유', 'حليب'),
+  TranslateWord('tuxum', '🥚', 'яйцо', 'egg', '달걀', 'بيضة'),
+  TranslateWord('mushuk', '🐱', 'кошка', 'cat', '고양이', 'قطة'),
+  TranslateWord('it', '🐶', 'собака', 'dog', '개', 'كلب'),
+  TranslateWord('ot', '🐴', 'лошадь', 'horse', '말', 'حصان'),
+  TranslateWord('sigir', '🐮', 'корова', 'cow', '소', 'بقرة'),
+  TranslateWord('baliq', '🐟', 'рыба', 'fish', '물고기', 'سمكة'),
+  TranslateWord('qush', '🐦', 'птица', 'bird', '새', 'طائر'),
+  TranslateWord('quyon', '🐰', 'заяц', 'rabbit', '토끼', 'أرنب'),
+  TranslateWord('ayiq', '🐻', 'медведь', 'bear', '곰', 'دب'),
+  TranslateWord('sher', '🦁', 'лев', 'lion', '사자', 'أسد'),
+  TranslateWord('uy', '🏠', 'дом', 'house', '집', 'بيت'),
+  TranslateWord('mashina', '🚗', 'машина', 'car', '자동차', 'سيارة'),
+  TranslateWord('kitob', '📖', 'книга', 'book', '책', 'كتاب'),
+  TranslateWord('quyosh', '☀️', 'солнце', 'sun', '해', 'شمس'),
+  TranslateWord('oy', '🌙', 'луна', 'moon', '달', 'قمر'),
+  TranslateWord('yulduz', '⭐', 'звезда', 'star', '별', 'نجمة'),
+  TranslateWord('gul', '🌸', 'цветок', 'flower', '꽃', 'زهرة'),
+  TranslateWord('daraxt', '🌳', 'дерево', 'tree', '나무', 'شجرة'),
+  TranslateWord('suv', '💧', 'вода', 'water', '물', 'ماء'),
+  TranslateWord('koptok', '⚽', 'мяч', 'ball', '공', 'كرة'),
+  TranslateWord('soat', '⏰', 'часы', 'clock', '시계', 'ساعة'),
+  TranslateWord('qalam', '✏️', 'карандаш', 'pencil', '연필', 'قلم'),
+  // Ranglar
+  TranslateWord('qizil', '🔴', 'красный', 'red', '빨간색', 'أحمر'),
+  TranslateWord('koʻk', '🔵', 'синий', 'blue', '파란색', 'أزرق'),
+  TranslateWord('yashil', '🟢', 'зелёный', 'green', '초록색', 'أخضر'),
+  TranslateWord('sariq', '🟡', 'жёлтый', 'yellow', '노란색', 'أصفر'),
+  TranslateWord('qora', '⚫', 'чёрный', 'black', '검은색', 'أسود'),
+  TranslateWord('oq', '⚪', 'белый', 'white', '흰색', 'أبيض'),
+  // Kiyim
+  TranslateWord('futbolka', '👕', 'футболка', 'T-shirt', '티셔츠', 'قميص'),
+  TranslateWord('shim', '👖', 'брюки', 'trousers', '바지', 'بنطال'),
+  TranslateWord('poyabzal', '👟', 'обувь', 'shoes', '신발', 'حذاء'),
+  TranslateWord('shapka', '🧢', 'кепка', 'cap', '모자', 'قبعة'),
+  TranslateWord('koʻylak', '👗', 'платье', 'dress', '원피스', 'فستان'),
+  // Tana
+  TranslateWord('koʻz', '👁️', 'глаз', 'eye', '눈', 'عين'),
+  TranslateWord('quloq', '👂', 'ухо', 'ear', '귀', 'أذن'),
+  TranslateWord('burun', '👃', 'нос', 'nose', '코', 'أنف'),
+  TranslateWord('qoʻl', '✋', 'рука', 'hand', '손', 'يد'),
+  TranslateWord('oyoq', '🦶', 'нога', 'foot', '발', 'قدم'),
+  TranslateWord('ogʻiz', '👄', 'рот', 'mouth', '입', 'فم'),
+  // Maktab
+  TranslateWord('daftar', '📓', 'тетрадь', 'notebook', '공책', 'دفتر'),
+  TranslateWord('qaychi', '✂️', 'ножницы', 'scissors', '가위', 'مقص'),
+  TranslateWord('chizgʻich', '📏', 'линейка', 'ruler', '자', 'مسطرة'),
+  // Hayvonlar
+  TranslateWord('fil', '🐘', 'слон', 'elephant', '코끼리', 'فيل'),
+  TranslateWord('maymun', '🐒', 'обезьяна', 'monkey', '원숭이', 'قرد'),
+  TranslateWord('tovuq', '🐔', 'курица', 'chicken', '닭', 'دجاجة'),
+  TranslateWord('oʻrdak', '🦆', 'утка', 'duck', '오리', 'بطة'),
+  TranslateWord('toshbaqa', '🐢', 'черепаха', 'turtle', '거북이', 'سلحفاة'),
+  // Ovqat
+  TranslateWord('sabzi', '🥕', 'морковь', 'carrot', '당근', 'جزرة'),
+  TranslateWord('pomidor', '🍅', 'помидор', 'tomato', '토마토', 'طماطم'),
+  TranslateWord('limon', '🍋', 'лимон', 'lemon', '레몬', 'ليمون'),
+  TranslateWord('kartoshka', '🥔', 'картофель', 'potato', '감자', 'بطاطس'),
+  TranslateWord('shokolad', '🍫', 'шоколад', 'chocolate', '초콜릿', 'شوكولاتة'),
 ];
+// dart format on
 
 /// Daraja: variantlar soni yoki teskari yo'nalish (chet tilidagi so'z → o'zbekchasi).
 enum TranslateLevel {

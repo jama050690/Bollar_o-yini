@@ -7,6 +7,11 @@ import '../game_result.dart';
 class AlphabetLetter {
   const AlphabetLetter(this.upper, this.lower, this.spoken);
 
+  /// Katta-kichik harfi yo'q yozuvlar uchun (koreys, arab).
+  const AlphabetLetter.single(String letter, this.spoken)
+      : upper = letter,
+        lower = letter;
+
   final String upper;
   final String lower;
 
@@ -23,7 +28,9 @@ class AlphabetLetter {
 enum Alphabet {
   uzbek('🇺🇿', TtsService.uzbek),
   russian('🇷🇺', TtsService.russian),
-  english('🇬🇧', TtsService.english);
+  english('🇬🇧', TtsService.english),
+  korean('🇰🇷', TtsService.korean),
+  arabic('🇸🇦', TtsService.arabic);
 
   const Alphabet(this.flag, this.language);
 
@@ -31,15 +38,26 @@ enum Alphabet {
         Alphabet.uzbek => AppStrings.langUzbek,
         Alphabet.russian => AppStrings.langRussian,
         Alphabet.english => AppStrings.langEnglish,
+        Alphabet.korean => AppStrings.langKorean,
+        Alphabet.arabic => AppStrings.langArabic,
       };
 
   final String flag;
   final String language;
 
+  /// Katta va kichik harfi bormi. Yo'q bo'lsa, ekranda kichik harf ko'rsatilmaydi —
+  /// bola harfni faqat eshitib topadi.
+  bool get hasCase => switch (this) {
+        Alphabet.uzbek || Alphabet.russian || Alphabet.english => true,
+        Alphabet.korean || Alphabet.arabic => false,
+      };
+
   List<AlphabetLetter> get letters => switch (this) {
         Alphabet.uzbek => _uzbek,
         Alphabet.russian => _russian,
         Alphabet.english => _english,
+        Alphabet.korean => _korean,
+        Alphabet.arabic => _arabic,
       };
 }
 
@@ -141,6 +159,82 @@ const _english = [
   AlphabetLetter('X', 'x', 'ex'),
   AlphabetLetter('Y', 'y', 'why'),
   AlphabetLetter('Z', 'z', 'zee'),
+];
+
+// Koreys alifbosi — Hangul, to'liq (19 undosh + 21 unli = 40 harf), lug'at tartibida.
+const _korean = [
+  AlphabetLetter.single('ㄱ', '기역'),
+  AlphabetLetter.single('ㄲ', '쌍기역'),
+  AlphabetLetter.single('ㄴ', '니은'),
+  AlphabetLetter.single('ㄷ', '디귿'),
+  AlphabetLetter.single('ㄸ', '쌍디귿'),
+  AlphabetLetter.single('ㄹ', '리을'),
+  AlphabetLetter.single('ㅁ', '미음'),
+  AlphabetLetter.single('ㅂ', '비읍'),
+  AlphabetLetter.single('ㅃ', '쌍비읍'),
+  AlphabetLetter.single('ㅅ', '시옷'),
+  AlphabetLetter.single('ㅆ', '쌍시옷'),
+  AlphabetLetter.single('ㅇ', '이응'),
+  AlphabetLetter.single('ㅈ', '지읒'),
+  AlphabetLetter.single('ㅉ', '쌍지읒'),
+  AlphabetLetter.single('ㅊ', '치읓'),
+  AlphabetLetter.single('ㅋ', '키읔'),
+  AlphabetLetter.single('ㅌ', '티읕'),
+  AlphabetLetter.single('ㅍ', '피읖'),
+  AlphabetLetter.single('ㅎ', '히읗'),
+  AlphabetLetter.single('ㅏ', '아'),
+  AlphabetLetter.single('ㅐ', '애'),
+  AlphabetLetter.single('ㅑ', '야'),
+  AlphabetLetter.single('ㅒ', '얘'),
+  AlphabetLetter.single('ㅓ', '어'),
+  AlphabetLetter.single('ㅔ', '에'),
+  AlphabetLetter.single('ㅕ', '여'),
+  AlphabetLetter.single('ㅖ', '예'),
+  AlphabetLetter.single('ㅗ', '오'),
+  AlphabetLetter.single('ㅘ', '와'),
+  AlphabetLetter.single('ㅙ', '왜'),
+  AlphabetLetter.single('ㅚ', '외'),
+  AlphabetLetter.single('ㅛ', '요'),
+  AlphabetLetter.single('ㅜ', '우'),
+  AlphabetLetter.single('ㅝ', '워'),
+  AlphabetLetter.single('ㅞ', '웨'),
+  AlphabetLetter.single('ㅟ', '위'),
+  AlphabetLetter.single('ㅠ', '유'),
+  AlphabetLetter.single('ㅡ', '으'),
+  AlphabetLetter.single('ㅢ', '의'),
+  AlphabetLetter.single('ㅣ', '이'),
+];
+
+// Arab alifbosi (28 harf), alohida yozilish shaklida.
+const _arabic = [
+  AlphabetLetter.single('ا', 'ألف'),
+  AlphabetLetter.single('ب', 'باء'),
+  AlphabetLetter.single('ت', 'تاء'),
+  AlphabetLetter.single('ث', 'ثاء'),
+  AlphabetLetter.single('ج', 'جيم'),
+  AlphabetLetter.single('ح', 'حاء'),
+  AlphabetLetter.single('خ', 'خاء'),
+  AlphabetLetter.single('د', 'دال'),
+  AlphabetLetter.single('ذ', 'ذال'),
+  AlphabetLetter.single('ر', 'راء'),
+  AlphabetLetter.single('ز', 'زاي'),
+  AlphabetLetter.single('س', 'سين'),
+  AlphabetLetter.single('ش', 'شين'),
+  AlphabetLetter.single('ص', 'صاد'),
+  AlphabetLetter.single('ض', 'ضاد'),
+  AlphabetLetter.single('ط', 'طاء'),
+  AlphabetLetter.single('ظ', 'ظاء'),
+  AlphabetLetter.single('ع', 'عين'),
+  AlphabetLetter.single('غ', 'غين'),
+  AlphabetLetter.single('ف', 'فاء'),
+  AlphabetLetter.single('ق', 'قاف'),
+  AlphabetLetter.single('ك', 'كاف'),
+  AlphabetLetter.single('ل', 'لام'),
+  AlphabetLetter.single('م', 'ميم'),
+  AlphabetLetter.single('ن', 'نون'),
+  AlphabetLetter.single('ه', 'هاء'),
+  AlphabetLetter.single('و', 'واو'),
+  AlphabetLetter.single('ي', 'ياء'),
 ];
 
 class LetterQuestion {

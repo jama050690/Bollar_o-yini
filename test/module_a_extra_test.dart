@@ -35,10 +35,12 @@ void main() {
   });
 
   group('Alifbolar', () {
-    test("harflar soni: o'zbek 29, rus 33, ingliz 26 — takrorsiz", () {
+    test("harflar soni: o'zbek 29, rus 33, ingliz 26, koreys 40, arab 28 — takrorsiz", () {
       expect(Alphabet.uzbek.letters.length, 29);
       expect(Alphabet.russian.letters.length, 33);
       expect(Alphabet.english.letters.length, 26);
+      expect(Alphabet.korean.letters.length, 40);
+      expect(Alphabet.arabic.letters.length, 28);
       for (final a in Alphabet.values) {
         expect(a.letters.map((l) => l.upper).toSet().length, a.letters.length);
       }
@@ -88,10 +90,32 @@ void main() {
       expect(russianNumber(100), 'сто');
     });
 
+    test('koreyscha sonlar', () {
+      expect(koreanNumber(1), '일');
+      expect(koreanNumber(10), '십');
+      expect(koreanNumber(15), '십오');
+      expect(koreanNumber(20), '이십');
+      expect(koreanNumber(45), '사십오');
+      expect(koreanNumber(99), '구십구');
+      expect(koreanNumber(100), '백');
+    });
+
+    test('arabcha sonlar', () {
+      expect(arabicNumber(1), 'واحد');
+      expect(arabicNumber(10), 'عشرة');
+      expect(arabicNumber(12), 'اثنا عشر');
+      expect(arabicNumber(20), 'عشرون');
+      expect(arabicNumber(21), 'واحد وعشرون');
+      expect(arabicNumber(45), 'خمسة وأربعون');
+      expect(arabicNumber(100), 'مئة');
+    });
+
     test("1–100 hamma son uchun so'z bor", () {
       for (var n = 1; n <= 100; n++) {
         expect(uzbekNumber(n), isNotEmpty);
         expect(russianNumber(n), isNotEmpty);
+        expect(koreanNumber(n), isNotEmpty);
+        expect(arabicNumber(n), isNotEmpty);
       }
     });
 

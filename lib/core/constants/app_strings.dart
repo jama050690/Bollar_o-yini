@@ -87,6 +87,8 @@ abstract final class AppStrings {
   static String get langUzbek => _t('Oʻzbek', 'Узбекский', 'Uzbek');
   static String get langRussian => _t('Rus', 'Русский', 'Russian');
   static String get langEnglish => _t('Ingliz', 'Английский', 'English');
+  static String get langKorean => _t('Koreys', 'Корейский', 'Korean');
+  static String get langArabic => _t('Arab', 'Арабский', 'Arabic');
 
   static String get shapeBuilderTitle =>
       _t('Shakldan buyum', 'Собери из фигур', 'Build with shapes');

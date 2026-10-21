@@ -6,13 +6,17 @@ import '../game_result.dart';
 
 enum CountingLanguage {
   uzbek('🇺🇿', TtsService.uzbek),
-  russian('🇷🇺', TtsService.russian);
+  russian('🇷🇺', TtsService.russian),
+  korean('🇰🇷', TtsService.korean),
+  arabic('🇸🇦', TtsService.arabic);
 
   const CountingLanguage(this.flag, this.language);
 
   String get label => switch (this) {
         CountingLanguage.uzbek => AppStrings.langUzbek,
         CountingLanguage.russian => AppStrings.langRussian,
+        CountingLanguage.korean => AppStrings.langKorean,
+        CountingLanguage.arabic => AppStrings.langArabic,
       };
 
   final String flag;
@@ -22,6 +26,8 @@ enum CountingLanguage {
   String words(int n) => switch (this) {
         CountingLanguage.uzbek => uzbekNumber(n),
         CountingLanguage.russian => russianNumber(n),
+        CountingLanguage.korean => koreanNumber(n),
+        CountingLanguage.arabic => arabicNumber(n),
       };
 }
 
@@ -65,6 +71,41 @@ String russianNumber(int n) {
   if (n < 20) return _ruOnes[n];
   final ones = _ruOnes[n % 10];
   return [_ruTens[n ~/ 10], ones].where((s) => s.isNotEmpty).join(' ');
+}
+
+// Sino-koreys sonlar: 21 = 이십일 ("ikki-o'n-bir"), bo'shliqsiz yoziladi.
+const _koDigits = ['', '일', '이', '삼', '사', '오', '육', '칠', '팔', '구'];
+
+String koreanNumber(int n) {
+  assert(n >= 1 && n <= 100);
+  if (n == 100) return '백';
+  final tens = n ~/ 10;
+  // 10 — "십" (일십 emas), 20 — "이십".
+  final tensWord = switch (tens) {
+    0 => '',
+    1 => '십',
+    _ => '${_koDigits[tens]}십',
+  };
+  return tensWord + _koDigits[n % 10];
+}
+
+// Arabcha sonlar (muzakkar shakl). 21 = واحد وعشرون — avval birlik, keyin "va" + o'nlik.
+const _arOnes = [
+  '', 'واحد', 'اثنان', 'ثلاثة', 'أربعة', 'خمسة', 'ستة', 'سبعة', 'ثمانية', 'تسعة',
+  'عشرة', 'أحد عشر', 'اثنا عشر', 'ثلاثة عشر', 'أربعة عشر', 'خمسة عشر',
+  'ستة عشر', 'سبعة عشر', 'ثمانية عشر', 'تسعة عشر',
+];
+const _arTens = [
+  '', '', 'عشرون', 'ثلاثون', 'أربعون', 'خمسون', 'ستون', 'سبعون', 'ثمانون', 'تسعون',
+];
+
+String arabicNumber(int n) {
+  assert(n >= 1 && n <= 100);
+  if (n == 100) return 'مئة';
+  if (n < 20) return _arOnes[n];
+  final tens = _arTens[n ~/ 10];
+  final ones = _arOnes[n % 10];
+  return ones.isEmpty ? tens : '$ones و$tens';
 }
 
 class CountingQuestion {

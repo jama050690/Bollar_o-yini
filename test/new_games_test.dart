@@ -148,10 +148,11 @@ void main() {
   });
 
   group('Tarjimon', () {
-    test("30 ta so'z, tarjimalar takrorsiz", () {
-      expect(translateWords.length, 30);
+    test("60 ta so'z, tarjimalar takrorsiz", () {
+      expect(translateWords.length, 60);
+      expect(translateWords.map((w) => w.uzbek).toSet().length, 60);
       for (final language in TargetLanguage.values) {
-        expect(translateWords.map((w) => w.translation(language)).toSet().length, 30);
+        expect(translateWords.map((w) => w.translation(language)).toSet().length, 60);
       }
     });
 
