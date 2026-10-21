@@ -32,6 +32,8 @@ class TtsService {
   static const uzbek = 'uz-UZ';
   static const russian = 'ru-RU';
   static const english = 'en-US';
+  static const korean = 'ko-KR';
+  static const arabic = 'ar-SA';
 
   /// Aytildi bo'lsa true; o'chirilgan, til yo'q yoki xato bo'lsa false.
   Future<bool> speak(String text, {required String language}) async {
