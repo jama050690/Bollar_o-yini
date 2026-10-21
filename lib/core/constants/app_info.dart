@@ -3,7 +3,7 @@
 /// [version] pubspec.yaml dagi `version:` bilan bir xil bo'lishi shart —
 /// test/about_test.dart buni tekshiradi (versiya ko'tarilganda shu yerni ham yangilang).
 abstract final class AppInfo {
-  static const version = '1.0.0+1';
+  static const version = '1.0.2+3';
   static const author = 'Jamshiddin Babajonov';
   static const email = 'jbm050690@gmail.com';
 
