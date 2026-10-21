@@ -84,6 +84,42 @@ const translateWords = [
   TranslateWord('koptok', '⚽', 'мяч', 'ball', '공', 'كرة'),
   TranslateWord('soat', '⏰', 'часы', 'clock', '시계', 'ساعة'),
   TranslateWord('qalam', '✏️', 'карандаш', 'pencil', '연필', 'قلم'),
+  // Ranglar
+  TranslateWord('qizil', '🔴', 'красный', 'red', '빨간색', 'أحمر'),
+  TranslateWord('koʻk', '🔵', 'синий', 'blue', '파란색', 'أزرق'),
+  TranslateWord('yashil', '🟢', 'зелёный', 'green', '초록색', 'أخضر'),
+  TranslateWord('sariq', '🟡', 'жёлтый', 'yellow', '노란색', 'أصفر'),
+  TranslateWord('qora', '⚫', 'чёрный', 'black', '검은색', 'أسود'),
+  TranslateWord('oq', '⚪', 'белый', 'white', '흰색', 'أبيض'),
+  // Kiyim
+  TranslateWord('futbolka', '👕', 'футболка', 'T-shirt', '티셔츠', 'قميص'),
+  TranslateWord('shim', '👖', 'брюки', 'trousers', '바지', 'بنطال'),
+  TranslateWord('poyabzal', '👟', 'обувь', 'shoes', '신발', 'حذاء'),
+  TranslateWord('shapka', '🧢', 'кепка', 'cap', '모자', 'قبعة'),
+  TranslateWord('koʻylak', '👗', 'платье', 'dress', '원피스', 'فستان'),
+  // Tana
+  TranslateWord('koʻz', '👁️', 'глаз', 'eye', '눈', 'عين'),
+  TranslateWord('quloq', '👂', 'ухо', 'ear', '귀', 'أذن'),
+  TranslateWord('burun', '👃', 'нос', 'nose', '코', 'أنف'),
+  TranslateWord('qoʻl', '✋', 'рука', 'hand', '손', 'يد'),
+  TranslateWord('oyoq', '🦶', 'нога', 'foot', '발', 'قدم'),
+  TranslateWord('ogʻiz', '👄', 'рот', 'mouth', '입', 'فم'),
+  // Maktab
+  TranslateWord('daftar', '📓', 'тетрадь', 'notebook', '공책', 'دفتر'),
+  TranslateWord('qaychi', '✂️', 'ножницы', 'scissors', '가위', 'مقص'),
+  TranslateWord('chizgʻich', '📏', 'линейка', 'ruler', '자', 'مسطرة'),
+  // Hayvonlar
+  TranslateWord('fil', '🐘', 'слон', 'elephant', '코끼리', 'فيل'),
+  TranslateWord('maymun', '🐒', 'обезьяна', 'monkey', '원숭이', 'قرد'),
+  TranslateWord('tovuq', '🐔', 'курица', 'chicken', '닭', 'دجاجة'),
+  TranslateWord('oʻrdak', '🦆', 'утка', 'duck', '오리', 'بطة'),
+  TranslateWord('toshbaqa', '🐢', 'черепаха', 'turtle', '거북이', 'سلحفاة'),
+  // Ovqat
+  TranslateWord('sabzi', '🥕', 'морковь', 'carrot', '당근', 'جزرة'),
+  TranslateWord('pomidor', '🍅', 'помидор', 'tomato', '토마토', 'طماطم'),
+  TranslateWord('limon', '🍋', 'лимон', 'lemon', '레몬', 'ليمون'),
+  TranslateWord('kartoshka', '🥔', 'картофель', 'potato', '감자', 'بطاطس'),
+  TranslateWord('shokolad', '🍫', 'шоколад', 'chocolate', '초콜릿', 'شوكولاتة'),
 ];
 // dart format on
 

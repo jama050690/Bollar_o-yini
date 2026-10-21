@@ -8,6 +8,16 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   group('Tarjimon+', () {
+    test("har darajada 30 ta element, har tilda tarjimalar takrorsiz", () {
+      for (final level in TranslatePlusLevel.values) {
+        expect(level.items.length, 30);
+        expect(level.items.map((i) => i.uzbek).toSet().length, 30);
+        for (final language in TargetLanguage.values) {
+          expect(level.items.map((i) => i.translation(language)).toSet().length, 30);
+        }
+      }
+    });
+
     test("har til va darajada 10 ta takrorlanmas savol, 4 ta turli variant", () {
       for (final language in TargetLanguage.values) {
         for (final level in TranslatePlusLevel.values) {
